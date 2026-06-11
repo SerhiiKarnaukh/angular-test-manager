@@ -1,30 +1,142 @@
-<mat-toolbar color="primary">
-  <a routerLink="/" class="brand">Angular Apps Manager</a>
+<mat-toolbar color="primary" class="navbar">
+  <a routerLink="/" class="brand">
+    <mat-icon class="brand-icon">apps</mat-icon>
+    <span class="brand-copy">
+      <span class="brand-title">Angular Apps Manager</span>
+      <span class="brand-subtitle">Portfolio launcher</span>
+    </span>
+  </a>
 
   <span class="spacer"></span>
 
-  <nav class="nav-actions">
-    <button mat-button [matMenuTriggerFor]="appsMenu" type="button">Apps Manager</button>
-    <mat-menu #appsMenu="matMenu">
-      <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">All Apps</a>
-      <a mat-menu-item routerLink="/">Angular Apps</a>
-    </mat-menu>
+  @if (!isHandset()) {
+    <nav class="nav-actions">
+      <button mat-button [matMenuTriggerFor]="appsMenu" type="button" class="nav-pill">
+        <mat-icon>grid_view</mat-icon>
+        Apps Manager
+      </button>
+      <mat-menu #appsMenu="matMenu" class="nav-dropdown">
+        <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
+          <mat-icon>public</mat-icon>
+          All Apps
+        </a>
+        <a mat-menu-item routerLink="/">
+          <mat-icon>view_module</mat-icon>
+          Angular Apps
+        </a>
+      </mat-menu>
 
-    <a
-      mat-button
-      href="https://docs.google.com/document/d/11DNF9pFl0wQLNXac779DO6axLG67nMGIBC_bPTPulRQ/edit?usp=share_link"
-      target="_blank"
-      rel="noopener"
+      <a
+        mat-button
+        class="nav-pill"
+        href="https://docs.google.com/document/d/11DNF9pFl0wQLNXac779DO6axLG67nMGIBC_bPTPulRQ/edit?usp=share_link"
+        target="_blank"
+        rel="noopener"
+      >
+        <mat-icon>description</mat-icon>
+        CV
+      </a>
+      <a mat-button class="nav-pill" href="https://github.com/SerhiiKarnaukh" target="_blank" rel="noopener">
+        <mat-icon>code</mat-icon>
+        GitHub
+      </a>
+      <a
+        mat-button
+        class="nav-pill"
+        href="https://www.linkedin.com/in/serhiikarnaukh"
+        target="_blank"
+        rel="noopener"
+      >
+        <mat-icon>work</mat-icon>
+        LinkedIn
+      </a>
+
+      <span class="nav-divider" aria-hidden="true"></span>
+
+      <button
+        mat-icon-button
+        type="button"
+        class="nav-icon-btn"
+        (click)="theme.toggle()"
+        [attr.aria-label]="theme.isDark() ? 'Light mode' : 'Dark mode'"
+      >
+        <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        type="button"
+        class="nav-icon-btn"
+        aria-label="Search"
+        (click)="openSearchDialog()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </nav>
+  } @else {
+    <button
+      mat-icon-button
+      type="button"
+      aria-label="Open menu"
+      [matMenuTriggerFor]="mobileMenu"
+      (menuOpened)="mobileMenuOpen.set(true)"
+      (menuClosed)="mobileMenuOpen.set(false)"
     >
-      CV
-    </a>
-    <a mat-button href="https://github.com/SerhiiKarnaukh" target="_blank" rel="noopener">GitHub</a>
-    <a mat-button href="https://www.linkedin.com/in/serhiikarnaukh" target="_blank" rel="noopener">
-      LinkedIn
-    </a>
-    <button mat-button type="button" (click)="theme.toggle()">Toggle Theme</button>
-    <button mat-icon-button type="button" aria-label="Search" (click)="openSearchDialog()">
-      <mat-icon>search</mat-icon>
+      <mat-icon>{{ mobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
     </button>
-  </nav>
+
+    <mat-menu #mobileMenu="matMenu" class="nav-dropdown">
+      <button mat-menu-item type="button" [matMenuTriggerFor]="mobileAppsMenu">
+        <mat-icon>grid_view</mat-icon>
+        Apps Manager
+      </button>
+      <mat-menu #mobileAppsMenu="matMenu">
+        <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener" (click)="closeMobileMenu()">
+          <mat-icon>public</mat-icon>
+          All Apps
+        </a>
+        <a mat-menu-item routerLink="/" (click)="closeMobileMenu()">
+          <mat-icon>view_module</mat-icon>
+          Angular Apps
+        </a>
+      </mat-menu>
+
+      <mat-divider />
+
+      <a
+        mat-menu-item
+        href="https://docs.google.com/document/d/11DNF9pFl0wQLNXac779DO6axLG67nMGIBC_bPTPulRQ/edit?usp=share_link"
+        target="_blank"
+        rel="noopener"
+        (click)="closeMobileMenu()"
+      >
+        <mat-icon>description</mat-icon>
+        CV
+      </a>
+      <a mat-menu-item href="https://github.com/SerhiiKarnaukh" target="_blank" rel="noopener" (click)="closeMobileMenu()">
+        <mat-icon>code</mat-icon>
+        GitHub
+      </a>
+      <a
+        mat-menu-item
+        href="https://www.linkedin.com/in/serhiikarnaukh"
+        target="_blank"
+        rel="noopener"
+        (click)="closeMobileMenu()"
+      >
+        <mat-icon>work</mat-icon>
+        LinkedIn
+      </a>
+
+      <mat-divider />
+
+      <button mat-menu-item type="button" (click)="theme.toggle(); closeMobileMenu()">
+        <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        {{ theme.isDark() ? 'Light mode' : 'Dark mode' }}
+      </button>
+      <button mat-menu-item type="button" (click)="openSearchDialog(); closeMobileMenu()">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+    </mat-menu>
+  }
 </mat-toolbar>
