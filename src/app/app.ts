@@ -1,34 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterOutlet } from '@angular/router';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import { ThemeService } from '@shared/services/theme.service';
+import { LoadingService } from '@core/loading/loading.service';
+import { AppMessageComponent } from '@shared/ui/app-message/app-message.component';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatChipsModule,
-  ],
+  imports: [RouterOutlet, AppMessageComponent, MatProgressBarModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly theme = inject(ThemeService);
-
-  protected readonly subApps = [
-    { name: 'Apps Manager', icon: 'dashboard' },
-    { name: 'Taberna eCommerce', icon: 'storefront' },
-    { name: 'Social Network', icon: 'groups' },
-    { name: 'AI Lab', icon: 'smart_toy' },
-  ];
+  protected readonly loading = inject(LoadingService);
 }

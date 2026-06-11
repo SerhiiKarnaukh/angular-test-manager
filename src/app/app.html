@@ -1,51 +1,7 @@
-<mat-toolbar color="primary" class="app-toolbar">
-  <mat-icon class="toolbar-logo">apps</mat-icon>
-  <span class="toolbar-title">Applications Manager</span>
-  <span class="toolbar-spacer"></span>
-  <button
-    mat-icon-button
-    type="button"
-    (click)="theme.toggle()"
-    [attr.aria-label]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
-  >
-    <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
-  </button>
-</mat-toolbar>
+<app-message />
 
-<main class="app-main">
-  <mat-card class="welcome-card">
-    <mat-card-header>
-      <mat-card-title>Angular Applications Manager</mat-card-title>
-      <mat-card-subtitle>Phase 0 — project scaffolding complete</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        Feature-parity rewrite of the Vue Applications Manager monorepo. Four sub-apps
-        share one Django REST API backend.
-      </p>
-      <div class="sub-app-chips">
-        @for (app of subApps; track app.name) {
-          <mat-chip-set>
-            <mat-chip>
-              <mat-icon matChipAvatar>{{ app.icon }}</mat-icon>
-              {{ app.name }}
-            </mat-chip>
-          </mat-chip-set>
-        }
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <a mat-button href="https://angular.dev" target="_blank" rel="noopener">Angular Docs</a>
-      <a
-        mat-flat-button
-        color="primary"
-        routerLink="/"
-        [disabled]="true"
-      >
-        Coming in Phase 1
-      </a>
-    </mat-card-actions>
-  </mat-card>
+@if (loading.isLoading()) {
+  <mat-progress-bar mode="indeterminate" class="global-progress" />
+}
 
-  <router-outlet />
-</main>
+<router-outlet />

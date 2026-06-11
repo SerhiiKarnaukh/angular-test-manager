@@ -4,10 +4,10 @@ Feature-parity Angular rewrite of the [Vue Applications Manager](https://github.
 
 | Sub-app | Route prefix | Status |
 |---------|--------------|--------|
-| **Apps Manager** | `/`, `/apps_manager/*` | Phase 2 |
-| **Taberna eCommerce** | `/taberna`, `/taberna-store/*` | Phase 3–6 |
-| **Social Network** | `/social/*` | Phase 7–9 |
-| **AI Lab** | `/ai-lab/*` | Phase 10 |
+| **Apps Manager** | `/`, `/apps_manager/*` | Phase 1 shell → Phase 2 |
+| **Taberna eCommerce** | `/taberna`, `/taberna-store/*` | Phase 1 shell → Phase 3–6 |
+| **Social Network** | `/social/*` | Phase 1 shell → Phase 7–9 |
+| **AI Lab** | `/ai-lab/*` | Phase 1 shell → Phase 10 |
 
 **Stack:** Angular 22, Angular Material, standalone components, signal-based stores, HttpClient, Vitest.
 

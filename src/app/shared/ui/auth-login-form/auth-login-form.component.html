@@ -1,0 +1,55 @@
+<mat-card class="auth-card">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <mat-icon matPrefix>email</mat-icon>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          [attr.name]="namePrefix() + '_login_email'"
+          autocomplete="username"
+          placeholder="Enter your Email"
+        />
+        @if (fieldError('email'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input
+          matInput
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          [attr.name]="namePrefix() + '_login_password'"
+          autocomplete="current-password"
+          placeholder="Enter your password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="showPassword = !showPassword"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+        >
+          <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+        @if (fieldError('password'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-card-actions align="end">
+        <a mat-flat-button color="accent" [routerLink]="signupPath()">Register</a>
+        <button mat-flat-button color="primary" type="submit">Login</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>

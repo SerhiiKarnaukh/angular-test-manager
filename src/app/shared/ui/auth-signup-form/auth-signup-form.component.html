@@ -1,0 +1,110 @@
+<mat-card class="auth-card">
+  <mat-card-header>
+    <mat-card-title>Create an account</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <input
+          matInput
+          formControlName="username"
+          [attr.name]="namePrefix() + '_signup_username'"
+          autocomplete="username"
+        />
+        @if (fieldError('username'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>First Name</mat-label>
+        <mat-icon matPrefix>badge</mat-icon>
+        <input
+          matInput
+          formControlName="first_name"
+          [attr.name]="namePrefix() + '_signup_given_name'"
+          autocomplete="given-name"
+        />
+        @if (fieldError('first_name'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Last Name</mat-label>
+        <mat-icon matPrefix>badge</mat-icon>
+        <input
+          matInput
+          formControlName="last_name"
+          [attr.name]="namePrefix() + '_signup_family_name'"
+          autocomplete="family-name"
+        />
+        @if (fieldError('last_name'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <mat-icon matPrefix>email</mat-icon>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          [attr.name]="namePrefix() + '_signup_email'"
+          autocomplete="email"
+        />
+        @if (fieldError('email'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input
+          matInput
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          [attr.name]="namePrefix() + '_signup_password'"
+          autocomplete="new-password"
+        />
+        @if (fieldError('password'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Repeat password</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input
+          matInput
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password2"
+          [attr.name]="namePrefix() + '_signup_password_confirm'"
+          autocomplete="new-password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="showPassword = !showPassword"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+        >
+          <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+        @if (fieldError('password2'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary" type="submit">Submit</button>
+        <a mat-flat-button color="accent" [routerLink]="loginPath()">I have an account</a>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>

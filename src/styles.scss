@@ -31,3 +31,15 @@ app-root {
   display: block;
   min-height: 100%;
 }
+
+.app-message-error {
+  --mat-snack-bar-button-color: #fff;
+}
+
+.app-message-success {
+  --mat-snack-bar-button-color: #fff;
+}
+
+.app-message-warning {
+  --mat-snack-bar-button-color: #fff;
+}

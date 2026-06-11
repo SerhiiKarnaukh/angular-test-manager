@@ -15,11 +15,4 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     expect(fixture.componentInstance).toBeTruthy();
   });
-
-  it('should render the welcome card title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Angular Applications Manager');
-  });
 });

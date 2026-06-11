@@ -1,0 +1,25 @@
+.layout-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.layout-logo {
+  margin-right: 0.5rem;
+}
+
+.layout-spacer {
+  flex: 1;
+}
+
+.layout-main {
+  min-height: calc(100vh - 128px);
+  padding: 1rem;
+}
+
+.layout-footer {
+  text-align: center;
+  padding: 1rem;
+  opacity: 0.7;
+  font-size: 0.875rem;
+}

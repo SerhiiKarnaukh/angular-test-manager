@@ -1,0 +1,19 @@
+<mat-toolbar color="primary" class="layout-toolbar">
+  <mat-icon class="layout-logo">apps</mat-icon>
+  <span>{{ appName() }}</span>
+  <span class="layout-spacer"></span>
+  <button
+    mat-icon-button
+    type="button"
+    (click)="theme.toggle()"
+    [attr.aria-label]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+  >
+    <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+</mat-toolbar>
+
+<main class="layout-main">
+  <ng-content />
+</main>
+
+<footer class="layout-footer">Applications Manager — Angular</footer>
