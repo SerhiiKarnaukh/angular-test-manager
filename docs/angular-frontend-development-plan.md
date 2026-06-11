@@ -492,19 +492,42 @@ Same dual-mode behaviour as Vue (`environment.stripeActionType`):
 
 ## 8. UI & Styling
 
+### 8.0 UI foundation (mandatory)
+
+**Angular Material is the only UI library for this project.** When porting screens from the Vue app (Vuetify), do **not** recreate Vuetify markup or copy Vuetify-specific CSS. Instead, map each Vuetify building block to the **closest Angular Material equivalent** and use **default Material appearance** (theme tokens, stock component layout, no custom SCSS unless unavoidable).
+
+| Rule | Meaning |
+|------|---------|
+| **Component-for-component** | Vuetify button → `mat-button`; Vuetify card → `mat-card`; Vuetify grid → Material layout (`mat-grid-list`, flex, or CDK) — same role, Material API |
+| **No Vuetify visual clone** | Do not hard-code Vuetify colors (`#ff4800`, `manager` theme bar, parallax overlays, etc.) to “match pixels”; rely on Material theme |
+| **Minimal custom CSS** | Prefer zero feature-level `.scss`; global theme lives in `src/styles.scss` only |
+| **Reference** | Vue file = **behaviour and structure**; Angular file = **Material components** that fulfil the same UX |
+
+**Example (Apps Manager):** Vue `v-app-bar` + `v-btn` + `v-card` → Angular `mat-toolbar` + `mat-button` + `mat-card` with default styling.
+
+Full mapping table: Section 8.1.
+
 ### 8.1 Component Library
 
 | Vue (Vuetify) | Angular Material equivalent |
 |---------------|------------------------------|
 | `v-app` | `mat-sidenav-container` or root flex layout |
 | `v-app-bar` / `v-navigation-drawer` | `mat-toolbar` + `mat-sidenav` |
-| `v-btn`, `v-icon` | `mat-button`, `mat-icon` |
-| `v-card` | `mat-card` |
+| `v-btn`, `v-icon` | `mat-button` / `mat-icon-button`, `mat-icon` |
+| `v-card`, `v-card-title`, `v-card-actions` | `mat-card`, `mat-card-header`, `mat-card-actions` |
+| `v-container`, `v-row`, `v-col` | `mat-grid-list` / flex layout / `@angular/cdk/layout` (same layout role) |
+| `v-img` | `img` with `mat-card-image` or `mat-card` media slot |
+| `v-parallax` | `mat-card` + `mat-card-image` (or static hero image — no custom parallax CSS) |
+| `v-dialog` | `MatDialog` + `mat-dialog-title` / `mat-dialog-content` / `mat-dialog-actions` |
+| `v-menu`, `v-list`, `v-list-item` | `mat-menu`, `mat-nav-list`, `mat-list-item` |
+| `v-form` | Reactive `form` + `mat-form-field` |
 | `v-data-table` | `mat-table` |
-| `v-text-field`, `v-select` | `mat-form-field` + input/select |
+| `v-text-field`, `v-select` | `mat-form-field` + `input` / `mat-select` |
+| `v-divider` | `mat-divider` |
 | `v-snackbar` (AppMessage) | `MatSnackBar` via `AlertService` |
-| `v-skeleton-loader` | Custom skeleton or `@angular/material/progress-bar` |
-| Theme toggle | Material light/dark theme via `@angular/material` theming API |
+| `v-progress-linear`, `v-progress-circular` | `mat-progress-bar`, `mat-progress-spinner` |
+| `v-skeleton-loader` | `mat-progress-bar` or placeholder `mat-card` |
+| Theme toggle | Material light/dark via `ThemeService` + `color-scheme` in `styles.scss` |
 
 ### 8.2 Shared Auth Forms
 
@@ -513,8 +536,8 @@ Port `AuthLoginForm` and `AuthSignupForm` from `src/shared/auth/components/` as 
 ### 8.3 Responsive & Theme
 
 - Light/dark toggle in each app's navbar (persist preference in `localStorage`)
-- Mobile: collapsible sidenav drawer per layout
-- Roboto + Material Icons (same visual language as Vuetify Material Design)
+- Mobile: Material `mat-sidenav` where Vue used `v-navigation-drawer`
+- Roboto + Material Icons (Material Design defaults — no Vuetify MDI dependency)
 
 ---
 
@@ -972,7 +995,7 @@ npm run test
 |----------|---------|----------------|
 | Repository | (a) Same repo `/angular` folder (b) New repo | **(b) New repo** — clean Angular CLI structure, independent CI/CD |
 | State management | (a) NgRx Store (b) ComponentStore (c) Signal services | **(c) Signal services** default; ComponentStore for checkout/feed if needed |
-| UI library | (a) Angular Material (b) PrimeNG (c) Tailwind only | **(a) Angular Material** — closest to Vuetify Material Design |
+| UI library | (a) Angular Material (b) PrimeNG (c) Tailwind only | **(a) Angular Material** — port Vuetify widgets to Material equivalents (Section 8.0), not pixel-perfect Vuetify clones |
 | Forms | (a) Reactive Forms (b) Template-driven | **(a) Reactive Forms** — mirrors Vuelidate imperative validation |
 | HTTP client | (a) HttpClient (b) Axios in Angular | **(a) HttpClient** — idiomatic, interceptor support built-in |
 | WebSocket | (a) Native WebSocket (b) RxJS webSocket | **(a) Native WebSocket** — direct port of Vue logic; wrap in service |
@@ -987,7 +1010,7 @@ npm run test
 
 | Risk | Mitigation |
 |------|------------|
-| Material vs Vuetify visual drift | Create shared SCSS tokens early; screenshot comparison per layout |
+| Material vs Vuetify visual drift | Use **default Material components only** (Section 8.0); no feature SCSS copying Vuetify colors/layout |
 | WebSocket reconnect on token refresh | Disconnect sockets before refresh; reconnect after new access token |
 | Stripe Elements styling mismatch | Dedicated `StripeCardFormComponent` with CSS matching Material form fields |
 | JWT expiry during checkout | Interceptor refresh + retry; show user-friendly message if refresh fails |

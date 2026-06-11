@@ -1,0 +1,12 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<section class="hero-banner">
+  <h1>Angular Applications Manager</h1>
+</section>
+
+<section class="apps-section">
+  <h2>Last Applications</h2>
+  <app-apps-grid [apps]="apps()" />
+</section>

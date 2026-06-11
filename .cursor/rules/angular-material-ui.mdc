@@ -1,0 +1,17 @@
+---
+description: UI must use Angular Material defaults; map Vuetify to Material equivalents
+alwaysApply: true
+---
+
+# Angular Material UI (Vuetify port)
+
+This project uses **Angular Material only** for UI. The Vue reference app uses Vuetify.
+
+When porting a Vue screen:
+
+1. Read the Vue template for **structure and behaviour** (what the user can do).
+2. Replace each Vuetify tag with the **closest Material component** (button → `mat-button`, card → `mat-card`, grid → Material/CDK layout, dialog → `MatDialog`, etc.).
+3. Use **default Material styling** — no copying Vuetify colors, SCSS, or pixel-perfect layout.
+4. Avoid feature-level `.scss` unless a Material component cannot express the layout.
+
+Full mapping: `docs/angular-frontend-development-plan.md` Section 8.

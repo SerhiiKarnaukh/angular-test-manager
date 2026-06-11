@@ -4,7 +4,7 @@ Feature-parity Angular rewrite of the [Vue Applications Manager](https://github.
 
 | Sub-app | Route prefix | Status |
 |---------|--------------|--------|
-| **Apps Manager** | `/`, `/apps_manager/*` | Phase 1 shell → Phase 2 |
+| **Apps Manager** | `/`, `/apps_manager/*` | Phase 2 complete |
 | **Taberna eCommerce** | `/taberna`, `/taberna-store/*` | Phase 1 shell → Phase 3–6 |
 | **Social Network** | `/social/*` | Phase 1 shell → Phase 7–9 |
 | **AI Lab** | `/ai-lab/*` | Phase 1 shell → Phase 10 |
@@ -61,6 +61,23 @@ src/app/
 ```
 
 Path aliases: `@core/*`, `@shared/*`, `@features/*`, `@env/*`.
+
+## UI & styling
+
+**Base library: [Angular Material](https://material.angular.dev/) only.**
+
+When implementing a screen, open the matching Vue view and map each Vuetify element to the Material counterpart — same role, Material API, **default appearance**:
+
+| Vue (Vuetify) | Angular Material |
+|---------------|------------------|
+| `v-btn` | `mat-button` / `mat-flat-button` |
+| `v-card` | `mat-card` |
+| `v-row` / `v-col` | layout grid / flex (Material or CDK) |
+| `v-text-field` | `mat-form-field` + input |
+| `v-dialog` | `MatDialog` |
+| … | see full table in [development plan §8](docs/angular-frontend-development-plan.md#80-ui-foundation-mandatory) |
+
+Do **not** copy Vuetify CSS, theme colors, or custom SCSS to mimic the Vue look. Behaviour and layout structure come from Vue; components and styling come from Material defaults.
 
 ## Firebase Hosting
 

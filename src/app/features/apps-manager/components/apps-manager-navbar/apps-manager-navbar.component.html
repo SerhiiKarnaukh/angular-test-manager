@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <a routerLink="/" class="brand">Angular Apps Manager</a>
+
+  <span class="spacer"></span>
+
+  <nav class="nav-actions">
+    <button mat-button [matMenuTriggerFor]="appsMenu" type="button">Apps Manager</button>
+    <mat-menu #appsMenu="matMenu">
+      <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">All Apps</a>
+      <a mat-menu-item routerLink="/">Angular Apps</a>
+    </mat-menu>
+
+    <a
+      mat-button
+      href="https://docs.google.com/document/d/11DNF9pFl0wQLNXac779DO6axLG67nMGIBC_bPTPulRQ/edit?usp=share_link"
+      target="_blank"
+      rel="noopener"
+    >
+      CV
+    </a>
+    <a mat-button href="https://github.com/SerhiiKarnaukh" target="_blank" rel="noopener">GitHub</a>
+    <a mat-button href="https://www.linkedin.com/in/serhiikarnaukh" target="_blank" rel="noopener">
+      LinkedIn
+    </a>
+    <button mat-button type="button" (click)="theme.toggle()">Toggle Theme</button>
+    <button mat-icon-button type="button" aria-label="Search" (click)="openSearchDialog()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </nav>
+</mat-toolbar>

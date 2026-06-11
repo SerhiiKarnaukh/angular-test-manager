@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { LayoutShellComponent } from '@shared/ui/layout-shell/layout-shell.component';
+import { AppsManagerFooterComponent } from '../../components/apps-manager-footer/apps-manager-footer.component';
+import { AppsManagerNavbarComponent } from '../../components/apps-manager-navbar/apps-manager-navbar.component';
 
 @Component({
   selector: 'app-main-apps-manager-layout',
-  imports: [LayoutShellComponent, RouterOutlet],
+  imports: [AppsManagerNavbarComponent, AppsManagerFooterComponent, RouterOutlet],
   template: `
-    <app-layout-shell appName="Apps Manager">
-      <router-outlet />
-    </app-layout-shell>
+    <app-apps-manager-navbar />
+    <router-outlet />
+    <app-apps-manager-footer />
   `,
 })
 export class MainAppsManagerLayoutComponent {}
