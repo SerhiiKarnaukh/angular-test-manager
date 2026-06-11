@@ -1,59 +1,67 @@
-# AngularTestManager
+# Angular Applications Manager
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.1.
+Feature-parity Angular rewrite of the [Vue Applications Manager](https://github.com/karnaukh-webdev/test-applications-manager-vue) monorepo SPA. Four sub-applications share one Django REST API backend.
 
-## Development server
+| Sub-app | Route prefix | Status |
+|---------|--------------|--------|
+| **Apps Manager** | `/`, `/apps_manager/*` | Phase 2 |
+| **Taberna eCommerce** | `/taberna`, `/taberna-store/*` | Phase 3–6 |
+| **Social Network** | `/social/*` | Phase 7–9 |
+| **AI Lab** | `/ai-lab/*` | Phase 10 |
 
-To start a local development server, run:
+**Stack:** Angular 22, Angular Material, standalone components, signal-based stores, HttpClient, Vitest.
 
-```bash
-ng serve
-```
+Development plan: [docs/angular-frontend-development-plan.md](docs/angular-frontend-development-plan.md)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Prerequisites
 
-## Code scaffolding
+- Node.js 22.x (see `.nvmrc`)
+- npm 11+
+- Django REST API running locally (optional until Phase 1 integration)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Quick start
 
 ```bash
-ng build
+cp .env.example .env
+npm install
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open [http://localhost:4200](http://localhost:4200).
 
-## Running unit tests
+## Environment
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Copy `.env.example` to `.env` for local tooling (`Makefile`). Runtime config lives in `src/environments/`:
 
-```bash
-ng test
+| Variable | Purpose |
+|----------|---------|
+| `remoteHost` | Django REST API base URL |
+| `encryptionKey` | CryptoJS AES key for social profile cache |
+| `stripePublicKey` | Stripe.js publishable key |
+| `stripeActionType` | `session` or `charge` |
+
+Production values are injected at build time via `environment.prod.ts` (Firebase CI in Phase 12).
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Dev server on port 4200 |
+| `npm run build` | Production build → `dist/angular-test-manager/browser` |
+| `npm run test` | Unit tests (Vitest) |
+| `npm run lint` | ESLint |
+
+## Project structure
+
+```
+src/app/
+├── core/           # Auth, HTTP interceptors, guards (Phase 1)
+├── shared/         # UI components, utils, validators
+└── features/       # apps-manager, taberna, social, ai-lab
 ```
 
-## Running end-to-end tests
+Path aliases: `@core/*`, `@shared/*`, `@features/*`, `@env/*`.
 
-For end-to-end (e2e) testing, run:
+## Firebase Hosting
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+SPA rewrites are configured in `firebase.json`. Deploy workflow will be added in Phase 12.
