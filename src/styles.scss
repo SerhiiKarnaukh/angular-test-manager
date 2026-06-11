@@ -69,6 +69,7 @@ app-root {
   --mat-snack-bar-button-color: #fff;
 }
 
-.apps-manager-search-dialog .mat-mdc-dialog-surface {
+.apps-manager-search-dialog .mat-mdc-dialog-surface,
+.taberna-search-dialog .mat-mdc-dialog-surface {
   border-radius: 8px;
 }

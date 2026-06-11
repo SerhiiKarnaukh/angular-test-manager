@@ -1,0 +1,12 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<section class="search-section">
+  @if (query()) {
+    <h2>Search results for "{{ query() }}"</h2>
+  } @else {
+    <h2>Search</h2>
+  }
+  <app-products-grid [products]="products()" />
+</section>

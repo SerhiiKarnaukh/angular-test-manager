@@ -1,0 +1,19 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<section class="hero-banner">
+  <div
+    class="hero-bg"
+    [style.transform]="'translate3d(0, ' + parallaxOffset() + 'px, 0)'"
+  ></div>
+  <div class="hero-overlay">
+    <h1>Taberna</h1>
+    <p class="hero-subtitle">The best Store in the whole world!</p>
+  </div>
+</section>
+
+<section class="products-section">
+  <h2>Latest products</h2>
+  <app-products-grid [products]="products()" />
+</section>

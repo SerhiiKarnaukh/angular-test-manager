@@ -1,0 +1,85 @@
+.product-detail {
+  padding: 24px clamp(16px, 3vw, 48px) 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.detail-card {
+  padding: 16px;
+}
+
+.detail-layout {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 960px) {
+  .detail-layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.gallery {
+  position: relative;
+}
+
+.gallery-image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.gallery-controls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  pointer-events: none;
+
+  button {
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+  }
+}
+
+.product-info h1 {
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+}
+
+.price {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.description {
+  margin: 0 0 20px;
+}
+
+.variation-fields {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin-bottom: 20px;
+}
+
+.variation-field mat-form-field {
+  width: 100%;
+}
+
+.field-error {
+  margin: -4px 0 0;
+  font-size: 0.75rem;
+  color: var(--mat-sys-error);
+}
+
+.product-info button mat-icon {
+  margin-right: 8px;
+}

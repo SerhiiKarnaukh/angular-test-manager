@@ -2,15 +2,31 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { AuthService } from '@core/auth/auth.service';
-import { LayoutShellComponent } from '@shared/ui/layout-shell/layout-shell.component';
+import { TabernaFooterComponent } from '@features/taberna/components/taberna-footer/taberna-footer.component';
+import { TabernaNavbarComponent } from '@features/taberna/components/taberna-navbar/taberna-navbar.component';
 
 @Component({
   selector: 'app-main-taberna-layout',
-  imports: [LayoutShellComponent, RouterOutlet],
+  imports: [TabernaNavbarComponent, TabernaFooterComponent, RouterOutlet],
   template: `
-    <app-layout-shell appName="Taberna E-com">
-      <router-outlet />
-    </app-layout-shell>
+    <div class="taberna-layout">
+      <app-taberna-navbar />
+      <main class="taberna-main">
+        <router-outlet />
+      </main>
+      <app-taberna-footer />
+    </div>
+  `,
+  styles: `
+    .taberna-layout {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .taberna-main {
+      flex: 1;
+    }
   `,
 })
 export class MainTabernaLayoutComponent implements OnInit {

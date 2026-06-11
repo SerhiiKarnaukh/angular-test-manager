@@ -1,0 +1,12 @@
+<footer class="taberna-footer">
+  <div class="footer-links">
+    <a mat-button routerLink="/taberna">Home</a>
+    @if (!auth.isAuthenticated()) {
+      <a mat-button routerLink="/taberna/signup">Signup</a>
+      <a mat-button routerLink="/taberna/login">Login</a>
+    }
+    <a mat-button [href]="remoteHost" target="_blank" rel="noopener">All Apps</a>
+    <a mat-button routerLink="/">Angular Apps</a>
+  </div>
+  <p class="footer-copy">{{ year }} — <strong>Taberna</strong></p>
+</footer>

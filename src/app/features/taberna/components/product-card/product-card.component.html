@@ -1,0 +1,21 @@
+<mat-card>
+  <img
+    mat-card-image
+    [src]="product().image"
+    [alt]="product().name"
+    height="200"
+    width="100%"
+  />
+  <mat-card-header>
+    <mat-card-title>{{ product().name }}</mat-card-title>
+    <mat-card-subtitle>{{ product().description }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="price">${{ product().price }}</p>
+  </mat-card-content>
+  <mat-divider />
+  <div class="card-actions">
+    <span></span>
+    <a mat-flat-button color="primary" [routerLink]="product().get_absolute_url">Details</a>
+  </div>
+</mat-card>

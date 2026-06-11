@@ -1,0 +1,151 @@
+<mat-toolbar color="primary" class="navbar">
+  <a routerLink="/taberna" class="brand">
+    <mat-icon class="brand-icon">storefront</mat-icon>
+    <span class="brand-title">Taberna</span>
+  </a>
+
+  <span class="spacer"></span>
+
+  @if (!isHandset()) {
+    <nav class="nav-actions">
+      <button mat-button [matMenuTriggerFor]="appsMenu" type="button">
+        <mat-icon>grid_view</mat-icon>
+        Apps Manager
+      </button>
+      <mat-menu #appsMenu="matMenu" class="nav-dropdown">
+        <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
+          <mat-icon>public</mat-icon>
+          All Apps
+        </a>
+        <a mat-menu-item routerLink="/">
+          <mat-icon>view_module</mat-icon>
+          Angular Apps
+        </a>
+      </mat-menu>
+
+      <button mat-button [matMenuTriggerFor]="categoryMenu" type="button">
+        <mat-icon>category</mat-icon>
+        Category
+      </button>
+      <mat-menu #categoryMenu="matMenu" class="nav-dropdown">
+        @for (category of categories(); track category.get_absolute_url) {
+          <a mat-menu-item [routerLink]="category.get_absolute_url">
+            {{ category.name }}
+          </a>
+        }
+      </mat-menu>
+
+      @if (!auth.isAuthenticated()) {
+        <a mat-button routerLink="/taberna/login">
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+        <a mat-button routerLink="/taberna/signup">
+          <mat-icon>person_add</mat-icon>
+          Signup
+        </a>
+      } @else {
+        <a mat-button routerLink="/taberna/dashboard">
+          <mat-icon>dashboard</mat-icon>
+          Dashboard
+        </a>
+        <button mat-button type="button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      }
+
+      <button mat-button type="button" (click)="theme.toggle()">
+        <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        {{ theme.isDark() ? 'Light mode' : 'Dark mode' }}
+      </button>
+
+      <a mat-button routerLink="/taberna/cart">
+        <mat-icon>shopping_basket</mat-icon>
+        Cart ({{ cartQuantity }})
+      </a>
+
+      <span class="nav-divider" aria-hidden="true"></span>
+
+      <button
+        mat-icon-button
+        type="button"
+        class="nav-icon-btn"
+        aria-label="Search"
+        (click)="openSearchDialog()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </nav>
+  } @else {
+    <button mat-icon-button type="button" aria-label="Open menu" [matMenuTriggerFor]="mobileMenu">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #mobileMenu="matMenu" class="nav-dropdown">
+      <button mat-menu-item type="button" [matMenuTriggerFor]="mobileAppsMenu">
+        <mat-icon>grid_view</mat-icon>
+        Apps Manager
+      </button>
+      <mat-menu #mobileAppsMenu="matMenu">
+        <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
+          <mat-icon>public</mat-icon>
+          All Apps
+        </a>
+        <a mat-menu-item routerLink="/">
+          <mat-icon>view_module</mat-icon>
+          Angular Apps
+        </a>
+      </mat-menu>
+
+      <button mat-menu-item type="button" [matMenuTriggerFor]="mobileCategoryMenu">
+        <mat-icon>category</mat-icon>
+        Category
+      </button>
+      <mat-menu #mobileCategoryMenu="matMenu">
+        @for (category of categories(); track category.get_absolute_url) {
+          <a mat-menu-item [routerLink]="category.get_absolute_url">
+            {{ category.name }}
+          </a>
+        }
+      </mat-menu>
+
+      <mat-divider />
+
+      @if (!auth.isAuthenticated()) {
+        <a mat-menu-item routerLink="/taberna/login">
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+        <a mat-menu-item routerLink="/taberna/signup">
+          <mat-icon>person_add</mat-icon>
+          Signup
+        </a>
+      } @else {
+        <a mat-menu-item routerLink="/taberna/dashboard">
+          <mat-icon>dashboard</mat-icon>
+          Dashboard
+        </a>
+        <button mat-menu-item type="button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      }
+
+      <button mat-menu-item type="button" (click)="theme.toggle()">
+        <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        {{ theme.isDark() ? 'Light mode' : 'Dark mode' }}
+      </button>
+
+      <a mat-menu-item routerLink="/taberna/cart">
+        <mat-icon>shopping_basket</mat-icon>
+        Cart ({{ cartQuantity }})
+      </a>
+
+      <button mat-menu-item type="button" (click)="openSearchDialog()">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+    </mat-menu>
+  }
+</mat-toolbar>

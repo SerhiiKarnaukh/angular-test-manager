@@ -1,0 +1,90 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<section class="product-detail">
+  @if (productDetail().product.name; as productName) {
+    <mat-card class="detail-card">
+      <div class="detail-layout">
+        <div class="gallery">
+          @if (galleryImages().length; as imageCount) {
+            <img
+              class="gallery-image"
+              [src]="galleryImages()[activeImageIndex()]"
+              [alt]="productName"
+            />
+            @if (imageCount > 1) {
+              <div class="gallery-controls">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Previous image"
+                  (click)="showPreviousImage()"
+                >
+                  <mat-icon>chevron_left</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Next image"
+                  (click)="showNextImage()"
+                >
+                  <mat-icon>chevron_right</mat-icon>
+                </button>
+              </div>
+            }
+          }
+        </div>
+
+        <div class="product-info">
+          <h1>{{ productName }}</h1>
+          <p class="price">${{ productDetail().product.price }}</p>
+          <p class="description">{{ productDetail().product.description }}</p>
+
+          <div class="variation-fields">
+            <div class="variation-field">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Color</mat-label>
+                <mat-select
+                  [value]="selectedColor()"
+                  [compareWith]="compareVariations"
+                  (valueChange)="selectedColor.set($event)"
+                >
+                  @for (color of productDetail().variations.colors; track color.variation_value) {
+                    <mat-option [value]="color">{{ color.variation_value }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              @if (colorError()) {
+                <p class="field-error">{{ colorError() }}</p>
+              }
+            </div>
+
+            <div class="variation-field">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Size</mat-label>
+                <mat-select
+                  [value]="selectedSize()"
+                  [compareWith]="compareVariations"
+                  (valueChange)="selectedSize.set($event)"
+                >
+                  @for (size of productDetail().variations.sizes; track size.variation_value) {
+                    <mat-option [value]="size">{{ size.variation_value }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              @if (sizeError()) {
+                <p class="field-error">{{ sizeError() }}</p>
+              }
+            </div>
+          </div>
+
+          <button mat-flat-button color="primary" type="button" (click)="addToCart()">
+            <mat-icon>shopping_basket</mat-icon>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  }
+</section>

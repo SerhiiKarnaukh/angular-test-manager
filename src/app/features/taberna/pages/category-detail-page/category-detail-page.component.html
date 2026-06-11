@@ -1,0 +1,10 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<section class="category-section">
+  @if (category(); as currentCategory) {
+    <h2>{{ currentCategory.name }}</h2>
+    <app-products-grid [products]="currentCategory.products" />
+  }
+</section>

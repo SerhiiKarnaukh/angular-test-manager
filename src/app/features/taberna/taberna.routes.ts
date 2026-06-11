@@ -4,6 +4,10 @@ import { authGuard } from '@core/auth/auth.guard';
 import { StubPageComponent } from '@shared/pages/stub-page/stub-page.component';
 
 import { MainTabernaLayoutComponent } from './layouts/main-taberna-layout/main-taberna-layout.component';
+import { CategoryDetailPageComponent } from './pages/category-detail-page/category-detail-page.component';
+import { ProductDetailPageComponent } from './pages/product-detail-page/product-detail-page.component';
+import { ProductHomePageComponent } from './pages/product-home-page/product-home-page.component';
+import { TabernaSearchPageComponent } from './pages/taberna-search-page/taberna-search-page.component';
 import { TabernaLoginPageComponent } from './profiles/pages/taberna-login-page/taberna-login-page.component';
 import { TabernaSignupPageComponent } from './profiles/pages/taberna-signup-page/taberna-signup-page.component';
 
@@ -14,8 +18,7 @@ export const TABERNA_ROUTES: Routes = [
     children: [
       {
         path: 'taberna',
-        component: StubPageComponent,
-        data: { pageTitle: 'Taberna Home' },
+        component: ProductHomePageComponent,
       },
       {
         path: 'taberna/signup',
@@ -33,18 +36,15 @@ export const TABERNA_ROUTES: Routes = [
       },
       {
         path: 'taberna-store/category/:category_slug/:product_slug',
-        component: StubPageComponent,
-        data: { pageTitle: 'Product Detail' },
+        component: ProductDetailPageComponent,
       },
       {
         path: 'taberna-store/category/:category_slug',
-        component: StubPageComponent,
-        data: { pageTitle: 'Category Detail' },
+        component: CategoryDetailPageComponent,
       },
       {
         path: 'taberna/search',
-        component: StubPageComponent,
-        data: { pageTitle: 'Taberna Search' },
+        component: TabernaSearchPageComponent,
       },
       {
         path: 'taberna/cart',
