@@ -1,5 +1,7 @@
 @use '@angular/material' as mat;
 
+$app-button-shape: 4px;
+
 html {
   height: 100%;
   @include mat.theme(
@@ -10,6 +12,21 @@ html {
       ),
       typography: Roboto,
       density: 0,
+    )
+  );
+
+  @include mat.button-overrides(
+    (
+      filled-container-shape: $app-button-shape,
+      protected-container-shape: $app-button-shape,
+      outlined-container-shape: $app-button-shape,
+      text-container-shape: $app-button-shape,
+    )
+  );
+
+  @include mat.icon-button-overrides(
+    (
+      container-shape: $app-button-shape,
     )
   );
 }
@@ -42,4 +59,8 @@ app-root {
 
 .app-message-warning {
   --mat-snack-bar-button-color: #fff;
+}
+
+.apps-manager-search-dialog .mat-mdc-dialog-surface {
+  border-radius: 8px;
 }

@@ -529,6 +529,16 @@ Full mapping table: Section 8.1.
 | `v-skeleton-loader` | `mat-progress-bar` or placeholder `mat-card` |
 | Theme toggle | Material light/dark via `ThemeService` + `color-scheme` in `styles.scss` |
 
+### 8.1.1 Global button shape (mandatory)
+
+All Material buttons use **4px** corner radius — set once in `src/styles.scss` (`mat.button-overrides`, `mat.icon-button-overrides`). No pill buttons (`999px` radius) in features or layouts.
+
+| Context | Pattern |
+|---------|---------|
+| Dialog secondary | `mat-stroked-button` |
+| Dialog primary | `mat-flat-button color="primary"` |
+| Toolbar / links | `mat-button` or `mat-icon-button` |
+
 ### 8.2 Shared Auth Forms
 
 Port `AuthLoginForm` and `AuthSignupForm` from `src/shared/auth/components/` as reusable Angular components with Reactive Forms validators matching Vuelidate rules.

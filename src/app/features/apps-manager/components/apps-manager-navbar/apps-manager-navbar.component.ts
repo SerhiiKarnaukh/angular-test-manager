@@ -43,7 +43,12 @@ export class AppsManagerNavbarComponent {
   protected readonly mobileMenuOpen = signal(false);
 
   protected openSearchDialog(): void {
-    this.dialog.open(AppsManagerSearchDialogComponent, { width: '400px' });
+    this.dialog.open(AppsManagerSearchDialogComponent, {
+      width: '400px',
+      maxWidth: '95vw',
+      panelClass: 'apps-manager-search-dialog',
+      autoFocus: 'first-toggler',
+    });
   }
 
   protected closeMobileMenu(): void {

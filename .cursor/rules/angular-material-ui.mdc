@@ -14,4 +14,10 @@ When porting a Vue screen:
 3. Use **default Material styling** — no copying Vuetify colors, SCSS, or pixel-perfect layout.
 4. Avoid feature-level `.scss` unless a Material component cannot express the layout.
 
+## Buttons (global)
+
+- **Shape:** `4px` border radius for all buttons — configured in `src/styles.scss` via `mat.button-overrides` / `mat.icon-button-overrides`. **Never** use pill shapes (`border-radius: 999px`) or extra-rounded custom button classes.
+- **Dialog actions:** secondary = `mat-stroked-button`, primary = `mat-flat-button color="primary"` — same height family, different visual weight (not both flat, not text-only Cancel with tiny hover target).
+- **Do not** override per-component button radius unless Material tokens cannot cover the case.
+
 Full mapping: `docs/angular-frontend-development-plan.md` Section 8.

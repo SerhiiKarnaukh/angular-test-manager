@@ -11,7 +11,7 @@
 
   @if (!isHandset()) {
     <nav class="nav-actions">
-      <button mat-button [matMenuTriggerFor]="appsMenu" type="button" class="nav-pill">
+      <button mat-button [matMenuTriggerFor]="appsMenu" type="button">
         <mat-icon>grid_view</mat-icon>
         Apps Manager
       </button>
@@ -28,7 +28,6 @@
 
       <a
         mat-button
-        class="nav-pill"
         href="https://docs.google.com/document/d/11DNF9pFl0wQLNXac779DO6axLG67nMGIBC_bPTPulRQ/edit?usp=share_link"
         target="_blank"
         rel="noopener"
@@ -36,13 +35,12 @@
         <mat-icon>description</mat-icon>
         CV
       </a>
-      <a mat-button class="nav-pill" href="https://github.com/SerhiiKarnaukh" target="_blank" rel="noopener">
+      <a mat-button href="https://github.com/SerhiiKarnaukh" target="_blank" rel="noopener">
         <mat-icon>code</mat-icon>
         GitHub
       </a>
       <a
         mat-button
-        class="nav-pill"
         href="https://www.linkedin.com/in/serhiikarnaukh"
         target="_blank"
         rel="noopener"

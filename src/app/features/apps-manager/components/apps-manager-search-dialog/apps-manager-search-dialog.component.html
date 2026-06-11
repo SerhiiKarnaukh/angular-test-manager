@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Search</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" id="apps-manager-search-form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-field">
+      <mat-label>Search</mat-label>
+      <input matInput formControlName="query" name="query" autocomplete="off" autofocus />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" (click)="close()">Cancel</button>
+  <button mat-flat-button color="primary" type="submit" form="apps-manager-search-form">
+    Search
+  </button>
+</mat-dialog-actions>

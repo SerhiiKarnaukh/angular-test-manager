@@ -24,23 +24,8 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatButtonModule,
   ],
-  template: `
-    <h2 mat-dialog-title>Search</h2>
-
-    <mat-dialog-content>
-      <form [formGroup]="form">
-        <mat-form-field>
-          <mat-label>Search</mat-label>
-          <input matInput formControlName="query" name="query" />
-        </mat-form-field>
-      </form>
-    </mat-dialog-content>
-
-    <mat-dialog-actions align="end">
-      <button mat-button type="button" (click)="close()">Cancel</button>
-      <button mat-flat-button color="primary" type="button" (click)="submit()">Search</button>
-    </mat-dialog-actions>
-  `,
+  templateUrl: './apps-manager-search-dialog.component.html',
+  styleUrl: './apps-manager-search-dialog.component.scss',
 })
 export class AppsManagerSearchDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<AppsManagerSearchDialogComponent>);
@@ -52,11 +37,16 @@ export class AppsManagerSearchDialogComponent {
   });
 
   submit(): void {
+    this.form.markAllAsTouched();
     if (this.form.invalid) {
       return;
     }
 
-    const query = this.form.controls.query.value;
+    const query = this.form.controls.query.value.trim();
+    if (!query) {
+      return;
+    }
+
     this.dialogRef.close();
     void this.router.navigate(['/apps_manager/search'], { queryParams: { query } });
   }

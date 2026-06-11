@@ -79,6 +79,8 @@ When implementing a screen, open the matching Vue view and map each Vuetify elem
 
 Do **not** copy Vuetify CSS, theme colors, or custom SCSS to mimic the Vue look. Behaviour and layout structure come from Vue; components and styling come from Material defaults.
 
+**Buttons:** global **4px** corner radius (`styles.scss`). Dialogs: `mat-stroked-button` (Cancel) + `mat-flat-button` (primary). No pill-shaped buttons.
+
 ## Firebase Hosting
 
 SPA rewrites are configured in `firebase.json`. Deploy workflow will be added in Phase 12.
