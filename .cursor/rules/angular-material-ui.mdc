@@ -20,4 +20,9 @@ When porting a Vue screen:
 - **Dialog actions:** secondary = `mat-stroked-button`, primary = `mat-flat-button color="primary"` — same height family, different visual weight (not both flat, not text-only Cancel with tiny hover target).
 - **Do not** override per-component button radius unless Material tokens cannot cover the case.
 
+## Cards & grids
+
+- **Cards:** `mat-card` with `mat.card-overrides` shape **8px** in `styles.scss`. Image `height="200"` + title + `mat-divider` + `mat-card-actions` — no `height: 100%` stretch.
+- **Grids:** CSS `display: grid` with `repeat(3, 1fr)` (responsive 1/2/3). **Do not** use `mat-grid-list` with fixed `rowHeight` for app cards — it creates empty vertical gaps.
+
 Full mapping: `docs/angular-frontend-development-plan.md` Section 8.

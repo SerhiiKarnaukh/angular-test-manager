@@ -29,6 +29,14 @@ html {
       container-shape: $app-button-shape,
     )
   );
+
+  @include mat.card-overrides(
+    (
+      elevated-container-shape: 8px,
+      outlined-container-shape: 8px,
+      filled-container-shape: 8px,
+    )
+  );
 }
 
 body {

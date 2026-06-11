@@ -1,9 +1,22 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { fromEvent } from 'rxjs';
 
-import { AppsManagerStore } from '@features/apps-manager/data-access/apps-manager.store';
 import { AppsGridComponent } from '@features/apps-manager/components/apps-grid/apps-grid.component';
+import { AppsManagerStore } from '@features/apps-manager/data-access/apps-manager.store';
+
+const PARALLAX_FACTOR = 0.35;
 
 @Component({
   selector: 'app-home-page',
@@ -14,12 +27,42 @@ import { AppsGridComponent } from '@features/apps-manager/components/apps-grid/a
 export class HomePageComponent implements OnInit {
   private readonly store = inject(AppsManagerStore);
   private readonly title = inject(Title);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly elementRef = inject(ElementRef);
 
   protected readonly apps = this.store.apps;
   protected readonly isLoading = this.store.isLoading;
+  protected readonly parallaxOffset = signal(0);
 
   ngOnInit(): void {
     this.title.setTitle('Home | Angular Applications Manager');
     void this.store.loadApps();
+    this.initParallax();
+  }
+
+  private initParallax(): void {
+    if (!isPlatformBrowser(this.platformId) || this.prefersReducedMotion()) {
+      return;
+    }
+
+    fromEvent(window, 'scroll', { passive: true })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.updateParallax());
+
+    this.updateParallax();
+  }
+
+  private updateParallax(): void {
+    const hero = this.elementRef.nativeElement.querySelector('.hero-banner') as HTMLElement | null;
+    if (!hero) {
+      return;
+    }
+
+    this.parallaxOffset.set(hero.getBoundingClientRect().top * PARALLAX_FACTOR);
+  }
+
+  private prefersReducedMotion(): boolean {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 }

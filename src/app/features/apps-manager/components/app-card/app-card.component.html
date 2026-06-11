@@ -1,12 +1,21 @@
 <mat-card>
-  <img mat-card-image [src]="application().photo" [alt]="application().title" height="200" />
+  <img
+    mat-card-image
+    [src]="application().photo"
+    [alt]="application().title"
+    height="200"
+    width="100%"
+  />
   <mat-card-header>
     <mat-card-title>{{ application().title }}</mat-card-title>
   </mat-card-header>
-  <mat-card-actions align="end">
+  <mat-divider />
+  <div class="card-actions">
     <a mat-flat-button color="primary" [href]="application().url" target="_blank" rel="noopener">
       Description
     </a>
-    <a mat-button [href]="application().view_url" target="_blank" rel="noopener">View App</a>
-  </mat-card-actions>
+    <a mat-stroked-button [href]="application().view_url" target="_blank" rel="noopener">
+      View App
+    </a>
+  </div>
 </mat-card>

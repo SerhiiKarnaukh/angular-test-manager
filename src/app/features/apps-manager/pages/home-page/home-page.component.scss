@@ -1,24 +1,54 @@
 .hero-banner {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+
+  @media (min-width: 960px) {
+    min-height: 520px;
+  }
+}
+
+.hero-bg {
+  position: absolute;
+  top: -30%;
+  left: 0;
+  right: 0;
+  height: 160%;
+  background: url('/manager_bg.jpg') center / cover no-repeat;
+  will-change: transform;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 280px;
-  padding: 3rem 1rem 1rem;
-  background:
-    linear-gradient(rgba(9, 30, 62, 0.7), rgba(9, 30, 62, 0.7)),
-    url('/manager_bg.jpg') center / cover no-repeat;
+  min-height: inherit;
+  width: 100%;
+  padding: 4rem 1rem 2rem;
+  background: linear-gradient(rgba(9, 30, 62, 0.7), rgba(9, 30, 62, 0.7));
 
   h1 {
     margin: 0;
     color: #fff;
     font-weight: 300;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
     text-align: center;
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg {
+    transform: none !important;
+  }
+}
+
 .apps-section {
+  width: 100%;
   padding-top: 1rem;
+  box-sizing: border-box;
 
   h2 {
     text-align: center;

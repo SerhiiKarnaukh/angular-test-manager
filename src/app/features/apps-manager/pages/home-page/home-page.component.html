@@ -3,7 +3,13 @@
 }
 
 <section class="hero-banner">
-  <h1>Angular Applications Manager</h1>
+  <div
+    class="hero-bg"
+    [style.transform]="'translate3d(0, ' + parallaxOffset() + 'px, 0)'"
+  ></div>
+  <div class="hero-overlay">
+    <h1>Angular Applications Manager</h1>
+  </div>
 </section>
 
 <section class="apps-section">

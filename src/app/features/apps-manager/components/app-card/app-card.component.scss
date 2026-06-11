@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 16px;
+}

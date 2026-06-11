@@ -1,5 +1,7 @@
-<mat-toolbar>
-  <a mat-button [href]="remoteHost" target="_blank" rel="noopener">All Apps</a>
-  <a mat-button routerLink="/">Angular Apps</a>
-  <span>{{ year }} — Angular Apps Manager</span>
-</mat-toolbar>
+<footer class="apps-manager-footer">
+  <div class="footer-links">
+    <a mat-button [href]="remoteHost" target="_blank" rel="noopener">All Apps</a>
+    <a mat-button routerLink="/">Angular Apps</a>
+  </div>
+  <p class="footer-copy">{{ year }} — <strong>Angular Apps Manager</strong></p>
+</footer>

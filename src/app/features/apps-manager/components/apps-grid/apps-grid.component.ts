@@ -1,33 +1,47 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { map } from 'rxjs';
 
-import { VueApp } from '@features/apps-manager/data-access/vue-app.models';
 import { AppCardComponent } from '@features/apps-manager/components/app-card/app-card.component';
+import { VueApp } from '@features/apps-manager/data-access/vue-app.models';
 
 @Component({
   selector: 'app-apps-grid',
-  imports: [MatGridListModule, AppCardComponent],
+  imports: [AppCardComponent],
   template: `
-    <mat-grid-list [cols]="gridCols()" rowHeight="420px" gutterSize="16px">
+    <div
+      class="apps-grid"
+      [class.cols-1]="gridCols() === 1"
+      [class.cols-2]="gridCols() === 2"
+      [class.cols-3]="gridCols() === 3"
+    >
       @for (application of apps(); track application.id) {
-        <mat-grid-tile>
-          <app-app-card [application]="application" />
-        </mat-grid-tile>
+        <app-app-card [application]="application" />
       }
-    </mat-grid-list>
+    </div>
   `,
   styles: `
-    :host {
-      display: block;
-      padding: 0 16px 24px;
+    .apps-grid {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 3vw, 48px) 24px;
+      box-sizing: border-box;
     }
 
-    app-app-card {
-      width: calc(100% - 8px);
-      height: calc(100% - 8px);
+    .cols-1 {
+      grid-template-columns: 1fr;
+    }
+
+    .cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cols-3 {
+      grid-template-columns: repeat(3, 1fr);
     }
   `,
 })
