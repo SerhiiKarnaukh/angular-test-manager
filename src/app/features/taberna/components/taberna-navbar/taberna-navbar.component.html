@@ -62,7 +62,7 @@
 
       <a mat-button routerLink="/taberna/cart">
         <mat-icon>shopping_basket</mat-icon>
-        Cart ({{ cartQuantity }})
+        Cart ({{ cartQuantity() }})
       </a>
 
       <span class="nav-divider" aria-hidden="true"></span>
@@ -139,7 +139,7 @@
 
       <a mat-menu-item routerLink="/taberna/cart">
         <mat-icon>shopping_basket</mat-icon>
-        Cart ({{ cartQuantity }})
+        Cart ({{ cartQuantity() }})
       </a>
 
       <button mat-menu-item type="button" (click)="openSearchDialog()">

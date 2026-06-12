@@ -12,6 +12,7 @@ import { map } from 'rxjs';
 
 import { AuthService } from '@core/auth/auth.service';
 import { environment } from '@env/environment';
+import { TabernaCartStore } from '@features/taberna/cart/data-access/taberna-cart.store';
 import { TabernaProductStore } from '@features/taberna/data-access/taberna-product.store';
 import { ThemeService } from '@shared/services/theme.service';
 
@@ -33,16 +34,15 @@ import { TabernaSearchDialogComponent } from '../taberna-search-dialog/taberna-s
 export class TabernaNavbarComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly breakpointObserver = inject(BreakpointObserver);
-  private readonly store = inject(TabernaProductStore);
+  private readonly productStore = inject(TabernaProductStore);
+  private readonly cartStore = inject(TabernaCartStore);
   private readonly router = inject(Router);
 
   protected readonly auth = inject(AuthService);
   protected readonly theme = inject(ThemeService);
   protected readonly remoteHost = environment.remoteHost;
-  protected readonly categories = this.store.categories;
-
-  /** Cart quantity — wired in Phase 4 */
-  protected readonly cartQuantity = 0;
+  protected readonly categories = this.productStore.categories;
+  protected readonly cartQuantity = this.cartStore.cartQuantity;
 
   protected readonly isHandset = toSignal(
     this.breakpointObserver.observe(Breakpoints.Handset).pipe(map((state) => state.matches)),
@@ -50,7 +50,7 @@ export class TabernaNavbarComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    void this.store.loadCategories();
+    void this.productStore.loadCategories();
   }
 
   protected openSearchDialog(): void {
@@ -62,8 +62,9 @@ export class TabernaNavbarComponent implements OnInit {
     });
   }
 
-  protected logout(): void {
+  protected async logout(): Promise<void> {
     this.auth.logout();
-    void this.router.navigate(['/taberna/login']);
+    await this.cartStore.loadCart();
+    await this.router.navigate(['/taberna/login']);
   }
 }

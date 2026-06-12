@@ -57,16 +57,37 @@ app-root {
   min-height: 100%;
 }
 
-.app-message-error {
+.app-message-error.mat-mdc-snack-bar-container {
+  --mat-snack-bar-container-color: #d32f2f;
+  --mat-snack-bar-supporting-text-color: #fff;
   --mat-snack-bar-button-color: #fff;
+
+  .mat-mdc-snackbar-surface {
+    background-color: #d32f2f;
+    color: #fff;
+  }
 }
 
-.app-message-success {
+.app-message-success.mat-mdc-snack-bar-container {
+  --mat-snack-bar-container-color: #2e7d32;
+  --mat-snack-bar-supporting-text-color: #fff;
   --mat-snack-bar-button-color: #fff;
+
+  .mat-mdc-snackbar-surface {
+    background-color: #2e7d32;
+    color: #fff;
+  }
 }
 
-.app-message-warning {
+.app-message-warning.mat-mdc-snack-bar-container {
+  --mat-snack-bar-container-color: #ed6c02;
+  --mat-snack-bar-supporting-text-color: #fff;
   --mat-snack-bar-button-color: #fff;
+
+  .mat-mdc-snackbar-surface {
+    background-color: #ed6c02;
+    color: #fff;
+  }
 }
 
 .apps-manager-search-dialog .mat-mdc-dialog-surface,

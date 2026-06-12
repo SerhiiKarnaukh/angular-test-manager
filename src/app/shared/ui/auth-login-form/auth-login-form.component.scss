@@ -1,8 +1,26 @@
-.auth-card {
+:host {
+  display: block;
+  width: 100%;
   max-width: 400px;
-  margin: 0 auto;
+}
+
+.auth-card {
+  width: 100%;
+}
+
+mat-card-content {
+  padding-top: 12px;
 }
 
 .full-width {
   width: 100%;
+  margin-bottom: 12px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
 }

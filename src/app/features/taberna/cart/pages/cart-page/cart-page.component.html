@@ -1,0 +1,62 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<section class="cart-page">
+  <mat-card class="cart-card">
+    @if (hasItems()) {
+      <mat-card-header>
+        <mat-card-title>Cart Summary</mat-card-title>
+      </mat-card-header>
+
+      <div class="table-wrap">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of cart().cart_items; track item.id) {
+              <tr app-cart-item [item]="item"></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-divider">
+        <mat-divider />
+      </div>
+
+      <mat-card-content class="totals">
+        <div class="total-row">
+          <span>Total Price:</span>
+          <span>$ {{ cart().total }}</span>
+        </div>
+        <div class="total-row">
+          <span>Tax:</span>
+          <span>$ {{ cart().tax }}</span>
+        </div>
+        <div class="total-row grand-total">
+          <span>Total:</span>
+          <span>$ {{ cart().grand_total }}</span>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <a mat-flat-button color="primary" routerLink="/taberna/cart/checkout">
+          Proceed to checkout
+        </a>
+      </mat-card-actions>
+    } @else {
+      <mat-card-header>
+        <mat-card-title>You don't have any products in your cart...</mat-card-title>
+      </mat-card-header>
+    }
+  </mat-card>
+</section>

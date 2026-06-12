@@ -1,0 +1,42 @@
+.image-cell {
+  width: 96px;
+}
+
+.product-image {
+  width: 80px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.product-link {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.variations {
+  margin-top: 4px;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.875rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+.quantity-cell {
+  white-space: nowrap;
+}
+
+.quantity {
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
+  vertical-align: middle;
+}

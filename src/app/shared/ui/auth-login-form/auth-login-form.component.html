@@ -46,10 +46,11 @@
         }
       </mat-form-field>
 
-      <mat-card-actions align="end">
-        <a mat-flat-button color="accent" [routerLink]="signupPath()">Register</a>
+      <mat-divider />
+      <div class="form-actions">
+        <a mat-stroked-button [routerLink]="signupPath()">Register</a>
         <button mat-flat-button color="primary" type="submit">Login</button>
-      </mat-card-actions>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

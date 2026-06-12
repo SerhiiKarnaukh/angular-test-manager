@@ -7,6 +7,7 @@ import { MainTabernaLayoutComponent } from './layouts/main-taberna-layout/main-t
 import { CategoryDetailPageComponent } from './pages/category-detail-page/category-detail-page.component';
 import { ProductDetailPageComponent } from './pages/product-detail-page/product-detail-page.component';
 import { ProductHomePageComponent } from './pages/product-home-page/product-home-page.component';
+import { CartPageComponent } from './cart/pages/cart-page/cart-page.component';
 import { TabernaSearchPageComponent } from './pages/taberna-search-page/taberna-search-page.component';
 import { TabernaLoginPageComponent } from './profiles/pages/taberna-login-page/taberna-login-page.component';
 import { TabernaSignupPageComponent } from './profiles/pages/taberna-signup-page/taberna-signup-page.component';
@@ -48,8 +49,7 @@ export const TABERNA_ROUTES: Routes = [
       },
       {
         path: 'taberna/cart',
-        component: StubPageComponent,
-        data: { pageTitle: 'Taberna Cart' },
+        component: CartPageComponent,
       },
       {
         path: 'taberna/cart/checkout',

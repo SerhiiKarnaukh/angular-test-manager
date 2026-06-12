@@ -101,10 +101,11 @@
         }
       </mat-form-field>
 
-      <mat-card-actions align="end">
+      <mat-divider />
+      <div class="form-actions">
         <button mat-flat-button color="primary" type="submit">Submit</button>
-        <a mat-flat-button color="accent" [routerLink]="loginPath()">I have an account</a>
-      </mat-card-actions>
+        <a mat-stroked-button [routerLink]="loginPath()">I have an account</a>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

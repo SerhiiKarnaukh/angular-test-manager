@@ -6,16 +6,27 @@ import {
   AuthSignupFormComponent,
   AuthSignupFormValue,
 } from '@shared/ui/auth-signup-form/auth-signup-form.component';
+import { AuthPageShellComponent } from '@shared/ui/auth-page-shell/auth-page-shell.component';
 
 @Component({
   selector: 'app-taberna-signup-page',
-  imports: [AuthSignupFormComponent],
+  imports: [AuthPageShellComponent, AuthSignupFormComponent],
   template: `
-    <app-auth-signup-form
-      namePrefix="taberna"
-      loginPath="/taberna/login"
-      (submitted)="onSignup($event)"
-    />
+    <app-auth-page-shell>
+      <app-auth-signup-form
+        namePrefix="taberna"
+        loginPath="/taberna/login"
+        (submitted)="onSignup($event)"
+      />
+    </app-auth-page-shell>
+  `,
+  styles: `
+    :host {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      width: 100%;
+    }
   `,
 })
 export class TabernaSignupPageComponent {
