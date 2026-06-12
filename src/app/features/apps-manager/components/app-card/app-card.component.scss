@@ -3,6 +3,13 @@
   width: 100%;
 }
 
+.card-image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
 .card-actions {
   display: flex;
   justify-content: space-between;
