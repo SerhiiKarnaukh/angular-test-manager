@@ -1,3 +1,21 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.apps-toolbar {
+  --mat-toolbar-container-background-color: var(--am-nav-bg, #0c2340);
+  --mat-toolbar-container-text-color: var(--am-nav-fg, #fff);
+  height: var(--am-nav-height, 64px);
+
+  .mat-mdc-button-base {
+    --mat-button-text-label-text-color: var(--am-nav-fg, #fff);
+    --mat-button-text-state-layer-color: var(--am-nav-fg, #fff);
+    --mat-icon-button-icon-color: var(--am-nav-fg, #fff);
+  }
+}
+
 .navbar {
   position: sticky;
   top: 0;
@@ -12,12 +30,13 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: inherit;
+  color: var(--am-nav-fg, #fff);
   text-decoration: none;
   padding: 6px 10px 6px 4px;
   transition: background-color 0.2s ease;
 
   &:hover {
+    color: var(--am-nav-fg, #fff);
     background-color: rgba(255, 255, 255, 0.1);
   }
 }

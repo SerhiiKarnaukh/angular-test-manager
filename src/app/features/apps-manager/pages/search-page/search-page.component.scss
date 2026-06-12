@@ -4,7 +4,19 @@
   h2 {
     text-align: center;
     margin-bottom: 2rem;
-    font-weight: 400;
+    font-weight: 500;
+    color: var(--am-heading, #0c4a6e);
+    letter-spacing: 0.02em;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      margin: 12px auto 0;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--am-action, #1eb8d4), var(--am-accent, #d94fad));
+    }
   }
 }
 

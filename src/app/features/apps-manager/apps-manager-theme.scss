@@ -1,0 +1,83 @@
+// Apps Manager — palette inspired by manager_bg.jpg (navy, cyan glow, magenta accents)
+
+app-main-apps-manager-layout {
+  --am-nav-height: 64px;
+  --am-nav-bg: #0c2340;
+  --am-nav-fg: #ffffff;
+  --am-page-bg: #e8f1f6;
+  --am-footer-bg: #f2f7fa;
+  --am-footer-border: #c5d6e3;
+  --am-footer-text: #2a4055;
+  --am-heading: #0c4a6e;
+  --am-action: #1eb8d4;
+  --am-action-on: #ffffff;
+  --am-action-outline: #179bb3;
+  --am-accent: #d94fad;
+  --am-link: #1565a8;
+
+  --mat-sys-primary: var(--am-action);
+  --mat-sys-on-primary: var(--am-action-on);
+  --mat-sys-primary-container: #b8ecf4;
+  --mat-sys-on-primary-container: #0c2340;
+
+  .apps-manager-main {
+    background-color: var(--am-page-bg);
+  }
+
+  .mat-mdc-button:not(:disabled),
+  a.mat-mdc-button:not(:disabled) {
+    --mat-button-text-label-text-color: var(--am-action);
+    --mat-button-text-state-layer-color: var(--am-action);
+  }
+
+  .mat-mdc-unelevated-button.mat-primary,
+  a.mat-mdc-unelevated-button.mat-primary {
+    --mat-button-filled-container-color: var(--am-action);
+    --mat-button-filled-label-text-color: var(--am-action-on);
+    --mat-button-filled-state-layer-color: var(--am-action-on);
+  }
+
+  .mat-mdc-outlined-button:not(:disabled),
+  a.mat-mdc-outlined-button:not(:disabled) {
+    --mat-button-outlined-label-text-color: var(--am-action-outline);
+    --mat-button-outlined-outline-color: var(--am-action);
+    --mat-button-outlined-state-layer-color: var(--am-action);
+  }
+
+  .mat-mdc-form-field {
+    --mat-form-field-focus-select-arrow-color: var(--am-action);
+    --mat-form-field-focus-label-text-color: var(--am-action);
+    --mat-form-field-outlined-focus-outline-color: var(--am-action);
+    --mat-form-field-outlined-focus-label-text-color: var(--am-action);
+  }
+
+  .mat-mdc-progress-spinner,
+  mat-progress-bar {
+    --mat-progress-spinner-active-indicator-color: var(--am-action);
+    --mat-progress-bar-active-indicator-color: var(--am-action);
+  }
+
+  a:not([class*='mat-']):not(.brand) {
+    color: var(--am-link);
+  }
+
+  a:not([class*='mat-']):not(.brand):hover {
+    color: var(--am-action);
+  }
+}
+
+body.dark-mode app-main-apps-manager-layout {
+  --am-nav-bg: #070f1c;
+  --am-page-bg: #0a1525;
+  --am-footer-bg: #070f1c;
+  --am-footer-border: #1a2d42;
+  --am-footer-text: #b8c9d9;
+  --am-heading: #7dd3e8;
+  --am-action: #3dd5e8;
+  --am-action-outline: #5ee0f0;
+  --am-accent: #e87ec4;
+  --am-link: #7dd3e8;
+
+  --mat-sys-primary-container: #123347;
+  --mat-sys-on-primary-container: #b8ecf4;
+}

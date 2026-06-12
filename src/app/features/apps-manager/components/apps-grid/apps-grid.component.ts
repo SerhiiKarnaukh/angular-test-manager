@@ -24,12 +24,13 @@ import { VueApp } from '@features/apps-manager/data-access/vue-app.models';
   styles: `
     .apps-grid {
       display: grid;
-      gap: 16px;
+      gap: 20px;
       width: 100%;
       max-width: 1600px;
       margin: 0 auto;
-      padding: 0 clamp(16px, 3vw, 48px) 24px;
+      padding: 0 clamp(16px, 3vw, 48px) 32px;
       box-sizing: border-box;
+      align-items: start;
     }
 
     .cols-1 {
