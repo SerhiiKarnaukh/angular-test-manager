@@ -69,8 +69,7 @@ test-applications-manager-angular/
 ├── firebase.json
 ├── .github/workflows/firebase-hosting-merge.yml
 ├── .env.example
-├── Dockerfile
-├── docker-compose.yml
+├── .nvmrc
 ├── Makefile
 ├── README.md
 ├── docs/
@@ -261,6 +260,24 @@ Replace Vue's dynamic `<component :is="layoutComponent">` with nested routes:
 
 Each `Main*LayoutComponent` template: navbar + `<router-outlet>` + footer + global `AppMessageComponent`.
 
+### 2.4 Route registration order (critical)
+
+In `app.routes.ts`, **Apps Manager routes must be registered first**.
+
+Several feature modules use `path: ''` with a layout component. Angular matches routes in declaration order. If Taberna/Social/AI Lab are listed before Apps Manager, `/` resolves to the wrong layout (empty Taberna shell instead of the portfolio home page).
+
+**Required order:**
+
+```typescript
+export const routes: Routes = [
+  ...APPS_MANAGER_ROUTES,        // first — owns `/` and `/apps_manager/*`
+  ...TABERNA_ROUTES,
+  ...SOCIAL_ROUTES,
+  ...AI_LAB_ROUTES,
+  ...APPS_MANAGER_NOT_FOUND_ROUTE, // catch-all last within Apps Manager block
+];
+```
+
 ---
 
 ## 3. State Management
@@ -349,8 +366,10 @@ Pure HTTP services in `data-access/*.api.service.ts` — no components, no store
 
 | Method | Endpoint | Service method |
 |--------|----------|----------------|
-| GET | `/api/v1/vue-apps/` | `fetchApps()` |
-| POST | `/api/v1/vue-apps/search/` | `searchApps(query)` |
+| GET | `/api/v1/angular-apps/` | `fetchApps()` |
+| POST | `/api/v1/angular-apps/search/` | `searchApps(query)` |
+
+> **Note:** The Vue reference app calls `/api/v1/vue-apps/`. This Angular app uses `/api/v1/angular-apps/` with the **same response shape**.
 
 ### 5.2 Taberna — Products
 
@@ -498,7 +517,7 @@ Same dual-mode behaviour as Vue (`environment.stripeActionType`):
 
 | Rule | Meaning |
 |------|---------|
-| **Component-for-component** | Vuetify button → `mat-button`; Vuetify card → `mat-card`; Vuetify grid → Material layout (`mat-grid-list`, flex, or CDK) — same role, Material API |
+| **Component-for-component** | Vuetify button → `mat-button`; Vuetify card → `mat-card`; Vuetify grid → **CSS `display: grid`** or flex (not `mat-grid-list` for card grids — see §8.1.2) |
 | **No Vuetify visual clone** | Do not hard-code Vuetify colors (`#ff4800`, `manager` theme bar, parallax overlays, etc.) to “match pixels”; rely on Material theme |
 | **Minimal custom CSS** | Prefer zero feature-level `.scss`; global theme lives in `src/styles.scss` only |
 | **Reference** | Vue file = **behaviour and structure**; Angular file = **Material components** that fulfil the same UX |
@@ -515,7 +534,7 @@ Full mapping table: Section 8.1.
 | `v-app-bar` / `v-navigation-drawer` | `mat-toolbar` + `mat-sidenav` |
 | `v-btn`, `v-icon` | `mat-button` / `mat-icon-button`, `mat-icon` |
 | `v-card`, `v-card-title`, `v-card-actions` | `mat-card`, `mat-card-header`, `mat-card-actions` |
-| `v-container`, `v-row`, `v-col` | `mat-grid-list` / flex layout / `@angular/cdk/layout` (same layout role) |
+| `v-container`, `v-row`, `v-col` | CSS grid / flex layout (card grids: §8.1.2; avoid `mat-grid-list` with fixed `rowHeight`) |
 | `v-img` | `img` with `mat-card-image` or `mat-card` media slot |
 | `v-parallax` | `mat-card` + `mat-card-image` (or static hero image — no custom parallax CSS) |
 | `v-dialog` | `MatDialog` + `mat-dialog-title` / `mat-dialog-content` / `mat-dialog-actions` |
@@ -535,19 +554,123 @@ All Material buttons use **4px** corner radius — set once in `src/styles.scss`
 
 | Context | Pattern |
 |---------|---------|
-| Dialog secondary | `mat-stroked-button` |
-| Dialog primary | `mat-flat-button color="primary"` |
+| Dialog / form secondary | `mat-stroked-button` |
+| Dialog / form primary | `mat-flat-button color="primary"` |
 | Toolbar / links | `mat-button` or `mat-icon-button` |
+
+**Do not** use two `mat-flat-button` with `accent` + `primary` for paired actions — in Material 22 they look almost identical. Use **stroked + flat** with `justify-content: space-between` and `gap: 12px` (Register left, Login/Submit right).
+
+### 8.1.2 Product & app cards (mandatory)
+
+| Rule | Implementation |
+|------|----------------|
+| **Images** | `aspect-ratio: 3 / 2` (Vue `v-img` 1.5) + `object-fit: cover` + `width: 100%`. **Never** `height="200" width="100%"` without `object-fit` — images stretch. |
+| **Equal height in grid** | Grid item `:host { height: 100% }`, card `display: flex; flex-direction: column; height: 100%`, actions `margin-top: auto`. |
+| **Description truncation** | Taberna product cards: title `line-clamp: 1`, description `line-clamp: 2` with ellipsis. |
+| **Card actions** | Prefer `div.card-actions` with `justify-content: space-between` — `mat-card-actions` can break spacing. |
+| **Grids** | CSS `display: grid` responsive 1/2/3 cols, `max-width: 1600px`. **No** `mat-grid-list` with fixed `rowHeight`. |
+
+### 8.1.3 Layout shells & vertical centering (mandatory)
+
+| Screen type | Pattern |
+|-------------|---------|
+| **Feature layouts** (Taberna, Apps Manager) | `.layout { min-height: 100vh; display: flex; flex-direction: column }`, `main { flex: 1; display: flex; flex-direction: column }`, footer at bottom via flex (not stuck under short content). |
+| **Auth / status pages** (login, signup, order success/failed) | Wrap in `AuthPageShellComponent` — centers content vertically and horizontally. Page `:host { flex: 1; display: flex; flex-direction: column; width: 100% }`. |
+| **Product detail** | Same centering as auth: flex column on `:host`, `.product-detail { flex: 1; align-items: center; justify-content: center }`, card `max-width` on inner element. |
+| **Auth form width** | Set `max-width` on **`:host`** of the form component (`400px` login, `700px` signup), **not** `display: flex` on the `<form>` — flex on the form shrinks the card to content width. |
+| **Field spacing** | `margin-bottom: 12px` on fields (or small `gap` on a wrapper **around** fields only). Extra `padding-top: 12px` on `mat-card-content` below the title. |
+
+Reference: `src/app/shared/ui/auth-page-shell/`, `main-taberna-layout.component.ts`.
+
+### 8.1.4 Tables, dividers & card padding (mandatory)
+
+| Rule | Implementation |
+|------|----------------|
+| **Cart / order tables** | Horizontal padding `24px` on table wrapper; `mat-card-actions` padding `8px 24px 24px`. |
+| **Equal divider width** | If table content is inset (`padding: 0 24px`), wrap `mat-divider` in the same inset (`.section-divider { padding: 0 24px }`). Remove duplicate `border-bottom` on last table row to avoid two lines of different widths. |
+| **Table row components** | Use `selector: 'tr[app-*]'` with `<td>` children only — do not wrap `<tr>` in a component host that breaks `<tbody>`. |
+
+### 8.1.5 Snackbars & alerts (mandatory)
+
+`AlertService` → `AppMessageComponent` → `MatSnackBar` with `panelClass: app-message-{error|success|warning}`.
+
+Global styles in `src/styles.scss` must set **container background**, not only button color:
+
+```scss
+.app-message-error.mat-mdc-snack-bar-container { /* red background + white text */ }
+.app-message-success.mat-mdc-snack-bar-container { /* green */ }
+.app-message-warning.mat-mdc-snack-bar-container { /* orange */ }
+```
+
+Without container colors, snackbars default to dark/neutral for all types.
+
+### 8.1.6 Dialogs & accessibility
+
+| Rule | Implementation |
+|------|----------------|
+| **Search dialogs** | `panelClass: '*-search-dialog'`, `border-radius: 8px` on `.mat-mdc-dialog-surface` in `styles.scss`. |
+| **Focus** | **No** `autofocus` HTML attribute in templates (`@angular-eslint/template/no-autofocus`). Use `MatDialog.open({ autoFocus: 'first-toggler' })` instead. |
 
 ### 8.2 Shared Auth Forms
 
 Port `AuthLoginForm` and `AuthSignupForm` from `src/shared/auth/components/` as reusable Angular components with Reactive Forms validators matching Vuelidate rules.
 
+**Button row:** `mat-divider` then `div.form-actions` with stroked Register / flat Login (not `mat-card-actions` with two flat buttons).
+
 ### 8.3 Responsive & Theme
 
 - Light/dark toggle in each app's navbar (persist preference in `localStorage`)
-- Mobile: Material `mat-sidenav` where Vue used `v-navigation-drawer`
+- Mobile: `mat-menu` where Vue used `v-navigation-drawer` (Taberna navbar pattern)
 - Roboto + Material Icons (Material Design defaults — no Vuetify MDI dependency)
+
+### 8.4 Animations bootstrap
+
+**Do not** add `provideAnimationsAsync()` or `provideAnimations()` — deprecated since Angular 20.2 (removal planned v23). Angular Material MDC components use CSS transitions; app-specific motion uses `animate.enter` / `animate.leave` when needed.
+
+`app.config.ts` providers: **no** `@angular/platform-browser/animations` imports.
+
+### 8.5 Testing conventions (mandatory from Phase 6 onward)
+
+Every phase deliverable includes tests for **both** data layer **and** UI:
+
+| Layer | Minimum |
+|-------|---------|
+| `*.api.service.ts` | HTTP contract tests (`HttpTestingController`) |
+| `*.store.ts` | State mutation tests |
+| `*.component.ts` | `TestBed` create + primary render/behaviour tests (`.component.spec.ts`) |
+
+Component specs must cover: component creates, key user-visible text/states (empty, loading, populated), and critical interactions where applicable.
+
+Reference specs: `order-summary.component.spec.ts`, `dashboard-page.component.spec.ts`.
+
+### 8.6 Apps Manager UI patterns
+
+Established during Phase 2 — reuse for any Apps Manager changes:
+
+| Area | Rule |
+|------|------|
+| **Hero banner** (`/`) | Taller hero section; background image from `public/` (e.g. `bg-1.jpg`); **parallax** via `background-attachment: fixed` (or equivalent) + centered title overlay — not a single-column text stack. |
+| **Navbar** | No duplicate app title button in toolbar. Actions (`Search`, theme toggle, **All Apps** menu) aligned **right** (`flex: 1` spacer). **All Apps** `mat-menu` lists sub-apps (Taberna, Social, AI Lab, Angular Apps). Gap between icon and label on the menu trigger (`gap` on flex row). |
+| **Search dialog** | Same button pattern as §8.1.1: `mat-stroked-button` Cancel + `mat-flat-button` Search, `justify-content: space-between`. Dialog surface `border-radius: 8px` via `panelClass` in `styles.scss`. |
+| **Card grid** | `max-width: 1600px` centered — wide screens must not leave huge side margins with tiny cards. |
+| **Footer** | Three-column flex/grid: brand + links + social icons — match Vue structure, Material components only. |
+
+### 8.7 Angular templates & Material pitfalls
+
+| Issue | Rule |
+|-------|------|
+| **Signals in templates** | Call signal getters: `cartQuantity()` not `cartQuantity`. |
+| **`mat-card-subtitle` projection** | Do not wrap `mat-card-subtitle` in `@if` blocks that confuse content projection — use separate `@if` branches per card or omit subtitle when empty. |
+| **Deprecated APIs** | Before adding Angular/Material bootstrap providers, check current docs (Context7 / angular.dev). Example: `provideAnimationsAsync()` removed from `app.config.ts`. |
+| **ESLint** | `@angular-eslint/template/no-autofocus` — see §8.1.6. |
+
+### 8.8 Infrastructure (this repo)
+
+| Rule | Detail |
+|------|--------|
+| **No Docker** | Local dev: `npm start`. Production: **Firebase Hosting** (`firebase.json` → `dist/angular-test-manager/browser`). Do not re-add Dockerfile/docker-compose. |
+| **Node version** | `.nvmrc` must match CI (22.22.3+). Mismatch breaks GitHub Actions tests. |
+| **Static assets** | Images for heroes/backgrounds → `public/` (served at `/filename.jpg`). |
 
 ---
 
@@ -559,7 +682,7 @@ Port `AuthLoginForm` and `AuthSignupForm` from `src/shared/auth/components/` as 
 
 ### Phase 0: Repository Scaffolding & Tooling (Week 1)
 
-**Goal:** New Angular workspace, CI skeleton, Docker dev environment, environment config.
+**Goal:** New Angular workspace, CI skeleton, Firebase deploy config, environment variables.
 
 **Backend dependency:** None.
 
@@ -570,7 +693,7 @@ Port `AuthLoginForm` and `AuthSignupForm` from `src/shared/auth/components/` as 
 3. Set up path aliases (`@core`, `@shared`, `@features/*`)
 4. Create `environment.ts` / `.env.example` mirroring Vue variables
 5. Add ESLint, Prettier, Husky (optional)
-6. Copy/adapt `Dockerfile`, `docker-compose.yml`, `Makefile` from Vue repo
+6. Add `firebase.json` SPA rewrites; **no Docker** in this repo (Firebase Hosting deploy in Phase 12)
 7. Create GitHub Actions workflow skeleton (lint + test + build)
 8. Add `firebase.json` SPA rewrites
 9. Document local setup in `README.md`
@@ -637,8 +760,8 @@ Port `AuthLoginForm` and `AuthSignupForm` from `src/shared/auth/components/` as 
 
 | Endpoint | Purpose |
 |----------|---------|
-| `GET /api/v1/vue-apps/` | Home page card grid |
-| `POST /api/v1/vue-apps/search/` | Search page |
+| `GET /api/v1/angular-apps/` | Home page card grid |
+| `POST /api/v1/angular-apps/search/` | Search page |
 
 **Can start immediately:**
 
@@ -970,7 +1093,7 @@ gantt
 |--------|---------------------------|
 | Taberna catalog UI (Phase 3) + Social feed UI mock (Phase 7) | Phase 1 complete |
 | AI Lab PromptForm UI (Phase 10) | Phase 1 complete |
-| Docker/CI hardening | Phase 0 onward |
+| CI / Firebase deploy | Phase 0 onward (no Docker) |
 
 ---
 
@@ -981,8 +1104,10 @@ gantt
 ```bash
 npm run build
 npm run lint
-npm run test
+npm run test:run
 ```
+
+CI runs `lint`, `test`, and `build`. Fix ESLint issues before push (e.g. no `autofocus` in templates).
 
 ### Manual smoke (per sub-app)
 
@@ -1010,7 +1135,8 @@ npm run test
 | HTTP client | (a) HttpClient (b) Axios in Angular | **(a) HttpClient** — idiomatic, interceptor support built-in |
 | WebSocket | (a) Native WebSocket (b) RxJS webSocket | **(a) Native WebSocket** — direct port of Vue logic; wrap in service |
 | Stripe | (a) `@stripe/stripe-js` (b) ngx-stripe | **(a) `@stripe/stripe-js`** — same as Vue charge mode |
-| Test runner | (a) Jest (b) Karma/Jasmine (c) Vitest | **(a) Jest** with Angular preset (or Vitest if team prefers Vue parity) |
+| Test runner | (a) Jest (b) Karma/Jasmine (c) Vitest | **(c) Vitest** — `ng test` / `npm run test:run` |
+| Animations | (a) `provideAnimationsAsync` (b) None / CSS | **(b)** — legacy `@angular/animations` providers deprecated; Material works without them |
 | i18n | (a) `@angular/localize` now (b) Defer | **(b) Defer** — English only, same as Vue app today |
 | Route guards | (a) Functional guards (b) Class guards | **(a) Functional guards** — Angular 19 default style |
 

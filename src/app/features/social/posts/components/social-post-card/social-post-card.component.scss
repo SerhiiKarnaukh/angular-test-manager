@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-header {
+  align-items: center;
+}
+
+.post-menu-trigger {
+  margin-left: auto;
+}
+
+.post-body {
+  margin: 0 0 12px;
+  white-space: pre-wrap;
+}
+
+.post-image {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 8px;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 16px;
+}
+
+.private-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 14px;
+}
+
+mat-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+mat-card-title a:hover {
+  text-decoration: underline;
+}

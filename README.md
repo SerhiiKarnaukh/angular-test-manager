@@ -5,7 +5,7 @@ Feature-parity Angular rewrite of the [Vue Applications Manager](https://github.
 | Sub-app | Route prefix | Status |
 |---------|--------------|--------|
 | **Apps Manager** | `/`, `/apps_manager/*` | Phase 2 complete |
-| **Taberna eCommerce** | `/taberna`, `/taberna-store/*` | Phase 1 shell → Phase 3–6 |
+| **Taberna eCommerce** | `/taberna`, `/taberna-store/*` | Phase 3–6 complete (catalog, cart, checkout, dashboard) |
 | **Social Network** | `/social/*` | Phase 1 shell → Phase 7–9 |
 | **AI Lab** | `/ai-lab/*` | Phase 1 shell → Phase 10 |
 
@@ -72,14 +72,18 @@ When implementing a screen, open the matching Vue view and map each Vuetify elem
 |---------------|------------------|
 | `v-btn` | `mat-button` / `mat-flat-button` |
 | `v-card` | `mat-card` |
-| `v-row` / `v-col` | layout grid / flex (Material or CDK) |
+| `v-row` / `v-col` | CSS grid / flex |
 | `v-text-field` | `mat-form-field` + input |
 | `v-dialog` | `MatDialog` |
 | … | see full table in [development plan §8](docs/angular-frontend-development-plan.md#80-ui-foundation-mandatory) |
 
 Do **not** copy Vuetify CSS, theme colors, or custom SCSS to mimic the Vue look. Behaviour and layout structure come from Vue; components and styling come from Material defaults.
 
-**Buttons:** global **4px** corner radius (`styles.scss`). Dialogs: `mat-stroked-button` (Cancel) + `mat-flat-button` (primary). No pill-shaped buttons.
+**Porting conventions** (route order, cards, auth layout, snackbars, tests, Apps Manager patterns): [development plan §8](docs/angular-frontend-development-plan.md#80-ui-foundation-mandatory) (subsections 8.1.1–8.8).
+
+**Buttons:** global **4px** corner radius (`styles.scss`). Paired actions: `mat-stroked-button` + `mat-flat-button color="primary"`. No pill-shaped buttons.
+
+**Tests:** every new component needs a `.component.spec.ts`; API + store tests are mandatory.
 
 ## Firebase Hosting
 

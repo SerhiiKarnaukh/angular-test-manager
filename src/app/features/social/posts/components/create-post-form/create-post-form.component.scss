@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+.image-preview-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 24px 0;
+}
+
+.preview-image {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px 24px;
+}
+
+.form-actions mat-checkbox {
+  margin-left: auto;
+}
+
+mat-card-content {
+  padding-top: 12px;
+}
+
+mat-form-field {
+  margin-bottom: 12px;
+}

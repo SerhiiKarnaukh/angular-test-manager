@@ -1,0 +1,24 @@
+<app-social-page-layout>
+  <div main>
+    <mat-card class="trend-header-card">
+      <mat-card-content>
+        <h2>Trend: #{{ trendId() }}</h2>
+      </mat-card-content>
+    </mat-card>
+
+    @for (post of posts(); track post.id) {
+      <app-social-post-card [post]="post" />
+    }
+
+    @if (isLoading() || isPaginationLoading()) {
+      <div class="loading-row">
+        <mat-progress-spinner mode="indeterminate" diameter="40" />
+      </div>
+    }
+  </div>
+
+  <div sidebar>
+    <app-people-you-may-know />
+    <app-trends />
+  </div>
+</app-social-page-layout>

@@ -10,19 +10,76 @@ This project uses **Angular Material only** for UI. The Vue reference app uses V
 When porting a Vue screen:
 
 1. Read the Vue template for **structure and behaviour** (what the user can do).
-2. Replace each Vuetify tag with the **closest Material component** (button → `mat-button`, card → `mat-card`, grid → Material/CDK layout, dialog → `MatDialog`, etc.).
+2. Replace each Vuetify tag with the **closest Material component** (button → `mat-button`, card → `mat-card`, grid → CSS grid, dialog → `MatDialog`, etc.).
 3. Use **default Material styling** — no copying Vuetify colors, SCSS, or pixel-perfect layout.
 4. Avoid feature-level `.scss` unless a Material component cannot express the layout.
 
+Full conventions: `docs/angular-frontend-development-plan.md` §8.
+
+## Routing
+
+- **`APPS_MANAGER_ROUTES` must be first** in `app.routes.ts` — other apps use `path: ''` and will steal `/` if registered earlier.
+
 ## Buttons (global)
 
-- **Shape:** `4px` border radius for all buttons — configured in `src/styles.scss` via `mat.button-overrides` / `mat.icon-button-overrides`. **Never** use pill shapes (`border-radius: 999px`) or extra-rounded custom button classes.
-- **Dialog actions:** secondary = `mat-stroked-button`, primary = `mat-flat-button color="primary"` — same height family, different visual weight (not both flat, not text-only Cancel with tiny hover target).
-- **Do not** override per-component button radius unless Material tokens cannot cover the case.
+- **Shape:** `4px` border radius — `mat.button-overrides` / `mat.icon-button-overrides` in `src/styles.scss`. **Never** pill shapes (`999px`).
+- **Paired actions:** secondary = `mat-stroked-button`, primary = `mat-flat-button color="primary"`, row with `justify-content: space-between` + `gap: 12px`. **Never** two `mat-flat-button` (accent + primary look identical in Material 22).
+- **Dialog / auth forms:** same stroked + flat pattern; use `div.form-actions`, not two flat buttons in `mat-card-actions`.
 
 ## Cards & grids
 
-- **Cards:** `mat-card` with `mat.card-overrides` shape **8px** in `styles.scss`. Image `height="200"` + title + `mat-divider` + `mat-card-actions` — no `height: 100%` stretch.
-- **Grids:** CSS `display: grid` with `repeat(3, 1fr)` (responsive 1/2/3). **Do not** use `mat-grid-list` with fixed `rowHeight` for app cards — it creates empty vertical gaps.
+- **Card shape:** `mat.card-overrides` **8px** radius in `styles.scss`.
+- **Images:** `aspect-ratio: 3 / 2` + `object-fit: cover` + `width: 100%`. **Never** `height="200" width="100%"` without `object-fit` — images stretch.
+- **Equal height in grid:** `:host { height: 100% }`, card `display: flex; flex-direction: column; height: 100%`, actions `margin-top: auto`.
+- **Text truncation:** product cards — title `line-clamp: 1`, description `line-clamp: 2`.
+- **Card actions:** prefer `div.card-actions` with `justify-content: space-between` — `mat-card-actions` can break spacing.
+- **Grids:** CSS `display: grid` responsive 1/2/3 cols, `max-width: 1600px`. **No** `mat-grid-list` with fixed `rowHeight`.
 
-Full mapping: `docs/angular-frontend-development-plan.md` Section 8.
+## Layout shells
+
+- **Feature layouts:** `min-height: 100vh`, column flex; `main { flex: 1 }` so footer sits at bottom.
+- **Auth / status pages:** `AuthPageShellComponent` — vertical + horizontal center. Page `:host { flex: 1; width: 100% }`.
+- **Product detail:** same centering pattern as auth pages.
+- **Form width:** `max-width` on form component `:host`, **not** `display: flex` on `<form>` (shrinks card).
+- **Field spacing:** `margin-bottom: 12px` on fields; `padding-top: 12px` on `mat-card-content` below title.
+
+## Tables, dividers, cart
+
+- Table / card horizontal padding **24px**; `mat-card-actions` `8px 24px 24px`.
+- `mat-divider` in wrapper with same horizontal inset as table (`.section-divider { padding: 0 24px }`).
+- Table row components: `selector: 'tr[app-*]'` with `<td>` only — no host breaking `<tbody>`.
+
+## Snackbars
+
+- `panelClass: app-message-{error|success|warning}` with **container** background colors in `styles.scss` (not button color only).
+
+## Dialogs & a11y
+
+- Search dialogs: `panelClass` + `8px` radius on `.mat-mdc-dialog-surface` in `styles.scss`.
+- **No** HTML `autofocus` in templates — use `MatDialog.open({ autoFocus: 'first-toggler' })`.
+
+## Animations
+
+- **No** `provideAnimationsAsync()` / `provideAnimations()` in `app.config.ts` — deprecated; Material MDC uses CSS.
+
+## Apps Manager (Phase 2 patterns)
+
+- Hero: tall banner, `public/bg-*.jpg`, parallax (`background-attachment: fixed`), centered title.
+- Navbar: actions right; **All Apps** menu; no duplicate title button; icon+label gap on trigger.
+- Grid `max-width: 1600px`; footer three-column layout.
+
+## Angular templates
+
+- Signals in templates: `signal()` with parentheses.
+- `mat-card-subtitle`: avoid `@if` projection traps — split branches per card.
+- Check angular.dev / Context7 before adding deprecated providers (`provideAnimations*`).
+
+## Infrastructure
+
+- No Docker — `npm start` locally, Firebase Hosting for deploy.
+- Static images in `public/`.
+
+## Testing
+
+- Every new **component** needs `.component.spec.ts` (create + key states/behaviour).
+- API services and stores: HTTP + state tests mandatory.

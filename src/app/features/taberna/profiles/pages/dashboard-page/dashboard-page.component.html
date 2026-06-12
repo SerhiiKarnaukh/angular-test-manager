@@ -1,0 +1,19 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<section class="dashboard-page">
+  @if (!isLoading()) {
+    @if (hasOrders()) {
+      @for (order of orders(); track order.id) {
+        <app-order-summary [order]="order" />
+      }
+    } @else {
+      <mat-card class="empty-card">
+        <mat-card-header>
+          <mat-card-title>You don't have any orders...</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    }
+  }
+</section>

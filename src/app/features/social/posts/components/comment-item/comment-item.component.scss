@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  margin-bottom: 16px;
+  margin-left: 40px;
+}
+
+.comment-card mat-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.comment-card mat-card-title a:hover {
+  text-decoration: underline;
+}
+
+.comment-card p {
+  margin: 0;
+}

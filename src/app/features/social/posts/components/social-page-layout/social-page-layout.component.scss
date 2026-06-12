@@ -1,0 +1,24 @@
+.social-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .social-page {
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    padding: 24px;
+  }
+}
+
+.main-column {
+  min-width: 0;
+}
+
+.sidebar {
+  min-width: 0;
+}

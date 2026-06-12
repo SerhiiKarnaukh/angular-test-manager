@@ -1,0 +1,42 @@
+<mat-card class="create-post-card">
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>What are you thinking about?</mat-label>
+        <textarea matInput rows="4" formControlName="body"></textarea>
+      </mat-form-field>
+    </mat-card-content>
+
+    @if (postImages().length) {
+      <mat-divider />
+      <div class="image-preview-row">
+        @for (image of postImages(); track image.file.name) {
+          <img class="preview-image" [src]="image.url" alt="Selected attachment" />
+        }
+      </div>
+    }
+
+    <mat-divider />
+
+    <div class="form-actions">
+      <input
+        #fileInput
+        type="file"
+        class="hidden-file-input"
+        accept="image/png, image/jpeg"
+        multiple
+        (change)="onFilesSelected($event)"
+      />
+
+      <button mat-stroked-button type="button" (click)="openFilePicker()">Attach image</button>
+
+      <button mat-flat-button color="primary" type="submit" [disabled]="isSubmitting()">
+        Post
+      </button>
+
+      <mat-checkbox formControlName="isPrivate">
+        {{ form.controls.isPrivate.value ? "It's a private post" : 'Make it private' }}
+      </mat-checkbox>
+    </div>
+  </form>
+</mat-card>

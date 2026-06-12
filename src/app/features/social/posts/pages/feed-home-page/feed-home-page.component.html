@@ -1,0 +1,22 @@
+<app-social-page-layout>
+  <div main>
+    @if (isAuthenticated()) {
+      <app-create-post-form />
+    }
+
+    @for (post of posts(); track post.id) {
+      <app-social-post-card [post]="post" />
+    }
+
+    @if (isLoading() || isPaginationLoading()) {
+      <div class="loading-row">
+        <mat-progress-spinner mode="indeterminate" diameter="40" />
+      </div>
+    }
+  </div>
+
+  <div sidebar>
+    <app-people-you-may-know />
+    <app-trends />
+  </div>
+</app-social-page-layout>

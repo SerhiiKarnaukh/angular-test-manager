@@ -1,0 +1,12 @@
+.dashboard-page {
+  padding: 24px clamp(16px, 3vw, 48px) 48px;
+}
+
+.empty-card {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.empty-card mat-card-header {
+  padding: 24px;
+}

@@ -1,0 +1,78 @@
+.friends-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .friends-page {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 2fr) minmax(280px, 1fr);
+    padding: 24px;
+  }
+}
+
+.profile-card,
+.section-card {
+  margin-bottom: 24px;
+}
+
+.profile-card {
+  text-align: center;
+}
+
+.profile-avatar,
+.user-avatar {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+}
+
+.profile-name {
+  margin: 0 0 12px;
+}
+
+.profile-stats,
+.user-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.user-card {
+  text-align: center;
+}
+
+.user-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.request-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+mat-card-content {
+  padding-top: 12px;
+}

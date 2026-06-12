@@ -1,0 +1,35 @@
+:host {
+  display: block;
+}
+
+.trends-card {
+  margin-bottom: 24px;
+}
+
+.trend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
+}
+
+.trend-row:last-child {
+  border-bottom: none;
+}
+
+.trend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.trend-info span {
+  opacity: 0.7;
+}
+
+mat-card-content {
+  padding-top: 12px;
+}

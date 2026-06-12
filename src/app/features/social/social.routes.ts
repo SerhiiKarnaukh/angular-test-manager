@@ -4,6 +4,14 @@ import { authGuard } from '@core/auth/auth.guard';
 import { StubPageComponent } from '@shared/pages/stub-page/stub-page.component';
 
 import { MainSocialLayoutComponent } from './layouts/main-social-layout/main-social-layout.component';
+import { FeedHomePageComponent } from './posts/pages/feed-home-page/feed-home-page.component';
+import { PostDetailPageComponent } from './posts/pages/post-detail-page/post-detail-page.component';
+import { SocialSearchPageComponent } from './posts/pages/social-search-page/social-search-page.component';
+import { TrendPageComponent } from './posts/pages/trend-page/trend-page.component';
+import { EditPasswordPageComponent } from './profiles/pages/edit-password-page/edit-password-page.component';
+import { EditProfilePageComponent } from './profiles/pages/edit-profile-page/edit-profile-page.component';
+import { FriendsPageComponent } from './profiles/pages/friends-page/friends-page.component';
+import { ProfilePageComponent } from './profiles/pages/profile-page/profile-page.component';
 import { SocialLoginPageComponent } from './profiles/pages/social-login-page/social-login-page.component';
 import { SocialSignupPageComponent } from './profiles/pages/social-signup-page/social-signup-page.component';
 
@@ -14,30 +22,27 @@ export const SOCIAL_ROUTES: Routes = [
     children: [
       {
         path: 'social/home',
-        component: StubPageComponent,
-        data: { pageTitle: 'Social Feed' },
+        component: FeedHomePageComponent,
       },
       {
         path: 'social/profile/edit',
-        component: StubPageComponent,
+        component: EditProfilePageComponent,
         canActivate: [authGuard],
-        data: { pageTitle: 'Edit Profile', authJWT: true },
+        data: { authJWT: true },
       },
       {
         path: 'social/profile/:slug/friends',
-        component: StubPageComponent,
+        component: FriendsPageComponent,
         canActivate: [authGuard],
-        data: { pageTitle: 'Friends', authJWT: true },
+        data: { authJWT: true },
       },
       {
         path: 'social/profile/:slug',
-        component: StubPageComponent,
-        data: { pageTitle: 'Profile' },
+        component: ProfilePageComponent,
       },
       {
         path: 'social/trends/:id',
-        component: StubPageComponent,
-        data: { pageTitle: 'Trend' },
+        component: TrendPageComponent,
       },
       {
         path: 'social/chat',
@@ -53,8 +58,7 @@ export const SOCIAL_ROUTES: Routes = [
       },
       {
         path: 'social/search',
-        component: StubPageComponent,
-        data: { pageTitle: 'Social Search' },
+        component: SocialSearchPageComponent,
       },
       {
         path: 'social/signup',
@@ -66,14 +70,13 @@ export const SOCIAL_ROUTES: Routes = [
       },
       {
         path: 'social/edit/password',
-        component: StubPageComponent,
+        component: EditPasswordPageComponent,
         canActivate: [authGuard],
-        data: { pageTitle: 'Edit Password', authJWT: true },
+        data: { authJWT: true },
       },
       {
         path: 'social/:id',
-        component: StubPageComponent,
-        data: { pageTitle: 'Post Detail' },
+        component: PostDetailPageComponent,
       },
     ],
   },

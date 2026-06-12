@@ -1,0 +1,25 @@
+@if (suggestions().length) {
+  <mat-card class="suggestions-card">
+    <mat-card-header>
+      <mat-card-title>People you may know</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @for (user of suggestions(); track user.id) {
+        <div class="suggestion-row">
+          <img
+            class="suggestion-avatar"
+            [src]="user.avatar_url ?? defaultAvatar"
+            [alt]="user.full_name"
+          />
+          <p class="suggestion-name">
+            <strong>{{ user.full_name }}</strong>
+          </p>
+          <a mat-flat-button color="primary" [routerLink]="['/social/profile', user.slug]">
+            Show
+          </a>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+}

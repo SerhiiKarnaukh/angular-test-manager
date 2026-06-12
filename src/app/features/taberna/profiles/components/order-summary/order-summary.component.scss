@@ -1,0 +1,58 @@
+.order-summary-card {
+  max-width: 1000px;
+  margin: 0 auto 24px;
+}
+
+.order-summary-card mat-card-header {
+  padding: 16px 24px 8px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  padding: 0 24px 24px;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 12px 8px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  th {
+    font-weight: 500;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.product-image {
+  max-height: 75px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.product-link {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.variations {
+  margin-top: 4px;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.875rem;
+
+  p {
+    margin: 0;
+  }
+}

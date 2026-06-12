@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { authGuard } from '@core/auth/auth.guard';
-import { StubPageComponent } from '@shared/pages/stub-page/stub-page.component';
 
 import { MainTabernaLayoutComponent } from './layouts/main-taberna-layout/main-taberna-layout.component';
 import { CategoryDetailPageComponent } from './pages/category-detail-page/category-detail-page.component';
@@ -12,6 +11,7 @@ import { CheckoutPageComponent } from './orders/pages/checkout-page/checkout-pag
 import { OrderFailedPageComponent } from './orders/pages/order-failed-page/order-failed-page.component';
 import { OrderSuccessPageComponent } from './orders/pages/order-success-page/order-success-page.component';
 import { TabernaSearchPageComponent } from './pages/taberna-search-page/taberna-search-page.component';
+import { TabernaDashboardPageComponent } from './profiles/pages/dashboard-page/dashboard-page.component';
 import { TabernaLoginPageComponent } from './profiles/pages/taberna-login-page/taberna-login-page.component';
 import { TabernaSignupPageComponent } from './profiles/pages/taberna-signup-page/taberna-signup-page.component';
 
@@ -34,9 +34,8 @@ export const TABERNA_ROUTES: Routes = [
       },
       {
         path: 'taberna/dashboard',
-        component: StubPageComponent,
+        component: TabernaDashboardPageComponent,
         canActivate: [authGuard],
-        data: { pageTitle: 'Taberna Dashboard', authJWT: true },
       },
       {
         path: 'taberna-store/category/:category_slug/:product_slug',

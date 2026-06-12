@@ -1,0 +1,72 @@
+<div class="profile-page">
+  <div class="profile-sidebar">
+    @if (!profileLoaded()) {
+      <div class="loading-row">
+        <mat-progress-spinner mode="indeterminate" diameter="40" />
+      </div>
+    } @else if (profile()) {
+      <mat-card class="profile-card">
+        <mat-card-content>
+          <img
+            class="profile-avatar"
+            [src]="profile()!.avatar_url ?? defaultAvatar"
+            [alt]="profileName()"
+          />
+          <p class="profile-name"><strong>{{ profileName() }}</strong></p>
+
+          <div class="profile-stats">
+            @if (profile()!.slug) {
+              <a [routerLink]="['/social/profile', profile()!.slug, 'friends']">
+                {{ profile()!.friends_count }} friends
+              </a>
+            }
+            <span>{{ profile()!.posts_count }} posts</span>
+          </div>
+
+          @if (canSendFriendshipRequest() === 'rejected') {
+            <p class="rejected-message">
+              The friend request was rejected. Please try again later...
+            </p>
+          } @else {
+            <div class="profile-actions">
+              @if (!isOwnProfile() && canSendFriendshipRequest()) {
+                <button mat-flat-button color="primary" type="button" (click)="sendFriendshipRequest()">
+                  Add as Friend
+                </button>
+              }
+
+              @if (!isOwnProfile()) {
+                <button mat-stroked-button type="button" (click)="sendMessage()">Send Message</button>
+              }
+
+              @if (isOwnProfile()) {
+                <a mat-flat-button color="primary" routerLink="/social/profile/edit">Edit Profile</a>
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <div class="profile-main">
+    @if (isOwnProfile()) {
+      <app-create-post-form />
+    }
+
+    @for (post of posts(); track post.id) {
+      <app-social-post-card [post]="post" />
+    }
+
+    @if (isPaginationLoading()) {
+      <div class="loading-row">
+        <mat-progress-spinner mode="indeterminate" diameter="40" />
+      </div>
+    }
+  </div>
+
+  <aside class="profile-widgets">
+    <app-people-you-may-know />
+    <app-trends />
+  </aside>
+</div>

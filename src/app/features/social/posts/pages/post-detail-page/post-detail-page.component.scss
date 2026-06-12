@@ -1,0 +1,25 @@
+.loading-card,
+.comment-form-card {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 24px 24px;
+}
+
+mat-card-content {
+  padding-top: 12px;
+}
+
+mat-form-field {
+  margin-bottom: 12px;
+}

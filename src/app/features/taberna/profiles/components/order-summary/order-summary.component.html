@@ -1,0 +1,52 @@
+<mat-card class="order-summary-card">
+  <mat-card-header>
+    <mat-card-title>Order #{{ order().order_number }}</mat-card-title>
+    <mat-card-subtitle>Order Date: {{ order().created_at }}</mat-card-subtitle>
+    @if (order().payment?.status) {
+      <mat-card-subtitle>Status: {{ order().payment!.status }}</mat-card-subtitle>
+    }
+    @if (order().payment?.payment_method) {
+      <mat-card-subtitle>Payment Method: {{ order().payment!.payment_method }}</mat-card-subtitle>
+    }
+    <mat-card-subtitle>Order Tax: ${{ order().tax }}</mat-card-subtitle>
+    <mat-card-subtitle>Total Amount: ${{ order().order_total }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <div class="table-wrap">
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of order().order_products; track item.id) {
+          <tr>
+            <td>
+              <img class="product-image" [src]="item.product.image" [alt]="item.product.name" />
+            </td>
+            <td>
+              <a class="product-link" [routerLink]="item.product.get_absolute_url">
+                {{ item.product.name }}
+              </a>
+              @if (item.variations.length) {
+                <div class="variations">
+                  @for (variation of item.variations; track variation.id) {
+                    <p>{{ variation.variation_category }}: {{ variation.variation_value }}</p>
+                  }
+                </div>
+              }
+            </td>
+            <td>${{ item.product.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ lineTotal(item) | number: '1.2-2' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</mat-card>

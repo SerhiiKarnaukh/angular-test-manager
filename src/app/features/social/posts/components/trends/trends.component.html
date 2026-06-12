@@ -1,0 +1,22 @@
+@if (trends().length) {
+  <mat-card class="trends-card">
+    <mat-card-header>
+      <mat-card-title>Trends</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @for (trend of trends(); track trend.id) {
+        <div class="trend-row">
+          <div class="trend-info">
+            <strong>#{{ trend.hashtag }}</strong>
+            <span>{{ trend.occurences }} posts</span>
+          </div>
+
+          <a mat-flat-button color="primary" [routerLink]="['/social/trends', trend.hashtag]">
+            Explore
+          </a>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+}

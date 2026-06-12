@@ -1,0 +1,60 @@
+<app-social-page-layout>
+  <div main>
+    <mat-card class="search-card">
+      <mat-card-content>
+        <form class="search-form" (ngSubmit)="submitSearch()">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>What are you looking for?</mat-label>
+            <input matInput type="search" [formControl]="queryControl" />
+          </mat-form-field>
+
+          <button mat-flat-button color="primary" type="submit">Search</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    @if (profiles().length) {
+      <mat-card class="profiles-card">
+        <mat-card-content>
+          <div class="profiles-grid">
+            @for (profile of profiles(); track profile.id) {
+              <mat-card class="profile-card">
+                <mat-card-content>
+                  <img
+                    class="profile-avatar"
+                    [src]="profile.avatar_url ?? defaultAvatar"
+                    [alt]="profile.first_name"
+                  />
+                  <p class="profile-name">
+                    <a [routerLink]="['/social/profile', profile.slug]">
+                      <strong>{{ profile.first_name }} {{ profile.last_name }}</strong>
+                    </a>
+                  </p>
+                  <div class="profile-stats">
+                    <span>{{ profile.friends_count }} friends</span>
+                    <span>{{ profile.posts_count }} posts</span>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    @for (post of posts(); track post.id) {
+      <app-social-post-card [post]="post" />
+    }
+
+    @if (isPaginationLoading()) {
+      <div class="loading-row">
+        <mat-progress-spinner mode="indeterminate" diameter="40" />
+      </div>
+    }
+  </div>
+
+  <div sidebar>
+    <app-people-you-may-know />
+    <app-trends />
+  </div>
+</app-social-page-layout>
