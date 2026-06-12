@@ -1,0 +1,25 @@
+<app-social-page-layout>
+  <div main>
+    @if (notifications().length) {
+      @for (notification of notifications(); track notification.id) {
+        <mat-card class="notification-card">
+          <mat-card-content>
+            <p>{{ notification.body }}</p>
+          </mat-card-content>
+          <div class="card-actions">
+            <button mat-flat-button color="primary" type="button" (click)="readNotification(notification)">
+              Read more
+            </button>
+          </div>
+        </mat-card>
+      }
+    } @else {
+      <h2 class="empty-state">You don't have any unread notifications!</h2>
+    }
+  </div>
+
+  <div sidebar>
+    <app-people-you-may-know />
+    <app-trends />
+  </div>
+</app-social-page-layout>

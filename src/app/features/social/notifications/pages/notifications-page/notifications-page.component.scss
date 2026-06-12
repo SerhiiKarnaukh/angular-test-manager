@@ -1,0 +1,18 @@
+.notification-card {
+  margin-bottom: 24px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 16px 16px;
+}
+
+.empty-state {
+  text-align: center;
+  margin: 24px 0;
+}
+
+mat-card-content p {
+  margin: 0;
+}

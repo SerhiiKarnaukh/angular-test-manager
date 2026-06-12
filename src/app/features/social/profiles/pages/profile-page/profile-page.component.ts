@@ -14,10 +14,10 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { firstValueFrom, fromEvent } from 'rxjs';
+import { fromEvent } from 'rxjs';
 
 import { AuthService } from '@core/auth/auth.service';
-import { SocialChatApiService } from '@features/social/chat/data-access/social-chat.api.service';
+import { SocialChatStore } from '@features/social/chat/data-access/social-chat.store';
 import { CreatePostFormComponent } from '@features/social/posts/components/create-post-form/create-post-form.component';
 import { SocialPostCardComponent } from '@features/social/posts/components/social-post-card/social-post-card.component';
 import { TrendsComponent } from '@features/social/posts/components/trends/trends.component';
@@ -45,7 +45,7 @@ import { SocialProfileStore } from '@features/social/profiles/data-access/social
 export class ProfilePageComponent implements OnInit {
   private readonly postsStore = inject(SocialPostsStore);
   private readonly profileStore = inject(SocialProfileStore);
-  private readonly chatApi = inject(SocialChatApiService);
+  private readonly chatStore = inject(SocialChatStore);
   private readonly auth = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -105,7 +105,7 @@ export class ProfilePageComponent implements OnInit {
     }
 
     try {
-      await firstValueFrom(this.chatApi.getOrCreateChat(slug));
+      await this.chatStore.getOrCreateChat(slug);
       await this.router.navigateByUrl('/social/chat');
     } catch (error) {
       console.error(error);

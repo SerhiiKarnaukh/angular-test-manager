@@ -2,16 +2,39 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { AuthService } from '@core/auth/auth.service';
+import { SocialNavbarComponent } from '@features/social/components/social-navbar/social-navbar.component';
 import { SocialProfileStore } from '@features/social/profiles/data-access/social-profile.store';
-import { LayoutShellComponent } from '@shared/ui/layout-shell/layout-shell.component';
 
 @Component({
   selector: 'app-main-social-layout',
-  imports: [LayoutShellComponent, RouterOutlet],
+  imports: [SocialNavbarComponent, RouterOutlet],
   template: `
-    <app-layout-shell appName="Social Network">
-      <router-outlet />
-    </app-layout-shell>
+    <div class="social-layout">
+      <app-social-navbar />
+      <main class="social-main">
+        <router-outlet />
+      </main>
+      <footer class="social-footer">Applications Manager — Angular</footer>
+    </div>
+  `,
+  styles: `
+    .social-layout {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .social-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .social-footer {
+      padding: 16px 24px;
+      text-align: center;
+      opacity: 0.7;
+    }
   `,
 })
 export class MainSocialLayoutComponent implements OnInit {

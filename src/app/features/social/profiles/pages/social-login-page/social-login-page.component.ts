@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from '@core/auth/auth.service';
 import { AlertService } from '@core/alert/alert.service';
+import { SocialNotificationsStore } from '@features/social/notifications/data-access/social-notifications.store';
 import { SocialProfileStore } from '@features/social/profiles/data-access/social-profile.store';
 import {
   AuthLoginFormComponent,
@@ -34,6 +35,7 @@ import { AuthPageShellComponent } from '@shared/ui/auth-page-shell/auth-page-she
 export class SocialLoginPageComponent {
   private readonly auth = inject(AuthService);
   private readonly profileStore = inject(SocialProfileStore);
+  private readonly notificationsStore = inject(SocialNotificationsStore);
   private readonly alert = inject(AlertService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -54,6 +56,7 @@ export class SocialLoginPageComponent {
       activeApp: 'social',
     });
     await this.profileStore.loadUserData();
+    this.notificationsStore.connectNotificationWebSocket();
     await this.router.navigateByUrl('/social/home');
   }
 }

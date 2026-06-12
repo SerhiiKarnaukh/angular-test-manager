@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
 
 import { authGuard } from '@core/auth/auth.guard';
-import { StubPageComponent } from '@shared/pages/stub-page/stub-page.component';
 
 import { MainSocialLayoutComponent } from './layouts/main-social-layout/main-social-layout.component';
+import { ChatPageComponent } from './chat/pages/chat-page/chat-page.component';
+import { NotificationsPageComponent } from './notifications/pages/notifications-page/notifications-page.component';
 import { FeedHomePageComponent } from './posts/pages/feed-home-page/feed-home-page.component';
 import { PostDetailPageComponent } from './posts/pages/post-detail-page/post-detail-page.component';
 import { SocialSearchPageComponent } from './posts/pages/social-search-page/social-search-page.component';
@@ -46,15 +47,15 @@ export const SOCIAL_ROUTES: Routes = [
       },
       {
         path: 'social/chat',
-        component: StubPageComponent,
+        component: ChatPageComponent,
         canActivate: [authGuard],
-        data: { pageTitle: 'Chat', authJWT: true },
+        data: { authJWT: true },
       },
       {
         path: 'social/notifications',
-        component: StubPageComponent,
+        component: NotificationsPageComponent,
         canActivate: [authGuard],
-        data: { pageTitle: 'Notifications', authJWT: true },
+        data: { authJWT: true },
       },
       {
         path: 'social/search',

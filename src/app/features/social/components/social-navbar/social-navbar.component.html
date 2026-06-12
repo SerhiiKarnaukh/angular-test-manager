@@ -1,0 +1,141 @@
+<mat-toolbar color="primary" class="navbar">
+  <a routerLink="/social/home" class="brand">
+    <mat-icon class="brand-icon">groups</mat-icon>
+    <span class="brand-title">Social Network</span>
+  </a>
+
+  <span class="spacer"></span>
+
+  @if (!isHandset()) {
+    <nav class="nav-actions">
+      <button mat-button [matMenuTriggerFor]="appsMenu" type="button">
+        <mat-icon>grid_view</mat-icon>
+        Apps Manager
+      </button>
+      <mat-menu #appsMenu="matMenu">
+        <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
+          <mat-icon>public</mat-icon>
+          All Apps
+        </a>
+        <a mat-menu-item routerLink="/">
+          <mat-icon>view_module</mat-icon>
+          Angular Apps
+        </a>
+      </mat-menu>
+
+      <a mat-button routerLink="/social/home">
+        <mat-icon>home</mat-icon>
+        Main
+      </a>
+
+      @if (!auth.isAuthenticated()) {
+        <a mat-button routerLink="/social/login">
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+        <a mat-button routerLink="/social/signup">
+          <mat-icon>person_add</mat-icon>
+          Signup
+        </a>
+      } @else {
+        <a mat-button routerLink="/social/chat">
+          <mat-icon>chat</mat-icon>
+          Chat
+        </a>
+        <button mat-button type="button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      }
+
+      <button mat-button type="button" (click)="theme.toggle()">
+        <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        {{ theme.isDark() ? 'Light mode' : 'Dark mode' }}
+      </button>
+
+      <a mat-icon-button routerLink="/social/search" aria-label="Search">
+        <mat-icon>search</mat-icon>
+      </a>
+
+      @if (auth.isAuthenticated()) {
+        <a mat-button routerLink="/social/notifications">
+          <mat-icon>notifications</mat-icon>
+          ({{ unreadCount() }})
+        </a>
+
+        @if (user()?.slug) {
+          <a mat-icon-button [routerLink]="['/social/profile', user()!.slug]" aria-label="Profile">
+            <img
+              class="profile-avatar"
+              [src]="user()?.avatar_url ?? defaultAvatar"
+              alt="Profile avatar"
+            />
+          </a>
+        }
+      }
+    </nav>
+  } @else {
+    <button mat-icon-button type="button" aria-label="Open menu" [matMenuTriggerFor]="mobileMenu">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #mobileMenu="matMenu">
+      <button mat-menu-item type="button" [matMenuTriggerFor]="mobileAppsMenu">
+        <mat-icon>grid_view</mat-icon>
+        Apps Manager
+      </button>
+      <mat-menu #mobileAppsMenu="matMenu">
+        <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
+          <mat-icon>public</mat-icon>
+          All Apps
+        </a>
+        <a mat-menu-item routerLink="/">
+          <mat-icon>view_module</mat-icon>
+          Angular Apps
+        </a>
+      </mat-menu>
+
+      <a mat-menu-item routerLink="/social/home">
+        <mat-icon>home</mat-icon>
+        Main
+      </a>
+
+      @if (!auth.isAuthenticated()) {
+        <a mat-menu-item routerLink="/social/login">
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+        <a mat-menu-item routerLink="/social/signup">
+          <mat-icon>person_add</mat-icon>
+          Signup
+        </a>
+      } @else {
+        <a mat-menu-item routerLink="/social/chat">
+          <mat-icon>chat</mat-icon>
+          Chat
+        </a>
+        <button mat-menu-item type="button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      }
+
+      <button mat-menu-item type="button" (click)="theme.toggle()">
+        <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        Theme
+      </button>
+
+      <a mat-menu-item routerLink="/social/search">
+        <mat-icon>search</mat-icon>
+        Search
+      </a>
+
+      @if (auth.isAuthenticated()) {
+        <a mat-menu-item routerLink="/social/notifications">
+          <mat-icon>notifications</mat-icon>
+          Notifications ({{ unreadCount() }})
+        </a>
+      }
+    </mat-menu>
+  }
+</mat-toolbar>

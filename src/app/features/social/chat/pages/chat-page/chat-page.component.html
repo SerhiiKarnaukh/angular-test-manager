@@ -1,0 +1,81 @@
+@if (isLoading()) {
+  <div class="loading-row">
+    <mat-progress-spinner mode="indeterminate" diameter="40" />
+  </div>
+} @else if (conversations().length) {
+  <div class="chat-page">
+    <aside class="conversation-list">
+      @for (conversation of conversations(); track conversation.id) {
+        <mat-card
+          class="conversation-card"
+          [class.active-conversation]="isActiveConversation(conversation.id)"
+          (click)="selectConversation(conversation.id)"
+        >
+          @for (user of conversation.users; track user.id) {
+            @if (user.id !== currentUser()?.id) {
+              <div class="conversation-row">
+                <img
+                  class="conversation-avatar"
+                  [src]="user.avatar_url ?? defaultAvatar"
+                  [alt]="otherUserName(user.first_name, user.last_name)"
+                />
+                <div class="conversation-info">
+                  <strong>{{ otherUserName(user.first_name, user.last_name) }}</strong>
+                  <span>{{ conversation.modified_at_formatted }} ago</span>
+                </div>
+              </div>
+            }
+          }
+        </mat-card>
+      }
+    </aside>
+
+    <section class="message-pane">
+      @if (activeConversation().messages.length) {
+        <mat-card class="messages-card">
+          <mat-list>
+            @for (message of activeConversation().messages; track message.id) {
+              <mat-list-item
+                class="message-item"
+                [class.sender-message]="isSenderMessage(message)"
+                [class.receiver-message]="!isSenderMessage(message)"
+              >
+                <div class="message-header">
+                  <img
+                    class="message-avatar"
+                    [src]="message.created_by.avatar_url ?? defaultAvatar"
+                    [alt]="message.created_by.first_name"
+                  />
+                  <strong>{{ message.created_by.first_name }}</strong>
+                </div>
+                <p class="message-body">{{ message.body }}</p>
+                <span class="message-time">{{ message.created_at_formatted }} ago</span>
+              </mat-list-item>
+            }
+          </mat-list>
+        </mat-card>
+      }
+
+      <mat-card class="composer-card">
+        <form (ngSubmit)="submitMessage()">
+          <mat-card-content>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>What do you want to say?</mat-label>
+              <textarea matInput rows="3" [formControl]="messageControl"></textarea>
+            </mat-form-field>
+          </mat-card-content>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" type="submit">Send</button>
+          </div>
+        </form>
+      </mat-card>
+    </section>
+  </div>
+} @else {
+  <mat-card class="empty-state">
+    <mat-card-content>
+      <h2>You have no active conversations!</h2>
+    </mat-card-content>
+  </mat-card>
+}
