@@ -16,7 +16,7 @@ import { fromEvent } from 'rxjs';
 import { ProductsGridComponent } from '@features/taberna/components/products-grid/products-grid.component';
 import { TabernaProductStore } from '@features/taberna/data-access/taberna-product.store';
 
-const PARALLAX_FACTOR = 0.35;
+const PARALLAX_FACTOR = 0.45;
 
 @Component({
   selector: 'app-product-home-page',
@@ -59,7 +59,9 @@ export class ProductHomePageComponent implements OnInit {
       return;
     }
 
-    this.parallaxOffset.set(hero.getBoundingClientRect().top * PARALLAX_FACTOR);
+    const scrollY = window.scrollY;
+    const maxOffset = hero.offsetHeight * 0.35;
+    this.parallaxOffset.set(Math.min(scrollY * PARALLAX_FACTOR, maxOffset));
   }
 
   private prefersReducedMotion(): boolean {

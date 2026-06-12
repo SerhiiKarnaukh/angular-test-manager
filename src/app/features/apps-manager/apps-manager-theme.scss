@@ -66,6 +66,44 @@ app-main-apps-manager-layout {
   }
 }
 
+@mixin apps-manager-dialog-controls {
+  .mat-mdc-unelevated-button.mat-primary,
+  a.mat-mdc-unelevated-button.mat-primary {
+    --mat-button-filled-container-color: var(--am-action);
+    --mat-button-filled-label-text-color: var(--am-action-on);
+    --mat-button-filled-state-layer-color: var(--am-action-on);
+  }
+
+  .mat-mdc-outlined-button:not(:disabled),
+  a.mat-mdc-outlined-button:not(:disabled) {
+    --mat-button-outlined-label-text-color: var(--am-action-outline);
+    --mat-button-outlined-outline-color: var(--am-action);
+    --mat-button-outlined-state-layer-color: var(--am-action);
+  }
+
+  .mat-mdc-form-field {
+    --mat-form-field-focus-select-arrow-color: var(--am-action);
+    --mat-form-field-focus-label-text-color: var(--am-action);
+    --mat-form-field-outlined-focus-outline-color: var(--am-action);
+    --mat-form-field-outlined-focus-label-text-color: var(--am-action);
+  }
+}
+
+.apps-manager-search-dialog {
+  --am-action: #1eb8d4;
+  --am-action-on: #ffffff;
+  --am-action-outline: #179bb3;
+  --am-heading: #0c4a6e;
+  --mat-sys-primary: var(--am-action);
+  --mat-sys-on-primary: var(--am-action-on);
+
+  @include apps-manager-dialog-controls;
+
+  [mat-dialog-title] {
+    color: var(--am-heading);
+  }
+}
+
 body.dark-mode app-main-apps-manager-layout {
   --am-nav-bg: #070f1c;
   --am-page-bg: #0a1525;
@@ -80,4 +118,10 @@ body.dark-mode app-main-apps-manager-layout {
 
   --mat-sys-primary-container: #123347;
   --mat-sys-on-primary-container: #b8ecf4;
+}
+
+body.dark-mode .apps-manager-search-dialog {
+  --am-action: #3dd5e8;
+  --am-action-outline: #5ee0f0;
+  --am-heading: #7dd3e8;
 }

@@ -1,23 +1,18 @@
 .hero-banner {
   position: relative;
   overflow: hidden;
-  height: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (min-width: 960px) {
-  .hero-banner {
-    height: 520px;
-  }
+  min-height: calc(100svh - var(--taberna-nav-height, 64px));
 }
 
 .hero-bg {
   position: absolute;
-  inset: -20% 0;
+  top: -20%;
+  left: 0;
+  right: 0;
+  height: 140%;
   background: url('/bg-1.jpg') center / cover no-repeat;
   will-change: transform;
+  z-index: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -33,24 +28,33 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 24px;
+  gap: 20px;
+  min-height: calc(100svh - var(--taberna-nav-height, 64px));
+  padding: 2rem 1.5rem;
   text-align: center;
   color: #fff;
-  background-color: rgba(128, 128, 128, 0.5);
+  background: linear-gradient(
+    120deg,
+    rgba(58, 52, 44, 0.72) 0%,
+    rgba(74, 64, 53, 0.55) 50%,
+    rgba(90, 78, 64, 0.45) 100%
+  );
   width: 100%;
-  height: 100%;
 }
 
 .hero-overlay h1 {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 300;
+  letter-spacing: 0.12em;
 }
 
 .hero-subtitle {
   margin: 0;
   font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 300;
+  word-spacing: 0.35em;
+  letter-spacing: 0.06em;
 }
 
 .products-section {
@@ -60,4 +64,18 @@
 .products-section h2 {
   text-align: center;
   margin: 0 0 16px;
+  font-size: clamp(1.375rem, 2.2vw, 1.625rem);
+  font-weight: 500;
+  color: var(--taberna-heading, #3a342c);
+  letter-spacing: 0.02em;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    margin: 12px auto 0;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--taberna-action, #a67c52), var(--taberna-accent, #8a8580));
+  }
 }

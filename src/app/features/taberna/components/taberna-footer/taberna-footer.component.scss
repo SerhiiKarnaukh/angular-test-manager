@@ -4,6 +4,9 @@
   align-items: center;
   gap: 16px;
   padding: 24px 16px 32px;
+  background-color: var(--taberna-footer-bg, #faf7f2);
+  border-top: 1px solid var(--taberna-footer-border, #ddd5c8);
+  color: var(--taberna-footer-text, #4a433c);
 }
 
 .footer-links {
@@ -13,8 +16,12 @@
   gap: 4px;
 }
 
+.footer-links a {
+  color: var(--taberna-action, #a67c52);
+}
+
 .footer-copy {
   margin: 0;
   text-align: center;
-  color: var(--mat-sys-on-surface-variant);
+  color: var(--taberna-footer-text, #4a433c);
 }

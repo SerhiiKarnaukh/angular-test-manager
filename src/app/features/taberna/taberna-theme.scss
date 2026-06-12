@@ -1,0 +1,127 @@
+// Taberna — warm leather & linen palette (bg-1.jpg banner)
+
+app-main-taberna-layout {
+  --taberna-nav-bg: #3a342c;
+  --taberna-nav-fg: #ffffff;
+  --taberna-page-bg: #f5f0e8;
+  --taberna-footer-bg: #faf7f2;
+  --taberna-footer-border: #ddd5c8;
+  --taberna-footer-text: #4a433c;
+  --taberna-heading: #3a342c;
+  --taberna-action: #a67c52;
+  --taberna-action-on: #ffffff;
+  --taberna-action-outline: #7d5c3a;
+  --taberna-accent: #8a8580;
+  --taberna-link: #6b5340;
+
+  --mat-sys-primary: var(--taberna-action);
+  --mat-sys-on-primary: var(--taberna-action-on);
+  --mat-sys-primary-container: #e8dcc8;
+  --mat-sys-on-primary-container: #3a342c;
+
+  .taberna-main {
+    background-color: var(--taberna-page-bg);
+  }
+
+  .mat-mdc-button:not(:disabled),
+  a.mat-mdc-button:not(:disabled) {
+    --mat-button-text-label-text-color: var(--taberna-action);
+    --mat-button-text-state-layer-color: var(--taberna-action);
+  }
+
+  .mat-mdc-unelevated-button.mat-primary,
+  a.mat-mdc-unelevated-button.mat-primary {
+    --mat-button-filled-container-color: var(--taberna-action);
+    --mat-button-filled-label-text-color: var(--taberna-action-on);
+    --mat-button-filled-state-layer-color: var(--taberna-action-on);
+  }
+
+  .mat-mdc-outlined-button:not(:disabled),
+  a.mat-mdc-outlined-button:not(:disabled) {
+    --mat-button-outlined-label-text-color: var(--taberna-action-outline);
+    --mat-button-outlined-outline-color: var(--taberna-action);
+    --mat-button-outlined-state-layer-color: var(--taberna-action);
+  }
+
+  .mat-mdc-form-field {
+    --mat-form-field-focus-select-arrow-color: var(--taberna-action);
+    --mat-form-field-focus-label-text-color: var(--taberna-action);
+    --mat-form-field-outlined-focus-outline-color: var(--taberna-action);
+    --mat-form-field-outlined-focus-label-text-color: var(--taberna-action);
+  }
+
+  .mat-mdc-progress-spinner,
+  mat-progress-bar {
+    --mat-progress-spinner-active-indicator-color: var(--taberna-action);
+    --mat-progress-bar-active-indicator-color: var(--taberna-action);
+  }
+
+  a:not([class*='mat-']):not(.brand) {
+    color: var(--taberna-link);
+  }
+
+  a:not([class*='mat-']):not(.brand):hover {
+    color: var(--taberna-action-outline);
+  }
+}
+
+@mixin taberna-dialog-controls {
+  .mat-mdc-unelevated-button.mat-primary,
+  a.mat-mdc-unelevated-button.mat-primary {
+    --mat-button-filled-container-color: var(--taberna-action);
+    --mat-button-filled-label-text-color: var(--taberna-action-on);
+    --mat-button-filled-state-layer-color: var(--taberna-action-on);
+  }
+
+  .mat-mdc-outlined-button:not(:disabled),
+  a.mat-mdc-outlined-button:not(:disabled) {
+    --mat-button-outlined-label-text-color: var(--taberna-action-outline);
+    --mat-button-outlined-outline-color: var(--taberna-action);
+    --mat-button-outlined-state-layer-color: var(--taberna-action);
+  }
+
+  .mat-mdc-form-field {
+    --mat-form-field-focus-select-arrow-color: var(--taberna-action);
+    --mat-form-field-focus-label-text-color: var(--taberna-action);
+    --mat-form-field-outlined-focus-outline-color: var(--taberna-action);
+    --mat-form-field-outlined-focus-label-text-color: var(--taberna-action);
+  }
+}
+
+// Overlay is outside app-main-taberna-layout — theme via panelClass on MatDialog.open()
+.taberna-search-dialog {
+  --taberna-action: #a67c52;
+  --taberna-action-on: #ffffff;
+  --taberna-action-outline: #7d5c3a;
+  --taberna-heading: #3a342c;
+  --mat-sys-primary: var(--taberna-action);
+  --mat-sys-on-primary: var(--taberna-action-on);
+
+  @include taberna-dialog-controls;
+
+  [mat-dialog-title] {
+    color: var(--taberna-heading);
+  }
+}
+
+body.dark-mode app-main-taberna-layout {
+  --taberna-nav-bg: #1f1b17;
+  --taberna-page-bg: #1a1814;
+  --taberna-footer-bg: #141210;
+  --taberna-footer-border: #3a342c;
+  --taberna-footer-text: #c9c0b4;
+  --taberna-heading: #e8dcc8;
+  --taberna-action: #c49a6c;
+  --taberna-action-outline: #d4ad82;
+  --taberna-accent: #9a928a;
+  --taberna-link: #d4ad82;
+
+  --mat-sys-primary-container: #3a342c;
+  --mat-sys-on-primary-container: #e8dcc8;
+}
+
+body.dark-mode .taberna-search-dialog {
+  --taberna-action: #c49a6c;
+  --taberna-action-outline: #d4ad82;
+  --taberna-heading: #e8dcc8;
+}

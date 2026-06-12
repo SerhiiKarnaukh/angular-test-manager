@@ -23,6 +23,7 @@ import { TabernaNavbarComponent } from '@features/taberna/components/taberna-nav
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      --taberna-nav-height: 64px;
     }
 
     .taberna-main {
