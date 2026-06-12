@@ -8,7 +8,6 @@ import { flattenApiErrors } from '@shared/utils/error.utils';
 
 import { SocialProfileApiService } from './social-profile.api.service';
 import {
-  EMPTY_SOCIAL_USER,
   FriendsDataResponse,
   SocialFriendSuggestion,
   SocialUser,
