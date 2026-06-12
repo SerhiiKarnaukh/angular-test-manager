@@ -1,0 +1,66 @@
+<mat-card class="summary-card">
+  <mat-card-header>
+    <mat-card-title>Order Summary</mat-card-title>
+  </mat-card-header>
+
+  <div class="table-wrap">
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of cart().cart_items; track item.id) {
+          <tr>
+            <td>
+              {{ item.product.name }}
+              @if (item.variations.length) {
+                <div class="variations">
+                  @for (variation of item.variations; track variation.id) {
+                    <p>{{ variation.variation_category }}: {{ variation.variation_value }}</p>
+                  }
+                </div>
+              }
+            </td>
+            <td>${{ item.product.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.sub_total ?? item.quantity * item.product.price }}</td>
+          </tr>
+        }
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">Total</td>
+          <td>{{ cart().quantity }}</td>
+          <td>${{ cart().grand_total }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <p class="demo-note">
+    <strong>Please Note:</strong> This is a demo website. Do not try to make real payments.
+  </p>
+
+  @if (isChargeMode()) {
+    <div id="card-element" class="card-element"></div>
+  }
+
+  @if (canPay()) {
+    <mat-card-actions align="end">
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        [disabled]="isSubmitting()"
+        (click)="pay.emit()"
+      >
+        Pay with Stripe
+      </button>
+    </mat-card-actions>
+  }
+</mat-card>

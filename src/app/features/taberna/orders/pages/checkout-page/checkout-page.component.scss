@@ -1,0 +1,36 @@
+.checkout-page {
+  padding: 24px clamp(16px, 3vw, 48px) 48px;
+}
+
+.checkout-layout {
+  display: grid;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 960px) {
+  .checkout-layout {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
+
+.billing-card mat-card-header {
+  padding: 16px 24px 8px;
+}
+
+.billing-card mat-card-content {
+  padding-top: 12px;
+}
+
+.billing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 24px 24px;
+}
+
+.full-width {
+  width: 100%;
+}

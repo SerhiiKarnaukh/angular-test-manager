@@ -1,0 +1,107 @@
+@if (isSubmitting()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<section class="checkout-page">
+  <div class="checkout-layout">
+    <mat-card class="billing-card">
+      <mat-card-header>
+        <mat-card-title>Billing Details</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="form" class="billing-form" (ngSubmit)="submitCheckout()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="first_name" autocomplete="given-name" />
+            @if (fieldError('first_name'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="last_name" autocomplete="family-name" />
+            @if (fieldError('last_name'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>E-mail</mat-label>
+            <input matInput type="email" formControlName="email" autocomplete="email" />
+            @if (fieldError('email'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" autocomplete="tel" />
+            @if (fieldError('phone'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Address Line 1</mat-label>
+            <input matInput formControlName="address1" autocomplete="address-line1" />
+            @if (fieldError('address1'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Address Line 2</mat-label>
+            <input matInput formControlName="address2" autocomplete="address-line2" />
+            @if (fieldError('address2'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" autocomplete="address-level2" />
+            @if (fieldError('city'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state" autocomplete="address-level1" />
+            @if (fieldError('state'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="country" autocomplete="country-name" />
+            @if (fieldError('country'); as error) {
+              <mat-error>{{ error }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Order Notes</mat-label>
+            <textarea
+              matInput
+              rows="4"
+              formControlName="order_notes"
+              placeholder="Enter any additional details or instructions here."
+            ></textarea>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <app-checkout-order-summary
+      [cart]="cart()"
+      [isChargeMode]="isChargeMode"
+      [isSubmitting]="isSubmitting()"
+      [canPay]="hasItems()"
+      (pay)="submitCheckout()"
+    />
+  </div>
+</section>

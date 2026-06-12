@@ -8,6 +8,9 @@ import { CategoryDetailPageComponent } from './pages/category-detail-page/catego
 import { ProductDetailPageComponent } from './pages/product-detail-page/product-detail-page.component';
 import { ProductHomePageComponent } from './pages/product-home-page/product-home-page.component';
 import { CartPageComponent } from './cart/pages/cart-page/cart-page.component';
+import { CheckoutPageComponent } from './orders/pages/checkout-page/checkout-page.component';
+import { OrderFailedPageComponent } from './orders/pages/order-failed-page/order-failed-page.component';
+import { OrderSuccessPageComponent } from './orders/pages/order-success-page/order-success-page.component';
 import { TabernaSearchPageComponent } from './pages/taberna-search-page/taberna-search-page.component';
 import { TabernaLoginPageComponent } from './profiles/pages/taberna-login-page/taberna-login-page.component';
 import { TabernaSignupPageComponent } from './profiles/pages/taberna-signup-page/taberna-signup-page.component';
@@ -53,19 +56,16 @@ export const TABERNA_ROUTES: Routes = [
       },
       {
         path: 'taberna/cart/checkout',
-        component: StubPageComponent,
+        component: CheckoutPageComponent,
         canActivate: [authGuard],
-        data: { pageTitle: 'Taberna Checkout', authJWT: true },
       },
       {
         path: 'taberna/cart/success',
-        component: StubPageComponent,
-        data: { pageTitle: 'Order Success' },
+        component: OrderSuccessPageComponent,
       },
       {
         path: 'taberna/cart/failed',
-        component: StubPageComponent,
-        data: { pageTitle: 'Order Failed' },
+        component: OrderFailedPageComponent,
       },
     ],
   },

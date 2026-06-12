@@ -1,0 +1,60 @@
+.summary-card mat-card-header {
+  padding: 16px 24px 8px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  padding: 0 24px;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 12px 8px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  th {
+    font-weight: 500;
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  tfoot td {
+    font-weight: 600;
+    border-bottom: none;
+  }
+}
+
+.variations {
+  margin-top: 4px;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.875rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+.demo-note {
+  margin: 16px 24px;
+  padding: 12px 16px;
+  border: 1px solid var(--mat-sys-error);
+  border-radius: 8px;
+  color: var(--mat-sys-on-surface);
+}
+
+.card-element {
+  margin: 0 24px 8px;
+  padding: 12px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
+}
+
+.summary-card mat-card-actions {
+  padding: 8px 24px 24px;
+}
