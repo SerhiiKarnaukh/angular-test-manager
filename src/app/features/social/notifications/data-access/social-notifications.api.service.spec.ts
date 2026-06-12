@@ -9,6 +9,7 @@ describe('SocialNotificationsApiService', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [provideHttpClient(), provideHttpClientTesting()],
     });
@@ -18,7 +19,7 @@ describe('SocialNotificationsApiService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify();
+    httpMock?.verify();
   });
 
   it('fetchNotifications calls list endpoint', () => {

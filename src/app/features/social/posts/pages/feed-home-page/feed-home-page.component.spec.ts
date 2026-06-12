@@ -13,6 +13,8 @@ describe('FeedHomePageComponent', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(async () => {
+    localStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [FeedHomePageComponent],
       providers: [
@@ -29,7 +31,7 @@ describe('FeedHomePageComponent', () => {
   });
 
   afterEach(() => {
-    httpMock.verify();
+    httpMock?.verify();
   });
 
   it('should create', () => {

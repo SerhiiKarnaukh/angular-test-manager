@@ -9,6 +9,7 @@ describe('TabernaProfileStore', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [provideHttpClient(), provideHttpClientTesting()],
     });
@@ -18,7 +19,7 @@ describe('TabernaProfileStore', () => {
   });
 
   afterEach(() => {
-    httpMock.verify();
+    httpMock?.verify();
   });
 
   it('loads orders into state', async () => {
