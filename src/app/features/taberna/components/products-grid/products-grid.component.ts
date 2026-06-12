@@ -30,6 +30,11 @@ import { TabernaProduct } from '@features/taberna/data-access/taberna-product.mo
       margin: 0 auto;
       padding: 0 clamp(16px, 3vw, 48px) 24px;
       box-sizing: border-box;
+      align-items: stretch;
+    }
+
+    app-product-card {
+      height: 100%;
     }
 
     .cols-1 {
