@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="navbar">
+<mat-toolbar class="navbar social-toolbar">
   <a routerLink="/social/home" class="brand">
     <mat-icon class="brand-icon">groups</mat-icon>
     <span class="brand-title">Social Network</span>
@@ -135,6 +135,13 @@
           <mat-icon>notifications</mat-icon>
           Notifications ({{ unreadCount() }})
         </a>
+
+        @if (user()?.slug) {
+          <a mat-menu-item [routerLink]="['/social/profile', user()!.slug]">
+            <mat-icon>account_circle</mat-icon>
+            Profile
+          </a>
+        }
       }
     </mat-menu>
   }

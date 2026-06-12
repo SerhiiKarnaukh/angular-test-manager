@@ -45,3 +45,15 @@ mat-card-content {
 mat-form-field {
   margin-bottom: 12px;
 }
+
+@media (max-width: 599px) {
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-actions mat-checkbox {
+    margin-left: 0;
+    order: -1;
+  }
+}

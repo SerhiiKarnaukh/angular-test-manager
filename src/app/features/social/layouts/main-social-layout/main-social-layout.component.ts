@@ -2,19 +2,22 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { AuthService } from '@core/auth/auth.service';
+import { SocialFooterComponent } from '@features/social/components/social-footer/social-footer.component';
 import { SocialNavbarComponent } from '@features/social/components/social-navbar/social-navbar.component';
 import { SocialProfileStore } from '@features/social/profiles/data-access/social-profile.store';
 
 @Component({
   selector: 'app-main-social-layout',
-  imports: [SocialNavbarComponent, RouterOutlet],
+  imports: [SocialNavbarComponent, SocialFooterComponent, RouterOutlet],
   template: `
     <div class="social-layout">
-      <app-social-navbar />
+      <header class="social-header">
+        <app-social-navbar />
+      </header>
       <main class="social-main">
         <router-outlet />
       </main>
-      <footer class="social-footer">Applications Manager — Angular</footer>
+      <app-social-footer />
     </div>
   `,
   styles: `
@@ -24,16 +27,21 @@ import { SocialProfileStore } from '@features/social/profiles/data-access/social
       min-height: 100vh;
     }
 
+    .social-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--social-nav-height);
+    }
+
     .social-main {
       flex: 1;
       display: flex;
       flex-direction: column;
-    }
-
-    .social-footer {
-      padding: 16px 24px;
-      text-align: center;
-      opacity: 0.7;
+      padding-top: var(--social-nav-height);
+      background-color: var(--social-page-bg);
     }
   `,
 })

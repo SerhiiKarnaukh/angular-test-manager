@@ -10,9 +10,22 @@
   display: grid;
   grid-template-columns: 40px 1fr auto;
   align-items: center;
-  gap: 12px;
-  padding: 12px 0;
+  gap: 8px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
+}
+
+@media (max-width: 479px) {
+  .suggestion-row {
+    grid-template-columns: 36px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .suggestion-row a {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    text-align: center;
+  }
 }
 
 .suggestion-row:last-child {

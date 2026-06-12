@@ -6,6 +6,7 @@
   margin: 0 auto;
   padding: 24px 16px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 960px) {
@@ -21,4 +22,17 @@
 
 .sidebar {
   min-width: 0;
+}
+
+@media (max-width: 959px) {
+  .sidebar {
+    order: 2;
+  }
+}
+
+@media (max-width: 599px) {
+  .social-page {
+    padding: 16px 12px;
+    gap: 20px;
+  }
 }

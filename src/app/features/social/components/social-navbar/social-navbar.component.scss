@@ -1,29 +1,56 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.social-toolbar {
+  --mat-toolbar-container-background-color: var(--social-nav-bg, #1e4d59);
+  --mat-toolbar-container-text-color: var(--social-nav-fg, #fff);
+  height: var(--social-nav-height, 64px);
+
+  .mat-mdc-button-base {
+    --mat-button-text-label-text-color: var(--social-nav-fg, #fff);
+    --mat-button-text-state-layer-color: var(--social-nav-fg, #fff);
+    --mat-icon-button-icon-color: var(--social-nav-fg, #fff);
+  }
+}
+
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  min-height: 64px;
+  width: 100%;
+  min-height: var(--social-nav-height, 64px);
   padding: 0 12px 0 16px;
   gap: 8px;
+  box-shadow: 0 2px 10px rgba(15, 40, 48, 0.28);
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: inherit;
+  color: var(--social-nav-fg, #fff);
   text-decoration: none;
+  padding: 6px 10px 6px 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    color: var(--social-nav-fg, #fff);
+    background-color: rgba(255, 255, 255, 0.12);
+  }
 }
 
 .brand-icon {
   width: 32px;
   height: 32px;
   font-size: 32px;
+  opacity: 0.95;
 }
 
 .brand-title {
   font-size: 1.2rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .spacer {
@@ -33,7 +60,14 @@
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+}
+
+.nav-actions mat-icon {
+  margin-right: 6px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
 }
 
 .profile-avatar {
@@ -41,4 +75,15 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width: 479px) {
+  .brand-title {
+    display: none;
+  }
+
+  .navbar {
+    padding: 0 8px 0 12px;
+  }
 }

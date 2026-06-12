@@ -1,23 +1,46 @@
 .friends-page {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 24px;
+  gap: 20px;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 16px 12px;
   width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+  .friends-page {
+    padding: 20px 16px;
+  }
 }
 
 @media (min-width: 960px) {
   .friends-page {
-    grid-template-columns: minmax(220px, 280px) minmax(0, 2fr) minmax(280px, 1fr);
-    padding: 24px;
+    grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+    gap: 24px;
+    padding: 24px 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .friends-page {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr) minmax(260px, 320px);
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1199px) {
+  .friends-widgets {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
   }
 }
 
 .profile-card,
 .section-card {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .profile-card {
@@ -26,16 +49,16 @@
 
 .profile-avatar,
 .user-avatar {
-  width: 125px;
-  height: 125px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 12px;
 }
 
 .profile-avatar {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
 }
 
 .profile-name {
@@ -45,16 +68,24 @@
 .profile-stats,
 .user-stats {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   font-size: 12px;
   opacity: 0.7;
 }
 
 .users-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .users-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
 }
 
 .user-card {
@@ -68,9 +99,16 @@
 
 .request-actions {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 16px;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+@media (min-width: 480px) {
+  .request-actions {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 mat-card-content {

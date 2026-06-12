@@ -1,0 +1,12 @@
+<footer class="social-footer">
+  <div class="footer-links">
+    <a mat-button routerLink="/social/home">Home</a>
+    @if (!auth.isAuthenticated()) {
+      <a mat-button routerLink="/social/signup">Signup</a>
+      <a mat-button routerLink="/social/login">Login</a>
+    }
+    <a mat-button [href]="remoteHost" target="_blank" rel="noopener">All Apps</a>
+    <a mat-button routerLink="/">Angular Apps</a>
+  </div>
+  <p class="footer-copy">{{ year }} — <strong>Social Network</strong></p>
+</footer>

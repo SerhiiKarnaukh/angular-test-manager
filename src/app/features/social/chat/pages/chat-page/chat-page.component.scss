@@ -2,8 +2,15 @@
   display: block;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 16px 12px;
   width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+  :host {
+    padding: 24px 16px;
+  }
 }
 
 .chat-page {
@@ -24,7 +31,7 @@
 }
 
 .conversation-card.active-conversation {
-  outline: 2px solid var(--mat-sys-primary, #6750a4);
+  outline: 2px solid var(--social-action, var(--mat-sys-primary));
 }
 
 .conversation-row {
@@ -71,7 +78,7 @@
 .sender-message {
   margin-left: auto;
   max-width: 70%;
-  background: var(--mat-sys-surface-variant, #e0e0e0);
+  background: var(--social-message-sent-bg, var(--mat-sys-primary-container));
   text-align: right;
 }
 

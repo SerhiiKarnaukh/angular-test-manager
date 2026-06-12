@@ -1,0 +1,101 @@
+// Social app palette — scoped to app-main-social-layout only (other apps unchanged).
+
+app-main-social-layout {
+  --social-nav-height: 64px;
+  --social-nav-bg: #1e4d59;
+  --social-nav-fg: #ffffff;
+  --social-page-bg: #e8eef1;
+  --social-footer-bg: #f4f7f9;
+  --social-footer-border: #d0dae0;
+  --social-action: #2a8f9e;
+  --social-action-strong: #1e6878;
+  --social-action-on: #ffffff;
+  --social-action-outline: #4da3b0;
+  --social-action-container: #c5e8ee;
+  --social-link: #1e6878;
+  --social-link-hover: #174f5c;
+  --social-message-sent-bg: #c5e8ee;
+
+  // Remap Material primary tokens inside Social
+  --mat-sys-primary: var(--social-action);
+  --mat-sys-on-primary: var(--social-action-on);
+  --mat-sys-primary-container: var(--social-action-container);
+  --mat-sys-on-primary-container: #0f2830;
+  --mat-sys-inverse-primary: var(--social-action);
+
+  // Text buttons — like, comment, etc.
+  .mat-mdc-button:not(:disabled),
+  a.mat-mdc-button:not(:disabled) {
+    --mat-button-text-label-text-color: var(--social-action);
+    --mat-button-text-state-layer-color: var(--social-action);
+  }
+
+  .mat-mdc-button .mat-icon,
+  a.mat-mdc-button .mat-icon {
+    color: var(--social-action);
+  }
+
+  // Filled primary
+  .mat-mdc-unelevated-button.mat-primary,
+  a.mat-mdc-unelevated-button.mat-primary {
+    --mat-button-filled-container-color: var(--social-action);
+    --mat-button-filled-label-text-color: var(--social-action-on);
+    --mat-button-filled-state-layer-color: var(--social-action-on);
+  }
+
+  // Stroked / outlined
+  .mat-mdc-outlined-button:not(:disabled),
+  a.mat-mdc-outlined-button:not(:disabled) {
+    --mat-button-outlined-label-text-color: var(--social-action);
+    --mat-button-outlined-outline-color: var(--social-action-outline);
+    --mat-button-outlined-state-layer-color: var(--social-action);
+  }
+
+  // Form fields
+  .mat-mdc-form-field {
+    --mat-form-field-focus-select-arrow-color: var(--social-action);
+    --mat-form-field-focus-label-text-color: var(--social-action);
+    --mat-form-field-outlined-focus-outline-color: var(--social-action);
+    --mat-form-field-outlined-focus-label-text-color: var(--social-action);
+    --mat-form-field-filled-focus-active-indicator-color: var(--social-action);
+    --mat-form-field-filled-focus-label-text-color: var(--social-action);
+  }
+
+  // Checkbox (create post — private)
+  .mat-mdc-checkbox {
+    --mat-checkbox-selected-focus-icon-color: var(--social-action);
+    --mat-checkbox-selected-hover-icon-color: var(--social-action);
+    --mat-checkbox-selected-icon-color: var(--social-action);
+    --mat-checkbox-selected-pressed-icon-color: var(--social-action);
+  }
+
+  // Progress spinners
+  .mat-mdc-progress-spinner {
+    --mat-progress-spinner-active-indicator-color: var(--social-action);
+  }
+
+  // Plain text links (search profiles, etc.) — not navbar brand or comment authors
+  a:not([class*='mat-']):not(.brand):not(.comment-author) {
+    color: var(--social-link);
+  }
+
+  a:not([class*='mat-']):not(.brand):not(.comment-author):hover {
+    color: var(--social-link-hover);
+  }
+}
+
+body.dark-mode app-main-social-layout {
+  --social-nav-bg: #0f2830;
+  --social-page-bg: #141b1f;
+  --social-footer-bg: #0f1418;
+  --social-footer-border: #2a353c;
+  --social-action: #45b8c7;
+  --social-action-strong: #45b8c7;
+  --social-action-outline: #5fc9d6;
+  --social-action-container: #1e3a42;
+  --social-link: #5fc9d6;
+  --social-link-hover: #7ad4df;
+  --social-message-sent-bg: #1e3a42;
+
+  --mat-sys-on-primary-container: #c5e8ee;
+}

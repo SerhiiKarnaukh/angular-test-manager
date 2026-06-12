@@ -13,7 +13,19 @@
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  padding: 0 24px 24px;
+  padding: 0 16px 16px;
+}
+
+@media (max-width: 599px) {
+  .loading-card,
+  .comment-form-card {
+    margin-bottom: 16px;
+    padding: 16px;
+  }
+
+  .form-actions {
+    padding: 0 12px 12px;
+  }
 }
 
 mat-card-content {
