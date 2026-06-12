@@ -24,7 +24,7 @@ describe('VueAppsApiService', () => {
   it('fetchApps calls list endpoint', () => {
     service.fetchApps().subscribe();
 
-    const request = httpMock.expectOne('/api/v1/vue-apps/');
+    const request = httpMock.expectOne('/api/v1/angular-apps/');
     expect(request.request.method).toBe('GET');
     request.flush([]);
   });
@@ -34,7 +34,7 @@ describe('VueAppsApiService', () => {
       expect(apps).toEqual([]);
     });
 
-    const request = httpMock.expectOne('/api/v1/vue-apps/search/');
+    const request = httpMock.expectOne('/api/v1/angular-apps/search/');
     expect(request.request.method).toBe('POST');
     expect(request.request.body).toEqual({ query: 'taberna' });
     request.flush([]);
@@ -45,7 +45,7 @@ describe('VueAppsApiService', () => {
       expect(apps).toEqual([]);
     });
 
-    const request = httpMock.expectOne('/api/v1/vue-apps/search/');
+    const request = httpMock.expectOne('/api/v1/angular-apps/search/');
     request.flush({ projects: [] });
   });
 });

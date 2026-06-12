@@ -5,7 +5,7 @@ import { map, Observable } from 'rxjs';
 import { VueApp, VueAppsSearchResponse } from './vue-app.models';
 import { normalizeVueAppsSearchResponse } from './vue-apps-response.utils';
 
-const BASE_URL = '/api/v1/vue-apps';
+const BASE_URL = '/api/v1/angular-apps';
 
 @Injectable({ providedIn: 'root' })
 export class VueAppsApiService {

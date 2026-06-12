@@ -25,7 +25,7 @@ describe('AppsManagerStore', () => {
 
   it('loads apps into state', async () => {
     const loadPromise = store.loadApps();
-    const request = httpMock.expectOne('/api/v1/vue-apps/');
+    const request = httpMock.expectOne('/api/v1/angular-apps/');
     request.flush([{ id: 1, title: 'Demo', photo: '', url: '', view_url: '' }]);
     await loadPromise;
 
@@ -35,7 +35,7 @@ describe('AppsManagerStore', () => {
 
   it('stores search query and results', async () => {
     const searchPromise = store.search('taberna');
-    const request = httpMock.expectOne('/api/v1/vue-apps/search/');
+    const request = httpMock.expectOne('/api/v1/angular-apps/search/');
     request.flush([]);
     await searchPromise;
 
