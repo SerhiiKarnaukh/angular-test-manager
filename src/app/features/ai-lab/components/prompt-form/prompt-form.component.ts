@@ -1,5 +1,13 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgForm,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -17,10 +25,19 @@ import {
 } from '@features/ai-lab/data-access/ai-lab.models';
 import { AiLabStore } from '@features/ai-lab/data-access/ai-lab.store';
 
+const PROMPT_MAX_LENGTH = 500;
+
+class TouchedOnlyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    void form;
+    return !!(control && control.invalid && control.touched);
+  }
+}
+
 @Component({
   selector: 'app-prompt-form',
   imports: [
-    FormsModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -29,6 +46,7 @@ import { AiLabStore } from '@features/ai-lab/data-access/ai-lab.store';
     MatDividerModule,
     MatProgressSpinnerModule,
   ],
+  providers: [{ provide: ErrorStateMatcher, useClass: TouchedOnlyErrorStateMatcher }],
   templateUrl: './prompt-form.component.html',
   styleUrl: './prompt-form.component.scss',
 })
@@ -37,37 +55,62 @@ export class PromptFormComponent {
   private readonly store = inject(AiLabStore);
   private readonly alert = inject(AlertService);
 
-  protected readonly body = signal('');
   protected readonly promptImages = this.store.promptImages;
   protected readonly uploadingImages = this.store.uploadingImages;
+  protected readonly isSubmitting = signal(false);
 
-  protected readonly mode = computed(() => this.resolveMode(this.router.url));
-  protected readonly showAddImages = computed(() => this.mode() === 'chat');
-  protected readonly submitLabel = computed(() =>
-    this.mode() === 'image' || this.mode() === 'voice' ? 'Generate' : 'Ask Me',
-  );
+  protected readonly form = new FormGroup({
+    prompt: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.maxLength(PROMPT_MAX_LENGTH)],
+    }),
+  });
+
+  protected get promptLength(): number {
+    return this.form.controls.prompt.value.length;
+  }
+
+  protected get showAddImages(): boolean {
+    return this.resolveMode() === 'chat';
+  }
+
+  protected get submitLabel(): string {
+    const mode = this.resolveMode();
+    return mode === 'image' || mode === 'voice' ? 'Generate' : 'Ask Me';
+  }
 
   protected async submitForm(): Promise<void> {
-    const question = this.body().trim();
+    const question = this.form.controls.prompt.value.trim();
     if (!question) {
+      this.form.controls.prompt.markAsTouched();
       return;
     }
 
-    this.body.set('');
+    this.isSubmitting.set(true);
 
-    switch (this.mode()) {
-      case 'image':
-        await this.store.generateImage(question);
-        break;
-      case 'voice':
-        await this.store.generateVoice(question);
-        break;
-      case 'realtime':
-        await this.store.sendRealtimeMessage(question);
-        break;
-      default:
-        await this.store.sendChatMessage(question);
+    try {
+      await this.dispatchPrompt(question);
+      this.resetPromptField();
+    } finally {
+      this.isSubmitting.set(false);
     }
+  }
+
+  protected promptFieldError(): string | null {
+    const control = this.form.controls.prompt;
+    if (!control.touched || !control.errors) {
+      return null;
+    }
+
+    if (control.errors['required']) {
+      return 'Prompt is required';
+    }
+
+    if (control.errors['maxlength']) {
+      return `Maximum length is ${PROMPT_MAX_LENGTH} characters`;
+    }
+
+    return 'Invalid prompt';
   }
 
   protected handleKeydown(event: KeyboardEvent): void {
@@ -102,7 +145,31 @@ export class PromptFormComponent {
     void this.store.deletePromptImage(index);
   }
 
-  private resolveMode(url: string): PromptFormMode {
+  private resetPromptField(): void {
+    this.form.controls.prompt.setValue('');
+    this.form.controls.prompt.markAsPristine();
+    this.form.controls.prompt.markAsUntouched();
+  }
+
+  private async dispatchPrompt(question: string): Promise<void> {
+    switch (this.resolveMode()) {
+      case 'image':
+        await this.store.generateImage(question);
+        break;
+      case 'voice':
+        await this.store.generateVoice(question);
+        break;
+      case 'realtime':
+        await this.store.sendRealtimeMessage(question);
+        break;
+      default:
+        await this.store.sendChatMessage(question);
+    }
+  }
+
+  private resolveMode(): PromptFormMode {
+    const url = this.router.url.split('?')[0];
+
     if (url.includes('/image-generator')) {
       return 'image';
     }
