@@ -12,12 +12,17 @@
         <mat-icon>grid_view</mat-icon>
         Apps Manager
       </button>
-      <mat-menu #appsMenu="matMenu">
+      <mat-menu #appsMenu="matMenu" class="social-nav-menu">
         <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
           <mat-icon>public</mat-icon>
           All Apps
         </a>
-        <a mat-menu-item routerLink="/">
+        <a
+          mat-menu-item
+          routerLink="/"
+          routerLinkActive="menu-item-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <mat-icon>view_module</mat-icon>
           Angular Apps
         </a>
@@ -79,38 +84,43 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <mat-menu #mobileMenu="matMenu">
+    <mat-menu #mobileMenu="matMenu" class="social-nav-menu">
       <button mat-menu-item type="button" [matMenuTriggerFor]="mobileAppsMenu">
         <mat-icon>grid_view</mat-icon>
         Apps Manager
       </button>
-      <mat-menu #mobileAppsMenu="matMenu">
+      <mat-menu #mobileAppsMenu="matMenu" class="social-nav-menu">
         <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
           <mat-icon>public</mat-icon>
           All Apps
         </a>
-        <a mat-menu-item routerLink="/">
+        <a
+          mat-menu-item
+          routerLink="/"
+          routerLinkActive="menu-item-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <mat-icon>view_module</mat-icon>
           Angular Apps
         </a>
       </mat-menu>
 
-      <a mat-menu-item routerLink="/social/home">
+      <a mat-menu-item routerLink="/social/home" routerLinkActive="menu-item-active">
         <mat-icon>home</mat-icon>
         Main
       </a>
 
       @if (!auth.isAuthenticated()) {
-        <a mat-menu-item routerLink="/social/login">
+        <a mat-menu-item routerLink="/social/login" routerLinkActive="menu-item-active">
           <mat-icon>login</mat-icon>
           Login
         </a>
-        <a mat-menu-item routerLink="/social/signup">
+        <a mat-menu-item routerLink="/social/signup" routerLinkActive="menu-item-active">
           <mat-icon>person_add</mat-icon>
           Signup
         </a>
       } @else {
-        <a mat-menu-item routerLink="/social/chat">
+        <a mat-menu-item routerLink="/social/chat" routerLinkActive="menu-item-active">
           <mat-icon>chat</mat-icon>
           Chat
         </a>
@@ -125,19 +135,23 @@
         Theme
       </button>
 
-      <a mat-menu-item routerLink="/social/search">
+      <a mat-menu-item routerLink="/social/search" routerLinkActive="menu-item-active">
         <mat-icon>search</mat-icon>
         Search
       </a>
 
       @if (auth.isAuthenticated()) {
-        <a mat-menu-item routerLink="/social/notifications">
+        <a mat-menu-item routerLink="/social/notifications" routerLinkActive="menu-item-active">
           <mat-icon>notifications</mat-icon>
           Notifications ({{ unreadCount() }})
         </a>
 
         @if (user()?.slug) {
-          <a mat-menu-item [routerLink]="['/social/profile', user()!.slug]">
+          <a
+            mat-menu-item
+            [routerLink]="['/social/profile', user()!.slug]"
+            routerLinkActive="menu-item-active"
+          >
             <mat-icon>account_circle</mat-icon>
             Profile
           </a>

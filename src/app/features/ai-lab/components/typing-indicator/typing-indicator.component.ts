@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background-color: #999;
+      background-color: var(--ai-lab-action, #0094e0);
       animation: typing 1.4s infinite ease-in-out;
     }
 

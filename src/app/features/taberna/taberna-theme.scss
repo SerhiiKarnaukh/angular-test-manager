@@ -125,3 +125,25 @@ body.dark-mode .taberna-search-dialog {
   --taberna-action-outline: #d4ad82;
   --taberna-heading: #e8dcc8;
 }
+
+.taberna-nav-menu {
+  .mat-mdc-menu-item.menu-item-active {
+    background-color: rgba(166, 124, 82, 0.14);
+    color: #a67c52;
+
+    .mat-icon {
+      color: #a67c52;
+    }
+  }
+}
+
+body.dark-mode .taberna-nav-menu {
+  .mat-mdc-menu-item.menu-item-active {
+    background-color: rgba(196, 154, 108, 0.16);
+    color: #c49a6c;
+
+    .mat-icon {
+      color: #c49a6c;
+    }
+  }
+}

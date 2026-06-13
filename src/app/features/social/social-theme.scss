@@ -99,3 +99,25 @@ body.dark-mode app-main-social-layout {
 
   --mat-sys-on-primary-container: #c5e8ee;
 }
+
+.social-nav-menu {
+  .mat-mdc-menu-item.menu-item-active {
+    background-color: rgba(42, 143, 158, 0.14);
+    color: #2a8f9e;
+
+    .mat-icon {
+      color: #2a8f9e;
+    }
+  }
+}
+
+body.dark-mode .social-nav-menu {
+  .mat-mdc-menu-item.menu-item-active {
+    background-color: rgba(69, 184, 199, 0.16);
+    color: #45b8c7;
+
+    .mat-icon {
+      color: #45b8c7;
+    }
+  }
+}

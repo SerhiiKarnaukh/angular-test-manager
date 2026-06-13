@@ -1,6 +1,12 @@
 .ai-lab-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   padding: 24px 16px 32px;
-  text-align: center;
+  background-color: var(--ai-lab-footer-bg, #f0f4fc);
+  border-top: 1px solid var(--ai-lab-footer-border, #c5d4e8);
+  color: var(--ai-lab-footer-text, #1a2d4a);
 }
 
 .footer-links {
@@ -10,6 +16,12 @@
   gap: 4px;
 }
 
+.footer-links a {
+  color: var(--ai-lab-action, #0094e0);
+}
+
 .footer-copy {
-  margin: 16px 0 0;
+  margin: 0;
+  text-align: center;
+  color: var(--ai-lab-footer-text, #1a2d4a);
 }

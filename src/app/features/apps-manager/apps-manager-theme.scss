@@ -125,3 +125,25 @@ body.dark-mode .apps-manager-search-dialog {
   --am-action-outline: #5ee0f0;
   --am-heading: #7dd3e8;
 }
+
+.apps-manager-nav-menu {
+  .mat-mdc-menu-item.menu-item-active {
+    background-color: rgba(30, 184, 212, 0.14);
+    color: #1eb8d4;
+
+    .mat-icon {
+      color: #1eb8d4;
+    }
+  }
+}
+
+body.dark-mode .apps-manager-nav-menu {
+  .mat-mdc-menu-item.menu-item-active {
+    background-color: rgba(61, 213, 232, 0.16);
+    color: #3dd5e8;
+
+    .mat-icon {
+      color: #3dd5e8;
+    }
+  }
+}

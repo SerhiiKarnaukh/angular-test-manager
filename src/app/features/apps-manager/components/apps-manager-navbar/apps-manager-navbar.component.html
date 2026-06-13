@@ -15,12 +15,17 @@
         <mat-icon>grid_view</mat-icon>
         Apps Manager
       </button>
-      <mat-menu #appsMenu="matMenu" class="nav-dropdown">
+      <mat-menu #appsMenu="matMenu" class="apps-manager-nav-menu">
         <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
           <mat-icon>public</mat-icon>
           All Apps
         </a>
-        <a mat-menu-item routerLink="/">
+        <a
+          mat-menu-item
+          routerLink="/"
+          routerLinkActive="menu-item-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <mat-icon>view_module</mat-icon>
           Angular Apps
         </a>
@@ -82,17 +87,23 @@
       <mat-icon>{{ mobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
     </button>
 
-    <mat-menu #mobileMenu="matMenu" class="nav-dropdown">
+    <mat-menu #mobileMenu="matMenu" class="apps-manager-nav-menu">
       <button mat-menu-item type="button" [matMenuTriggerFor]="mobileAppsMenu">
         <mat-icon>grid_view</mat-icon>
         Apps Manager
       </button>
-      <mat-menu #mobileAppsMenu="matMenu">
+      <mat-menu #mobileAppsMenu="matMenu" class="apps-manager-nav-menu">
         <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener" (click)="closeMobileMenu()">
           <mat-icon>public</mat-icon>
           All Apps
         </a>
-        <a mat-menu-item routerLink="/" (click)="closeMobileMenu()">
+        <a
+          mat-menu-item
+          routerLink="/"
+          routerLinkActive="menu-item-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMobileMenu()"
+        >
           <mat-icon>view_module</mat-icon>
           Angular Apps
         </a>

@@ -7,7 +7,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { map } from 'rxjs';
 
 import { environment } from '@env/environment';
@@ -19,6 +19,7 @@ import { AppsManagerSearchDialogComponent } from '../apps-manager-search-dialog/
   selector: 'app-apps-manager-navbar',
   imports: [
     RouterLink,
+    RouterLinkActive,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,

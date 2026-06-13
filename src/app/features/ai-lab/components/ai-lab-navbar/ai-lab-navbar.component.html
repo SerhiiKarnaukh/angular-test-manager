@@ -12,9 +12,14 @@
         <mat-icon>settings</mat-icon>
         AI Services
       </button>
-      <mat-menu #servicesMenu="matMenu">
+      <mat-menu #servicesMenu="matMenu" class="ai-lab-nav-menu">
         @for (item of aiServices; track item.route) {
-          <a mat-menu-item [routerLink]="item.route">
+          <a
+            mat-menu-item
+            [routerLink]="item.route"
+            routerLinkActive="menu-item-active"
+            [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+          >
             <mat-icon>{{ item.icon }}</mat-icon>
             {{ item.title }}
           </a>
@@ -25,12 +30,17 @@
         <mat-icon>apps</mat-icon>
         Apps Manager
       </button>
-      <mat-menu #appsMenu="matMenu">
+      <mat-menu #appsMenu="matMenu" class="ai-lab-nav-menu">
         <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
           <mat-icon>public</mat-icon>
           All Apps
         </a>
-        <a mat-menu-item routerLink="/">
+        <a
+          mat-menu-item
+          routerLink="/"
+          routerLinkActive="menu-item-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <mat-icon>view_module</mat-icon>
           Angular Apps
         </a>
@@ -62,9 +72,15 @@
         <mat-icon>settings</mat-icon>
         AI Services
       </button>
-      <mat-menu #mobileServicesMenu="matMenu">
+      <mat-menu #mobileServicesMenu="matMenu" class="ai-lab-nav-menu">
         @for (item of aiServices; track item.route) {
-          <a mat-menu-item [routerLink]="item.route" (click)="closeMobileMenu()">
+          <a
+            mat-menu-item
+            [routerLink]="item.route"
+            routerLinkActive="menu-item-active"
+            [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+            (click)="closeMobileMenu()"
+          >
             <mat-icon>{{ item.icon }}</mat-icon>
             {{ item.title }}
           </a>
@@ -75,12 +91,18 @@
         <mat-icon>apps</mat-icon>
         Apps Manager
       </button>
-      <mat-menu #mobileAppsMenu="matMenu">
+      <mat-menu #mobileAppsMenu="matMenu" class="ai-lab-nav-menu">
         <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener" (click)="closeMobileMenu()">
           <mat-icon>public</mat-icon>
           All Apps
         </a>
-        <a mat-menu-item routerLink="/" (click)="closeMobileMenu()">
+        <a
+          mat-menu-item
+          routerLink="/"
+          routerLinkActive="menu-item-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMobileMenu()"
+        >
           <mat-icon>view_module</mat-icon>
           Angular Apps
         </a>

@@ -22,7 +22,7 @@
 
 .prompt-image-wrapper {
   position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--ai-lab-card-border, rgba(10, 45, 92, 0.12));
   border-radius: 8px;
   padding: 4px;
 }

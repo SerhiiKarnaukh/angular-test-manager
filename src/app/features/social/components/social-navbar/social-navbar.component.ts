@@ -6,7 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { map } from 'rxjs';
 
 import { AuthService } from '@core/auth/auth.service';
@@ -21,6 +21,7 @@ import { ThemeService } from '@shared/services/theme.service';
   selector: 'app-social-navbar',
   imports: [
     RouterLink,
+    RouterLinkActive,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,

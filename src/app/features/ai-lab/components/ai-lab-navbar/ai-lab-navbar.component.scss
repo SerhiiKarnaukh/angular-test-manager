@@ -1,25 +1,60 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .ai-lab-toolbar {
+  --mat-toolbar-container-background-color: var(--ai-lab-nav-bg, #050a30);
+  --mat-toolbar-container-text-color: var(--ai-lab-nav-fg, #fff);
   position: sticky;
   top: 0;
   z-index: 100;
   height: var(--ai-lab-nav-height, 64px);
+  padding: 0 12px 0 16px;
+  gap: 8px;
+  box-shadow: 0 2px 12px rgba(5, 10, 48, 0.35);
+
+  .mat-mdc-button-base {
+    --mat-button-text-label-text-color: var(--ai-lab-nav-fg, #fff);
+    --mat-button-text-state-layer-color: var(--ai-lab-nav-fg, #fff);
+    --mat-icon-button-icon-color: var(--ai-lab-nav-fg, #fff);
+  }
+
+  .mat-mdc-button .mat-icon,
+  .mat-mdc-icon-button .mat-icon {
+    color: var(--ai-lab-nav-fg, #fff);
+  }
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: inherit;
+  gap: 10px;
+  color: var(--ai-lab-nav-fg, #fff);
   text-decoration: none;
+  padding: 6px 10px 6px 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    color: var(--ai-lab-nav-fg, #fff);
+    background-color: rgba(0, 212, 255, 0.12);
+  }
 }
 
 .brand-icon {
   flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  font-size: 28px;
+  color: var(--ai-lab-action, #0094e0);
 }
 
 .brand-title {
   font-size: 1.125rem;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .spacer {
@@ -29,11 +64,15 @@
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .nav-actions button[mat-button] {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.nav-actions mat-icon {
+  margin-right: 4px;
 }

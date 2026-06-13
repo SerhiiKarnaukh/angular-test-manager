@@ -17,8 +17,8 @@
   height: 32px;
   border-radius: 50%;
   flex-shrink: 0;
-  background: var(--mat-sys-primary);
-  color: var(--mat-sys-on-primary);
+  background: var(--ai-lab-action, #0094e0);
+  color: var(--ai-lab-action-on, #fff);
 }
 
 .avatar mat-icon {
@@ -31,7 +31,8 @@
   max-width: 85%;
   padding: 12px 16px;
   border-radius: 16px 16px 16px 4px;
-  background: var(--mat-sys-surface-container-high);
+  background: var(--ai-lab-message-assistant-bg, #dce8f8);
+  color: var(--ai-lab-heading, #0a2d5c);
   line-height: 1.6;
   white-space: pre-wrap;
   word-wrap: break-word;

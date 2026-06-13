@@ -12,12 +12,17 @@
         <mat-icon>grid_view</mat-icon>
         Apps Manager
       </button>
-      <mat-menu #appsMenu="matMenu" class="nav-dropdown">
+      <mat-menu #appsMenu="matMenu" class="taberna-nav-menu">
         <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
           <mat-icon>public</mat-icon>
           All Apps
         </a>
-        <a mat-menu-item routerLink="/">
+        <a
+          mat-menu-item
+          routerLink="/"
+          routerLinkActive="menu-item-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <mat-icon>view_module</mat-icon>
           Angular Apps
         </a>
@@ -27,9 +32,13 @@
         <mat-icon>category</mat-icon>
         Category
       </button>
-      <mat-menu #categoryMenu="matMenu" class="nav-dropdown">
+      <mat-menu #categoryMenu="matMenu" class="taberna-nav-menu">
         @for (category of categories(); track category.get_absolute_url) {
-          <a mat-menu-item [routerLink]="category.get_absolute_url">
+          <a
+            mat-menu-item
+            [routerLink]="category.get_absolute_url"
+            routerLinkActive="menu-item-active"
+          >
             {{ category.name }}
           </a>
         }
@@ -82,17 +91,22 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <mat-menu #mobileMenu="matMenu" class="nav-dropdown">
+    <mat-menu #mobileMenu="matMenu" class="taberna-nav-menu">
       <button mat-menu-item type="button" [matMenuTriggerFor]="mobileAppsMenu">
         <mat-icon>grid_view</mat-icon>
         Apps Manager
       </button>
-      <mat-menu #mobileAppsMenu="matMenu">
+      <mat-menu #mobileAppsMenu="matMenu" class="taberna-nav-menu">
         <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
           <mat-icon>public</mat-icon>
           All Apps
         </a>
-        <a mat-menu-item routerLink="/">
+        <a
+          mat-menu-item
+          routerLink="/"
+          routerLinkActive="menu-item-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <mat-icon>view_module</mat-icon>
           Angular Apps
         </a>
@@ -102,9 +116,13 @@
         <mat-icon>category</mat-icon>
         Category
       </button>
-      <mat-menu #mobileCategoryMenu="matMenu">
+      <mat-menu #mobileCategoryMenu="matMenu" class="taberna-nav-menu">
         @for (category of categories(); track category.get_absolute_url) {
-          <a mat-menu-item [routerLink]="category.get_absolute_url">
+          <a
+            mat-menu-item
+            [routerLink]="category.get_absolute_url"
+            routerLinkActive="menu-item-active"
+          >
             {{ category.name }}
           </a>
         }
@@ -113,16 +131,16 @@
       <mat-divider />
 
       @if (!auth.isAuthenticated()) {
-        <a mat-menu-item routerLink="/taberna/login">
+        <a mat-menu-item routerLink="/taberna/login" routerLinkActive="menu-item-active">
           <mat-icon>login</mat-icon>
           Login
         </a>
-        <a mat-menu-item routerLink="/taberna/signup">
+        <a mat-menu-item routerLink="/taberna/signup" routerLinkActive="menu-item-active">
           <mat-icon>person_add</mat-icon>
           Signup
         </a>
       } @else {
-        <a mat-menu-item routerLink="/taberna/dashboard">
+        <a mat-menu-item routerLink="/taberna/dashboard" routerLinkActive="menu-item-active">
           <mat-icon>dashboard</mat-icon>
           Dashboard
         </a>
@@ -137,7 +155,7 @@
         {{ theme.isDark() ? 'Light mode' : 'Dark mode' }}
       </button>
 
-      <a mat-menu-item routerLink="/taberna/cart">
+      <a mat-menu-item routerLink="/taberna/cart" routerLinkActive="menu-item-active">
         <mat-icon>shopping_basket</mat-icon>
         Cart ({{ cartQuantity() }})
       </a>

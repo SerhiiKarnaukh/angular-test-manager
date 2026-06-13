@@ -1,0 +1,133 @@
+// AI Lab — deep navy, electric cyan & violet glow (ai_lab.jpg banner)
+
+app-main-ai-lab-layout {
+  --ai-lab-nav-height: 64px;
+  --ai-lab-nav-bg: #050a30;
+  --ai-lab-nav-fg: #ffffff;
+  --ai-lab-page-bg: #e8eef8;
+  --ai-lab-footer-bg: #f0f4fc;
+  --ai-lab-footer-border: #c5d4e8;
+  --ai-lab-footer-text: #1a2d4a;
+  --ai-lab-heading: #0a2d5c;
+  --ai-lab-action: #0094e0;
+  --ai-lab-action-on: #ffffff;
+  --ai-lab-action-outline: #0077b6;
+  --ai-lab-accent: #6c63ff;
+  --ai-lab-accent-on: #ffffff;
+  --ai-lab-accent-container: #d8e4ff;
+  --ai-lab-link: #1565c0;
+  --ai-lab-hero-overlay: rgba(9, 30, 62, 0.7);
+  --ai-lab-message-assistant-bg: #dce8f8;
+  --ai-lab-card-border: rgba(10, 45, 92, 0.12);
+  --ai-lab-muted: rgba(26, 45, 74, 0.62);
+  --ai-lab-scroll-hint-bg: rgba(0, 212, 255, 0.14);
+  --ai-lab-scroll-hint-ring: rgba(0, 212, 255, 0.45);
+
+  --mat-sys-primary: var(--ai-lab-action);
+  --mat-sys-on-primary: var(--ai-lab-action-on);
+  --mat-sys-primary-container: #b8e0ff;
+  --mat-sys-on-primary-container: #051e3a;
+  --mat-sys-secondary-container: var(--ai-lab-accent-container);
+  --mat-sys-on-secondary-container: #1a1f4a;
+
+  .ai-lab-main {
+    background-color: var(--ai-lab-page-bg);
+  }
+
+  .mat-mdc-button:not(:disabled),
+  a.mat-mdc-button:not(:disabled) {
+    --mat-button-text-label-text-color: var(--ai-lab-action);
+    --mat-button-text-state-layer-color: var(--ai-lab-action);
+  }
+
+  .mat-mdc-button .mat-icon,
+  a.mat-mdc-button .mat-icon {
+    color: var(--ai-lab-action);
+  }
+
+  .mat-mdc-unelevated-button.mat-primary,
+  a.mat-mdc-unelevated-button.mat-primary {
+    --mat-button-filled-container-color: var(--ai-lab-action);
+    --mat-button-filled-label-text-color: var(--ai-lab-action-on);
+    --mat-button-filled-state-layer-color: var(--ai-lab-action-on);
+  }
+
+  .mat-mdc-outlined-button:not(:disabled),
+  a.mat-mdc-outlined-button:not(:disabled) {
+    --mat-button-outlined-label-text-color: var(--ai-lab-action-outline);
+    --mat-button-outlined-outline-color: var(--ai-lab-action);
+    --mat-button-outlined-state-layer-color: var(--ai-lab-action);
+  }
+
+  .mat-mdc-form-field {
+    --mat-form-field-focus-select-arrow-color: var(--ai-lab-action);
+    --mat-form-field-focus-label-text-color: var(--ai-lab-action);
+    --mat-form-field-outlined-focus-outline-color: var(--ai-lab-action);
+    --mat-form-field-outlined-focus-label-text-color: var(--ai-lab-action);
+  }
+
+  .mat-mdc-progress-spinner,
+  mat-progress-bar {
+    --mat-progress-spinner-active-indicator-color: var(--ai-lab-action);
+    --mat-progress-bar-active-indicator-color: var(--ai-lab-action);
+  }
+
+  .mat-mdc-card {
+    --mat-card-outlined-outline-color: var(--ai-lab-card-border);
+  }
+
+  a:not([class*='mat-']):not(.brand) {
+    color: var(--ai-lab-link);
+  }
+
+  a:not([class*='mat-']):not(.brand):hover {
+    color: var(--ai-lab-action);
+  }
+}
+
+body.dark-mode app-main-ai-lab-layout {
+  --ai-lab-nav-bg: #020618;
+  --ai-lab-page-bg: #0a0f1e;
+  --ai-lab-footer-bg: #060a14;
+  --ai-lab-footer-border: #1a2540;
+  --ai-lab-footer-text: #b8c9e8;
+  --ai-lab-heading: #7dd3fc;
+  --ai-lab-action: #00d4ff;
+  --ai-lab-action-outline: #5ee0f0;
+  --ai-lab-accent: #9d8cff;
+  --ai-lab-accent-container: #1a2048;
+  --ai-lab-link: #7dd3fc;
+  --ai-lab-hero-overlay: rgba(9, 30, 62, 0.75);
+  --ai-lab-message-assistant-bg: #141e36;
+  --ai-lab-card-border: rgba(125, 211, 252, 0.16);
+  --ai-lab-muted: rgba(184, 201, 232, 0.62);
+  --ai-lab-scroll-hint-bg: rgba(0, 212, 255, 0.18);
+  --ai-lab-scroll-hint-ring: rgba(0, 212, 255, 0.55);
+
+  --mat-sys-primary-container: #0c2848;
+  --mat-sys-on-primary-container: #b8e0ff;
+  --mat-sys-on-secondary-container: #d8e4ff;
+}
+
+// Mat-menu renders in CDK overlay — panelClass styles live at root (like taberna-search-dialog).
+.ai-lab-nav-menu {
+  .mat-mdc-menu-item.menu-item-active {
+    background-color: rgba(0, 148, 224, 0.14);
+    color: #0094e0;
+
+    .mat-icon {
+      color: #0094e0;
+    }
+  }
+}
+
+body.dark-mode .ai-lab-nav-menu {
+  .mat-mdc-menu-item.menu-item-active {
+    background-color: rgba(0, 212, 255, 0.16);
+    color: #00d4ff;
+
+    .mat-icon {
+      color: #00d4ff;
+    }
+  }
+}

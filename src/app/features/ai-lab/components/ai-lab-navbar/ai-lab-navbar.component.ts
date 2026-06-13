@@ -6,7 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { map } from 'rxjs';
 
 import { environment } from '@env/environment';
@@ -16,12 +16,14 @@ interface AiLabNavItem {
   title: string;
   icon: string;
   route: string;
+  exact?: boolean;
 }
 
 @Component({
   selector: 'app-ai-lab-navbar',
   imports: [
     RouterLink,
+    RouterLinkActive,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
@@ -39,7 +41,7 @@ export class AiLabNavbarComponent {
   protected readonly mobileMenuOpen = signal(false);
 
   protected readonly aiServices: AiLabNavItem[] = [
-    { title: 'Funny Chat', icon: 'chat', route: '/ai-lab' },
+    { title: 'Funny Chat', icon: 'chat', route: '/ai-lab', exact: true },
     { title: 'Image Generator', icon: 'image', route: '/ai-lab/image-generator' },
     { title: 'Voice Generator', icon: 'record_voice_over', route: '/ai-lab/voice-generator' },
     { title: 'Realtime Chat', icon: 'forum', route: '/ai-lab/realtime-chat' },
