@@ -113,4 +113,35 @@ describe('AiLabRealtimeWebSocketService', () => {
     expect(socket.close).toHaveBeenCalled();
     expect(service.isReady()).toBe(false);
   });
+
+  it('resolves connect promise on session.updated', async () => {
+    const connectPromise = service.connect('ephemeral-key', vi.fn());
+
+    getSocket().onmessage?.({
+      data: JSON.stringify({ type: 'session.updated' }),
+    } as MessageEvent<string>);
+
+    await connectPromise;
+    expect(service.isReady()).toBe(true);
+  });
+
+  it('sendMessage returns false when socket is not ready', () => {
+    expect(service.sendMessage('hello')).toBe(false);
+  });
+
+  it('ignores unrelated websocket events', async () => {
+    const onAssistantMessage = vi.fn();
+    const connectPromise = service.connect('ephemeral-key', onAssistantMessage);
+
+    getSocket().onmessage?.({
+      data: JSON.stringify({ type: 'session.created' }),
+    } as MessageEvent<string>);
+    await connectPromise;
+
+    getSocket().onmessage?.({
+      data: JSON.stringify({ type: 'response.audio.delta' }),
+    } as MessageEvent<string>);
+
+    expect(onAssistantMessage).not.toHaveBeenCalled();
+  });
 });

@@ -6,18 +6,16 @@ import { provideRouter } from '@angular/router';
 
 import { AlertService } from '@core/alert/alert.service';
 import { LoadingService } from '@core/loading/loading.service';
-import { AiLabStore } from '@features/ai-lab/data-access/ai-lab.store';
 
-import { AiHomePageComponent } from './ai-home-page.component';
+import { RealtimeChatPageComponent } from './realtime-chat-page.component';
 
-describe('AiHomePageComponent', () => {
-  let fixture: ComponentFixture<AiHomePageComponent>;
-  let store: AiLabStore;
+describe('RealtimeChatPageComponent', () => {
+  let fixture: ComponentFixture<RealtimeChatPageComponent>;
   let title: Title;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AiHomePageComponent],
+      imports: [RealtimeChatPageComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -27,9 +25,8 @@ describe('AiHomePageComponent', () => {
       ],
     }).compileComponents();
 
-    store = TestBed.inject(AiLabStore);
     title = TestBed.inject(Title);
-    fixture = TestBed.createComponent(AiHomePageComponent);
+    fixture = TestBed.createComponent(RealtimeChatPageComponent);
   });
 
   it('should create', () => {
@@ -38,23 +35,15 @@ describe('AiHomePageComponent', () => {
 
   it('should set document title on init', () => {
     fixture.detectChanges();
-    expect(title.getTitle()).toBe('Home | AI Lab');
+    expect(title.getTitle()).toBe('Realtime Chat | AI Lab');
   });
 
-  it('should render page title and prompt form', () => {
+  it('should render chat area and prompt form', () => {
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
-    expect(element.textContent).toContain('Funny Chat');
+    expect(element.textContent).toContain('Realtime Chat');
+    expect(element.querySelector('app-realtime-chat')).toBeTruthy();
     expect(element.querySelector('app-prompt-form')).toBeTruthy();
-  });
-
-  it('should render assistant response when message is available', () => {
-    store['messageState'].set('AI says hello');
-    fixture.detectChanges();
-
-    const element = fixture.nativeElement as HTMLElement;
-    expect(element.textContent).toContain('AI says hello');
-    expect(element.querySelector('.response-bubble')).toBeTruthy();
   });
 });

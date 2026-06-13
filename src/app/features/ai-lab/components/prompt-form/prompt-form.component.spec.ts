@@ -12,6 +12,7 @@ describe('PromptFormComponent', () => {
   let fixture: ComponentFixture<PromptFormComponent>;
   let httpMock: HttpTestingController;
   let router: Router;
+  let alert: AlertService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,6 +23,8 @@ describe('PromptFormComponent', () => {
         provideRouter([
           { path: 'ai-lab', component: PromptFormComponent },
           { path: 'ai-lab/image-generator', component: PromptFormComponent },
+          { path: 'ai-lab/voice-generator', component: PromptFormComponent },
+          { path: 'ai-lab/realtime-chat', component: PromptFormComponent },
         ]),
         AlertService,
         LoadingService,
@@ -30,6 +33,7 @@ describe('PromptFormComponent', () => {
 
     router = TestBed.inject(Router);
     httpMock = TestBed.inject(HttpTestingController);
+    alert = TestBed.inject(AlertService);
     fixture = TestBed.createComponent(PromptFormComponent);
   });
 
@@ -105,5 +109,93 @@ describe('PromptFormComponent', () => {
     };
     expect(component.promptFieldError()).toBe('Prompt is required');
     httpMock.expectNone('/ai-lab/');
+  });
+
+  it('should show Generate label on voice route', async () => {
+    await router.navigateByUrl('/ai-lab/voice-generator');
+    fixture.detectChanges();
+
+    const submitButton = fixture.nativeElement.querySelector(
+      'button[type="submit"]',
+    ) as HTMLButtonElement | null;
+    expect(submitButton?.textContent?.trim()).toBe('Generate');
+  });
+
+  it('should show Ask Me label on realtime route', async () => {
+    await router.navigateByUrl('/ai-lab/realtime-chat');
+    fixture.detectChanges();
+
+    const submitButton = fixture.nativeElement.querySelector(
+      'button[type="submit"]',
+    ) as HTMLButtonElement | null;
+    expect(submitButton?.textContent?.trim()).toBe('Ask Me');
+  });
+
+  it('should post image prompt to image-generator endpoint', async () => {
+    await router.navigateByUrl('/ai-lab/image-generator');
+    fixture.detectChanges();
+
+    (fixture.componentInstance as unknown as { form: { controls: { prompt: { setValue(value: string): void } } } })
+      .form.controls.prompt.setValue('Draw a cat');
+    fixture.detectChanges();
+
+    const form = fixture.nativeElement.querySelector('form') as HTMLFormElement;
+    form.requestSubmit();
+
+    const request = httpMock.expectOne('/ai-lab/image-generator/');
+    expect(request.request.body).toEqual({ question: 'Draw a cat' });
+    request.flush({ message: 'https://img.test/a.png' });
+    await fixture.whenStable();
+  });
+
+  it('should submit on Enter without Shift', async () => {
+    await router.navigateByUrl('/ai-lab');
+    fixture.detectChanges();
+
+    (fixture.componentInstance as unknown as { form: { controls: { prompt: { setValue(value: string): void } } } })
+      .form.controls.prompt.setValue('Quick question');
+    fixture.detectChanges();
+
+    const textarea = fixture.nativeElement.querySelector('textarea') as HTMLTextAreaElement;
+    textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
+    await fixture.whenStable();
+
+    const request = httpMock.expectOne('/ai-lab/');
+    request.flush({ message: 'Answer' });
+    await fixture.whenStable();
+  });
+
+  it('should show Add Images controls on chat route', async () => {
+    await router.navigateByUrl('/ai-lab');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('input[type="file"]')).toBeTruthy();
+    expect(fixture.nativeElement.textContent).toContain('Add Images');
+  });
+
+  it('should hide Add Images controls on image route', async () => {
+    await router.navigateByUrl('/ai-lab/image-generator');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('input[type="file"]')).toBeNull();
+  });
+
+  it('should reject oversized image uploads with error toast', async () => {
+    await router.navigateByUrl('/ai-lab');
+    fixture.detectChanges();
+
+    const oversized = new File(['x'], 'big.png', { type: 'image/png' });
+    Object.defineProperty(oversized, 'size', { value: 21 * 1024 * 1024 });
+    const input = fixture.nativeElement.querySelector('input[type="file"]') as HTMLInputElement;
+
+    Object.defineProperty(input, 'files', { value: [oversized] });
+    input.dispatchEvent(new Event('change'));
+    await fixture.whenStable();
+
+    expect(alert.message()?.type).toBe('error');
+    expect(alert.message()?.value[0]).toContain('big.png');
+    httpMock.expectNone('/ai-lab/upload-vision-images/');
   });
 });

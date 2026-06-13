@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
 import {
+  extractFilenameFromUrl,
   isOpenAiQuotaExceeded,
   OPENAI_QUOTA_EXCEEDED_CODE,
+  parseRealtimeAssistantMessage,
   resolveAiLabApiErrorMessage,
 } from './ai-lab.models';
 
@@ -61,5 +63,39 @@ describe('isOpenAiQuotaExceeded', () => {
     expect(isOpenAiQuotaExceeded(402, undefined)).toBe(true);
     expect(isOpenAiQuotaExceeded(500, OPENAI_QUOTA_EXCEEDED_CODE)).toBe(true);
     expect(isOpenAiQuotaExceeded(500, undefined)).toBe(false);
+  });
+});
+
+describe('parseRealtimeAssistantMessage', () => {
+  it('returns null for non response.done events', () => {
+    expect(parseRealtimeAssistantMessage({ type: 'session.created' })).toBeNull();
+  });
+
+  it('returns transcript from response.done payload', () => {
+    expect(
+      parseRealtimeAssistantMessage({
+        type: 'response.done',
+        response: { output: [{ content: [{ transcript: 'hello back' }] }] },
+      }),
+    ).toBe('hello back');
+  });
+
+  it('returns text fallback from response.done payload', () => {
+    expect(
+      parseRealtimeAssistantMessage({
+        type: 'response.done',
+        response: { output: [{ content: [{ text: 'text reply' }] }] },
+      }),
+    ).toBe('text reply');
+  });
+});
+
+describe('extractFilenameFromUrl', () => {
+  it('extracts and decodes filename from url path', () => {
+    expect(extractFilenameFromUrl('https://cdn.test/uploads/cat%20pic.png')).toBe('cat pic.png');
+  });
+
+  it('returns empty string when url has no path segment', () => {
+    expect(extractFilenameFromUrl('https://cdn.test/')).toBe('');
   });
 });

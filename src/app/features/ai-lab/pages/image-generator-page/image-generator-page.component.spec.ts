@@ -8,16 +8,16 @@ import { AlertService } from '@core/alert/alert.service';
 import { LoadingService } from '@core/loading/loading.service';
 import { AiLabStore } from '@features/ai-lab/data-access/ai-lab.store';
 
-import { AiHomePageComponent } from './ai-home-page.component';
+import { ImageGeneratorPageComponent } from './image-generator-page.component';
 
-describe('AiHomePageComponent', () => {
-  let fixture: ComponentFixture<AiHomePageComponent>;
+describe('ImageGeneratorPageComponent', () => {
+  let fixture: ComponentFixture<ImageGeneratorPageComponent>;
   let store: AiLabStore;
   let title: Title;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AiHomePageComponent],
+      imports: [ImageGeneratorPageComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -29,7 +29,7 @@ describe('AiHomePageComponent', () => {
 
     store = TestBed.inject(AiLabStore);
     title = TestBed.inject(Title);
-    fixture = TestBed.createComponent(AiHomePageComponent);
+    fixture = TestBed.createComponent(ImageGeneratorPageComponent);
   });
 
   it('should create', () => {
@@ -38,23 +38,38 @@ describe('AiHomePageComponent', () => {
 
   it('should set document title on init', () => {
     fixture.detectChanges();
-    expect(title.getTitle()).toBe('Home | AI Lab');
+    expect(title.getTitle()).toBe('Image Generator | AI Lab');
   });
 
   it('should render page title and prompt form', () => {
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
-    expect(element.textContent).toContain('Funny Chat');
+    expect(element.textContent).toContain('Image Generator');
     expect(element.querySelector('app-prompt-form')).toBeTruthy();
   });
 
-  it('should render assistant response when message is available', () => {
-    store['messageState'].set('AI says hello');
+  it('should render generated image and download action', () => {
+    store['imageUrlState'].set('https://img.test/generated.png');
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
-    expect(element.textContent).toContain('AI says hello');
-    expect(element.querySelector('.response-bubble')).toBeTruthy();
+    expect(element.querySelector('.generated-image')?.getAttribute('src')).toBe(
+      'https://img.test/generated.png',
+    );
+    expect(element.textContent).toContain('Download Image');
+  });
+
+  it('should call store download when download button is clicked', () => {
+    const downloadImage = vi.spyOn(store, 'downloadImage').mockResolvedValue(undefined);
+    store['imageUrlState'].set('https://img.test/generated.png');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector(
+      'button[type="button"]',
+    ) as HTMLButtonElement;
+    button.click();
+
+    expect(downloadImage).toHaveBeenCalledWith('https://img.test/generated.png');
   });
 });
