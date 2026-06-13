@@ -1,0 +1,45 @@
+<mat-card class="chat-card">
+  @if (messages().length === 0) {
+    <div class="empty-state">
+      <mat-icon>forum</mat-icon>
+      <p>Start a conversation</p>
+    </div>
+  } @else {
+    <div #chatArea class="chat-area">
+      @for (message of messages(); track $index) {
+        <div class="message-row" [class.message-row--sender]="isSender(message)">
+          @if (!isSender(message)) {
+            <div class="avatar avatar--assistant" aria-hidden="true">
+              <mat-icon>smart_toy</mat-icon>
+            </div>
+          }
+
+          <div
+            class="message-bubble"
+            [class.message-bubble--sender]="isSender(message)"
+            [class.message-bubble--receiver]="!isSender(message)"
+          >
+            {{ message.message }}
+          </div>
+
+          @if (isSender(message)) {
+            <div class="avatar avatar--user" aria-hidden="true">
+              <mat-icon>person</mat-icon>
+            </div>
+          }
+        </div>
+      }
+
+      @if (isLoading()) {
+        <div class="message-row">
+          <div class="avatar avatar--assistant" aria-hidden="true">
+            <mat-icon>smart_toy</mat-icon>
+          </div>
+          <div class="message-bubble message-bubble--receiver">
+            <app-ai-typing-indicator />
+          </div>
+        </div>
+      }
+    </div>
+  }
+</mat-card>

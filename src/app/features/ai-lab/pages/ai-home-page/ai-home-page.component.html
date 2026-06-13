@@ -1,0 +1,25 @@
+<app-ai-lab-page-layout title="Funny Chat" heroImage="/ai_lab.jpg">
+  @if (isLoading() || displayMessage()) {
+    <mat-card class="response-card">
+      @if (isLoading()) {
+        <div class="response-row">
+          <div class="avatar" aria-hidden="true">
+            <mat-icon>smart_toy</mat-icon>
+          </div>
+          <div class="response-bubble">
+            <app-ai-typing-indicator />
+          </div>
+        </div>
+      } @else {
+        <div class="response-row">
+          <div class="avatar" aria-hidden="true">
+            <mat-icon>smart_toy</mat-icon>
+          </div>
+          <div class="response-bubble">{{ displayMessage() }}</div>
+        </div>
+      }
+    </mat-card>
+  }
+
+  <app-prompt-form />
+</app-ai-lab-page-layout>

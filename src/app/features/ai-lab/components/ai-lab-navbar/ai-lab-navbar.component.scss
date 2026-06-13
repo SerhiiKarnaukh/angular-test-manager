@@ -1,0 +1,39 @@
+.ai-lab-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--ai-lab-nav-height, 64px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-icon {
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-actions button[mat-button] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

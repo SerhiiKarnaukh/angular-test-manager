@@ -1,0 +1,130 @@
+.hero-banner {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100svh - var(--ai-lab-nav-height, 64px));
+}
+
+.hero-bg {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  right: 0;
+  height: 140%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: transform;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100svh - var(--ai-lab-nav-height, 64px));
+  width: 100%;
+  background: linear-gradient(rgba(9, 30, 62, 0.7), rgba(9, 30, 62, 0.7));
+}
+
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+}
+
+.scroll-hint-ring {
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  animation: scroll-hint-pulse 2s ease-in-out infinite;
+}
+
+.scroll-hint-icon {
+  position: relative;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  animation: scroll-hint-bounce 2s ease-in-out infinite;
+}
+
+@keyframes scroll-hint-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes scroll-hint-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg {
+    transform: none !important;
+  }
+
+  .scroll-hint-icon,
+  .scroll-hint-ring {
+    animation: none;
+  }
+}
+
+.page-content {
+  padding: 24px 16px 48px;
+}
+
+.page-content h2 {
+  text-align: center;
+  margin: 0 0 24px;
+  font-size: clamp(1.375rem, 2.2vw, 1.625rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.content-column {
+  width: min(100%, 960px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}

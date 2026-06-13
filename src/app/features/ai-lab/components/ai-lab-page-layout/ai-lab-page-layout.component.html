@@ -1,0 +1,27 @@
+<section class="hero-banner">
+  <div
+    class="hero-bg"
+    [style.background-image]="'url(' + heroImage() + ')'"
+    [style.transform]="'translate3d(0, ' + parallaxOffset() + 'px, 0)'"
+  ></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  @if (showScrollHint()) {
+    <button
+      type="button"
+      class="scroll-hint"
+      aria-label="Scroll to content"
+      (click)="scrollToContent()"
+    >
+      <span class="scroll-hint-ring" aria-hidden="true"></span>
+      <mat-icon class="scroll-hint-icon">keyboard_arrow_down</mat-icon>
+    </button>
+  }
+</section>
+
+<section #pageContent class="page-content">
+  <h2>{{ title() }}</h2>
+  <div class="content-column">
+    <ng-content />
+  </div>
+</section>

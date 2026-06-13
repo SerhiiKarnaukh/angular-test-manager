@@ -1,0 +1,97 @@
+<mat-toolbar class="ai-lab-toolbar">
+  <a routerLink="/ai-lab" class="brand">
+    <mat-icon class="brand-icon">psychology</mat-icon>
+    <span class="brand-title">AI Lab</span>
+  </a>
+
+  <span class="spacer"></span>
+
+  @if (!isHandset()) {
+    <nav class="nav-actions">
+      <button mat-button type="button" [matMenuTriggerFor]="servicesMenu">
+        <mat-icon>settings</mat-icon>
+        AI Services
+      </button>
+      <mat-menu #servicesMenu="matMenu">
+        @for (item of aiServices; track item.route) {
+          <a mat-menu-item [routerLink]="item.route">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            {{ item.title }}
+          </a>
+        }
+      </mat-menu>
+
+      <button mat-button type="button" [matMenuTriggerFor]="appsMenu">
+        <mat-icon>apps</mat-icon>
+        Apps Manager
+      </button>
+      <mat-menu #appsMenu="matMenu">
+        <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener">
+          <mat-icon>public</mat-icon>
+          All Apps
+        </a>
+        <a mat-menu-item routerLink="/">
+          <mat-icon>view_module</mat-icon>
+          Angular Apps
+        </a>
+      </mat-menu>
+
+      <button
+        mat-icon-button
+        type="button"
+        (click)="theme.toggle()"
+        [attr.aria-label]="theme.isDark() ? 'Light mode' : 'Dark mode'"
+      >
+        <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+    </nav>
+  } @else {
+    <button
+      mat-icon-button
+      type="button"
+      aria-label="Open menu"
+      [matMenuTriggerFor]="mobileMenu"
+      (menuOpened)="mobileMenuOpen.set(true)"
+      (menuClosed)="mobileMenuOpen.set(false)"
+    >
+      <mat-icon>{{ mobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+    <mat-menu #mobileMenu="matMenu">
+      <button mat-menu-item type="button" [matMenuTriggerFor]="mobileServicesMenu">
+        <mat-icon>settings</mat-icon>
+        AI Services
+      </button>
+      <mat-menu #mobileServicesMenu="matMenu">
+        @for (item of aiServices; track item.route) {
+          <a mat-menu-item [routerLink]="item.route" (click)="closeMobileMenu()">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            {{ item.title }}
+          </a>
+        }
+      </mat-menu>
+
+      <button mat-menu-item type="button" [matMenuTriggerFor]="mobileAppsMenu">
+        <mat-icon>apps</mat-icon>
+        Apps Manager
+      </button>
+      <mat-menu #mobileAppsMenu="matMenu">
+        <a mat-menu-item [href]="remoteHost" target="_blank" rel="noopener" (click)="closeMobileMenu()">
+          <mat-icon>public</mat-icon>
+          All Apps
+        </a>
+        <a mat-menu-item routerLink="/" (click)="closeMobileMenu()">
+          <mat-icon>view_module</mat-icon>
+          Angular Apps
+        </a>
+      </mat-menu>
+
+      <mat-divider />
+
+      <button mat-menu-item type="button" (click)="theme.toggle(); closeMobileMenu()">
+        <mat-icon>{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        {{ theme.isDark() ? 'Light mode' : 'Dark mode' }}
+      </button>
+    </mat-menu>
+  }
+</mat-toolbar>

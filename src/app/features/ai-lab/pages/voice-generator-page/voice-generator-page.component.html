@@ -1,0 +1,34 @@
+<app-ai-lab-page-layout title="Voice Generator" heroImage="/v_gen_3.png">
+  @if (isLoading() || voiceMessage() || errorMessage()) {
+    <mat-card class="response-card">
+      @if (isLoading()) {
+        <div class="response-row">
+          <div class="avatar" aria-hidden="true">
+            <mat-icon>smart_toy</mat-icon>
+          </div>
+          <div class="response-bubble">
+            <app-ai-typing-indicator />
+          </div>
+        </div>
+      } @else if (errorMessage()) {
+        <div class="response-row">
+          <div class="avatar" aria-hidden="true">
+            <mat-icon>smart_toy</mat-icon>
+          </div>
+          <div class="response-bubble">{{ errorMessage() }}</div>
+        </div>
+      } @else {
+        <div class="response-row">
+          <div class="avatar" aria-hidden="true">
+            <mat-icon>smart_toy</mat-icon>
+          </div>
+          <div class="response-bubble audio-bubble">
+            <audio [src]="voiceMessage()" controls class="audio-player"></audio>
+          </div>
+        </div>
+      }
+    </mat-card>
+  }
+
+  <app-prompt-form />
+</app-ai-lab-page-layout>
