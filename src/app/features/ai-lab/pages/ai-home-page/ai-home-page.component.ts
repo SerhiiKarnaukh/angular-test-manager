@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,12 +27,9 @@ export class AiHomePageComponent implements OnInit {
   private readonly title = inject(Title);
 
   protected readonly isLoading = this.loading.isLoading;
-  protected readonly displayMessage = computed(
-    () => this.store.errorMessage() || this.store.message(),
-  );
+  protected readonly displayMessage = this.store.message;
 
   ngOnInit(): void {
     this.title.setTitle('Home | AI Lab');
-    this.store.clearErrorMessage();
   }
 }

@@ -28,7 +28,6 @@ export class VoiceGeneratorPageComponent implements OnInit {
 
   protected readonly isLoading = this.loading.isLoading;
   protected readonly voiceMessage = this.store.voiceMessage;
-  protected readonly errorMessage = this.store.errorMessage;
 
   ngOnInit(): void {
     this.title.setTitle('Voice Generator | AI Lab');

@@ -30,11 +30,9 @@ export class ImageGeneratorPageComponent implements OnInit {
 
   protected readonly isLoading = this.loading.isLoading;
   protected readonly imageUrl = this.store.imageUrl;
-  protected readonly errorMessage = this.store.errorMessage;
 
   ngOnInit(): void {
     this.title.setTitle('Image Generator | AI Lab');
-    this.store.clearErrorMessage();
   }
 
   protected downloadImage(): void {

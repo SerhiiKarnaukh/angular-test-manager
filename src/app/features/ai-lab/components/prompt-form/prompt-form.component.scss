@@ -1,5 +1,13 @@
 .prompt-form-card {
   margin-top: 0;
+
+  mat-card-content {
+    padding-top: 12px;
+  }
+
+  mat-divider {
+    margin-top: 5px;
+  }
 }
 
 .prompt-field {

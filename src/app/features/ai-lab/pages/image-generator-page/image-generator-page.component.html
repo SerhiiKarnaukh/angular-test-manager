@@ -1,5 +1,5 @@
 <app-ai-lab-page-layout title="Image Generator" heroImage="/img_gen.png">
-  @if (isLoading() || imageUrl() || errorMessage()) {
+  @if (isLoading() || imageUrl()) {
     <mat-card class="response-card">
       @if (isLoading()) {
         <div class="response-row">
@@ -9,13 +9,6 @@
           <div class="response-bubble">
             <app-ai-typing-indicator />
           </div>
-        </div>
-      } @else if (errorMessage()) {
-        <div class="response-row">
-          <div class="avatar" aria-hidden="true">
-            <mat-icon>smart_toy</mat-icon>
-          </div>
-          <div class="response-bubble">{{ errorMessage() }}</div>
         </div>
       } @else {
         <div class="image-result">

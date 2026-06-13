@@ -10,6 +10,7 @@ import {
   extractFilenameFromUrl,
   PromptImageUpload,
   RealtimeChatMessage,
+  resolveAiLabApiErrorMessage,
 } from './ai-lab.models';
 
 @Injectable({ providedIn: 'root' })
@@ -22,7 +23,6 @@ export class AiLabStore {
   private readonly messageState = signal<string | null>(null);
   private readonly imageUrlState = signal<string | null>(null);
   private readonly voiceMessageState = signal<string | null>(null);
-  private readonly errorMessageState = signal<string | null>(null);
   private readonly promptImagesState = signal<string[]>([]);
   private readonly realtimeMessagesState = signal<RealtimeChatMessage[]>([]);
   private readonly uploadingImagesState = signal(false);
@@ -30,14 +30,9 @@ export class AiLabStore {
   readonly message = this.messageState.asReadonly();
   readonly imageUrl = this.imageUrlState.asReadonly();
   readonly voiceMessage = this.voiceMessageState.asReadonly();
-  readonly errorMessage = this.errorMessageState.asReadonly();
   readonly promptImages = this.promptImagesState.asReadonly();
   readonly realtimeMessages = this.realtimeMessagesState.asReadonly();
   readonly uploadingImages = this.uploadingImagesState.asReadonly();
-
-  clearErrorMessage(): void {
-    this.errorMessageState.set(null);
-  }
 
   async sendChatMessage(question: string): Promise<void> {
     await this.runRequest(async () => {
@@ -69,7 +64,7 @@ export class AiLabStore {
       const blob = await firstValueFrom(this.api.downloadImage(filename));
       this.triggerBlobDownload(blob, filename);
     } catch (error) {
-      console.error('Error while downloading the image:', error);
+      this.setApiError(error);
     }
   }
 
@@ -105,7 +100,7 @@ export class AiLabStore {
       await firstValueFrom(this.api.deleteVisionImage(filename));
       this.promptImagesState.update((images) => images.filter((_, itemIndex) => itemIndex !== index));
     } catch (error) {
-      console.error('Error while deleting image:', error);
+      this.setApiError(error);
     }
   }
 
@@ -117,7 +112,7 @@ export class AiLabStore {
         this.loading.hide();
       });
     } catch (error) {
-      console.error('Realtime connection failed:', error);
+      this.setApiError(error);
     }
   }
 
@@ -127,7 +122,6 @@ export class AiLabStore {
     }
 
     if (!this.realtimeWs.isReady()) {
-      console.warn('WebSocket is not ready');
       return;
     }
 
@@ -157,27 +151,12 @@ export class AiLabStore {
   }
 
   private setApiError(error: unknown): void {
-    const apiMessage = this.extractApiMessage(error);
-    if (apiMessage) {
-      this.errorMessageState.set(
-        `${apiMessage} Please contact the site administrator if the issue persists.`,
-      );
-      return;
-    }
+    const apiMessage = resolveAiLabApiErrorMessage(error);
 
     this.alert.setMessage({
-      value: ['Request failed. Please try again.'],
+      value: [apiMessage ?? 'Request failed. Please try again.'],
       type: 'error',
     });
-  }
-
-  private extractApiMessage(error: unknown): string | null {
-    if (!error || typeof error !== 'object' || !('error' in error)) {
-      return null;
-    }
-
-    const payload = (error as { error?: { message?: string } }).error;
-    return payload?.message ?? null;
   }
 
   private triggerBlobDownload(blob: Blob, filename: string): void {

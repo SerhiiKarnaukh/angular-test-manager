@@ -6,7 +6,7 @@ import { AlertService } from '@core/alert/alert.service';
 import { LoadingService } from '@core/loading/loading.service';
 
 import { AiLabRealtimeWebSocketService } from './ai-lab-realtime-websocket.service';
-import { parseRealtimeAssistantMessage } from './ai-lab.models';
+import { OPENAI_QUOTA_EXCEEDED_CODE, parseRealtimeAssistantMessage } from './ai-lab.models';
 import { AiLabStore } from './ai-lab.store';
 
 describe('parseRealtimeAssistantMessage', () => {
@@ -33,6 +33,7 @@ describe('AiLabStore', () => {
   let store: AiLabStore;
   let httpMock: HttpTestingController;
   let realtimeWs: AiLabRealtimeWebSocketService;
+  let alert: AlertService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,6 +43,7 @@ describe('AiLabStore', () => {
     store = TestBed.inject(AiLabStore);
     httpMock = TestBed.inject(HttpTestingController);
     realtimeWs = TestBed.inject(AiLabRealtimeWebSocketService);
+    alert = TestBed.inject(AlertService);
   });
 
   afterEach(() => {
@@ -59,14 +61,50 @@ describe('AiLabStore', () => {
     expect(store.message()).toBe('AI says hi');
   });
 
-  it('sendChatMessage stores api error message', async () => {
+  it('sendChatMessage shows api error toast with admin suffix', async () => {
     const promise = store.sendChatMessage('hello');
 
     const request = httpMock.expectOne('/ai-lab/');
-    request.flush({ message: 'Quota exceeded' }, { status: 429, statusText: 'Too Many Requests' });
+    request.flush({ message: 'Error: upstream failed' }, { status: 500, statusText: 'Server Error' });
     await promise;
 
-    expect(store.errorMessage()).toContain('Quota exceeded');
+    expect(alert.message()?.type).toBe('error');
+    expect(alert.message()?.value[0]).toContain('Error: upstream failed');
+    expect(alert.message()?.value[0]).toContain('Please contact the site administrator');
+  });
+
+  it('sendChatMessage shows quota error toast without admin suffix', async () => {
+    const promise = store.sendChatMessage('hello');
+
+    const request = httpMock.expectOne('/ai-lab/');
+    request.flush(
+      {
+        message: 'OpenAI API credits have been exhausted.',
+        error_code: OPENAI_QUOTA_EXCEEDED_CODE,
+      },
+      { status: 402, statusText: 'Payment Required' },
+    );
+    await promise;
+
+    expect(alert.message()?.type).toBe('error');
+    expect(alert.message()?.value).toEqual(['OpenAI API credits have been exhausted.']);
+  });
+
+  it('connectRealtimeSocket shows quota error toast', async () => {
+    const promise = store.connectRealtimeSocket();
+
+    const request = httpMock.expectOne('/ai-lab/realtime-token/');
+    request.flush(
+      {
+        message: 'OpenAI API credits have been exhausted.',
+        error_code: OPENAI_QUOTA_EXCEEDED_CODE,
+      },
+      { status: 402, statusText: 'Payment Required' },
+    );
+    await promise;
+
+    expect(alert.message()?.type).toBe('error');
+    expect(alert.message()?.value).toEqual(['OpenAI API credits have been exhausted.']);
   });
 
   it('generateImage stores image url', async () => {
