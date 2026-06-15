@@ -4,11 +4,19 @@
       <app-create-post-form />
     }
 
-    @for (post of posts(); track post.id) {
-      <app-social-post-card [post]="post" />
+    @if (isLoading() && !posts().length) {
+      <app-post-list-skeleton />
+    } @else {
+      @for (post of posts(); track post.id) {
+        <app-social-post-card [post]="post" />
+      }
+
+      @if (!isLoading() && !isPaginationLoading() && !posts().length) {
+        <app-empty-state title="No posts yet." message="Be the first to share something!" />
+      }
     }
 
-    @if (isLoading() || isPaginationLoading()) {
+    @if (isPaginationLoading()) {
       <div class="loading-row">
         <mat-progress-spinner mode="indeterminate" diameter="40" />
       </div>

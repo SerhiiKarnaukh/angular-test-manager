@@ -1,13 +1,11 @@
-@if (isLoading()) {
-  <mat-progress-bar mode="indeterminate" />
-}
-
 <section class="search-section">
   <h2>Search term: "{{ query() }}"</h2>
 
-  @if (apps().length > 0) {
+  @if (isLoading()) {
+    <app-card-grid-skeleton />
+  } @else if (apps().length > 0) {
     <app-apps-grid [apps]="apps()" />
   } @else {
-    <h3 class="empty-state">Nothing was found.</h3>
+    <app-empty-state title="Nothing was found." />
   }
 </section>

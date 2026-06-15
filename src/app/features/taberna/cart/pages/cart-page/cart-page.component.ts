@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 
 import { CartItemComponent } from '@features/taberna/cart/components/cart-item/cart-item.component';
@@ -17,6 +18,7 @@ import { TabernaCartStore } from '@features/taberna/cart/data-access/taberna-car
     MatDividerModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     CartItemComponent,
   ],
   templateUrl: './cart-page.component.html',

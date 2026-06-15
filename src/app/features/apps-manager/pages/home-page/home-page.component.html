@@ -1,18 +1,18 @@
 @if (isLoading()) {
-  <mat-progress-bar mode="indeterminate" />
+  <app-card-grid-skeleton />
+} @else {
+  <section class="hero-banner">
+    <div
+      class="hero-bg"
+      [style.transform]="'translate3d(0, ' + parallaxOffset() + 'px, 0)'"
+    ></div>
+    <div class="hero-overlay">
+      <h1>Angular Applications Manager</h1>
+    </div>
+  </section>
+
+  <section class="apps-section">
+    <h2>Last Applications</h2>
+    <app-apps-grid [apps]="apps()" />
+  </section>
 }
-
-<section class="hero-banner">
-  <div
-    class="hero-bg"
-    [style.transform]="'translate3d(0, ' + parallaxOffset() + 'px, 0)'"
-  ></div>
-  <div class="hero-overlay">
-    <h1>Angular Applications Manager</h1>
-  </div>
-</section>
-
-<section class="apps-section">
-  <h2>Last Applications</h2>
-  <app-apps-grid [apps]="apps()" />
-</section>

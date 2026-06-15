@@ -2,6 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
 import { AlertService } from '@core/alert/alert.service';
+import { reportApiError } from '@shared/utils/error.utils';
 
 import { SocialChatApiService } from './social-chat.api.service';
 import { SocialChatWebSocketService } from './social-chat-websocket.service';
@@ -40,7 +41,7 @@ export class SocialChatStore {
         this.activeConversationState.set(EMPTY_ACTIVE_CONVERSATION);
       }
     } catch (error) {
-      console.error(error);
+      reportApiError(this.alert, error);
     } finally {
       this.loadingState.set(false);
     }
@@ -57,7 +58,7 @@ export class SocialChatStore {
       const conversation = await firstValueFrom(this.api.fetchChatMessages(conversationId));
       this.activeConversationState.set(conversation);
     } catch (error) {
-      console.error(error);
+      reportApiError(this.alert, error);
     }
   }
 
@@ -70,7 +71,7 @@ export class SocialChatStore {
     try {
       await firstValueFrom(this.api.sendChatMessage(conversation.id, body));
     } catch (error) {
-      console.error(error);
+      reportApiError(this.alert, error);
       throw error;
     }
   }

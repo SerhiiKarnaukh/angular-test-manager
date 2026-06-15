@@ -13,37 +13,45 @@
       </mat-card-content>
     </mat-card>
 
-    @if (profiles().length) {
-      <mat-card class="profiles-card">
-        <mat-card-content>
-          <div class="profiles-grid">
-            @for (profile of profiles(); track profile.id) {
-              <mat-card class="profile-card">
-                <mat-card-content>
-                  <img
-                    class="profile-avatar"
-                    [src]="profile.avatar_url ?? defaultAvatar"
-                    [alt]="profile.first_name"
-                  />
-                  <p class="profile-name">
-                    <a [routerLink]="['/social/profile', profile.slug]">
-                      <strong>{{ profile.first_name }} {{ profile.last_name }}</strong>
-                    </a>
-                  </p>
-                  <div class="profile-stats">
-                    <span>{{ profile.friends_count }} friends</span>
-                    <span>{{ profile.posts_count }} posts</span>
-                  </div>
-                </mat-card-content>
-              </mat-card>
-            }
-          </div>
-        </mat-card-content>
-      </mat-card>
-    }
+    @if (isLoading()) {
+      <app-post-list-skeleton />
+    } @else {
+      @if (profiles().length) {
+        <mat-card class="profiles-card">
+          <mat-card-content>
+            <div class="profiles-grid">
+              @for (profile of profiles(); track profile.id) {
+                <mat-card class="profile-card">
+                  <mat-card-content>
+                    <img
+                      class="profile-avatar"
+                      [src]="profile.avatar_url ?? defaultAvatar"
+                      [alt]="profile.first_name"
+                    />
+                    <p class="profile-name">
+                      <a [routerLink]="['/social/profile', profile.slug]">
+                        <strong>{{ profile.first_name }} {{ profile.last_name }}</strong>
+                      </a>
+                    </p>
+                    <div class="profile-stats">
+                      <span>{{ profile.friends_count }} friends</span>
+                      <span>{{ profile.posts_count }} posts</span>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
 
-    @for (post of posts(); track post.id) {
-      <app-social-post-card [post]="post" />
+      @for (post of posts(); track post.id) {
+        <app-social-post-card [post]="post" />
+      }
+
+      @if (hasSearched() && !profiles().length && !posts().length) {
+        <app-empty-state title="Nothing was found." />
+      }
     }
 
     @if (isPaginationLoading()) {

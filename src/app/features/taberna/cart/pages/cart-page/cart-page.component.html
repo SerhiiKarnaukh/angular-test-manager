@@ -4,7 +4,11 @@
 
 <section class="cart-page">
   <mat-card class="cart-card">
-    @if (hasItems()) {
+    @if (isLoading()) {
+      <mat-card-content class="cart-loading">
+        <mat-progress-spinner mode="indeterminate" diameter="40" />
+      </mat-card-content>
+    } @else if (hasItems()) {
       <mat-card-header>
         <mat-card-title>Cart Summary</mat-card-title>
       </mat-card-header>

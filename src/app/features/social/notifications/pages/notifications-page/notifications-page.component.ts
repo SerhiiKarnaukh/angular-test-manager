@@ -8,10 +8,20 @@ import { SocialPageLayoutComponent } from '@features/social/posts/components/soc
 import { TrendsComponent } from '@features/social/posts/components/trends/trends.component';
 import { SocialNotificationsStore } from '@features/social/notifications/data-access/social-notifications.store';
 import { SocialNotification } from '@features/social/notifications/data-access/social-notification.models';
+import { EmptyStateComponent } from '@shared/ui/empty-state/empty-state.component';
+import { PostListSkeletonComponent } from '@shared/ui/post-list-skeleton/post-list-skeleton.component';
 
 @Component({
   selector: 'app-notifications-page',
-  imports: [SocialPageLayoutComponent, MatCardModule, MatButtonModule, PeopleYouMayKnowComponent, TrendsComponent],
+  imports: [
+    SocialPageLayoutComponent,
+    MatCardModule,
+    MatButtonModule,
+    PeopleYouMayKnowComponent,
+    TrendsComponent,
+    EmptyStateComponent,
+    PostListSkeletonComponent,
+  ],
   templateUrl: './notifications-page.component.html',
   styleUrl: './notifications-page.component.scss',
 })
@@ -20,6 +30,7 @@ export class NotificationsPageComponent implements OnInit {
   private readonly title = inject(Title);
 
   protected readonly notifications = this.notificationsStore.notifications;
+  protected readonly isLoading = this.notificationsStore.isLoading;
 
   ngOnInit(): void {
     this.title.setTitle('Notifications | Social Network');

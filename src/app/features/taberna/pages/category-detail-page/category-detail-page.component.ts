@@ -2,14 +2,14 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { ProductsGridComponent } from '@features/taberna/components/products-grid/products-grid.component';
 import { TabernaProductStore } from '@features/taberna/data-access/taberna-product.store';
+import { CardGridSkeletonComponent } from '@shared/ui/card-grid-skeleton/card-grid-skeleton.component';
 
 @Component({
   selector: 'app-category-detail-page',
-  imports: [ProductsGridComponent, MatProgressBarModule],
+  imports: [ProductsGridComponent, CardGridSkeletonComponent],
   templateUrl: './category-detail-page.component.html',
   styleUrl: './category-detail-page.component.scss',
 })

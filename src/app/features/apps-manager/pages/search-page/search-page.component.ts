@@ -1,14 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppsManagerStore } from '@features/apps-manager/data-access/apps-manager.store';
 import { AppsGridComponent } from '@features/apps-manager/components/apps-grid/apps-grid.component';
+import { CardGridSkeletonComponent } from '@shared/ui/card-grid-skeleton/card-grid-skeleton.component';
+import { EmptyStateComponent } from '@shared/ui/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-search-page',
-  imports: [AppsGridComponent, MatProgressBarModule],
+  imports: [AppsGridComponent, CardGridSkeletonComponent, EmptyStateComponent],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
 })

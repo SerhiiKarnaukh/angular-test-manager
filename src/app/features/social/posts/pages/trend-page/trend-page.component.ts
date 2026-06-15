@@ -18,6 +18,8 @@ import { SocialPageLayoutComponent } from '@features/social/posts/components/soc
 import { SocialPostCardComponent } from '@features/social/posts/components/social-post-card/social-post-card.component';
 import { TrendsComponent } from '@features/social/posts/components/trends/trends.component';
 import { SocialPostsStore } from '@features/social/posts/data-access/social-posts.store';
+import { EmptyStateComponent } from '@shared/ui/empty-state/empty-state.component';
+import { PostListSkeletonComponent } from '@shared/ui/post-list-skeleton/post-list-skeleton.component';
 import { isPageBottomReached } from '@features/social/posts/utils/scroll.utils';
 
 @Component({
@@ -27,6 +29,8 @@ import { isPageBottomReached } from '@features/social/posts/utils/scroll.utils';
     SocialPostCardComponent,
     PeopleYouMayKnowComponent,
     TrendsComponent,
+    EmptyStateComponent,
+    PostListSkeletonComponent,
     MatCardModule,
     MatProgressSpinnerModule,
   ],

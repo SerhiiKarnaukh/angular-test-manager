@@ -10,17 +10,17 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { fromEvent } from 'rxjs';
 
 import { AppsGridComponent } from '@features/apps-manager/components/apps-grid/apps-grid.component';
 import { AppsManagerStore } from '@features/apps-manager/data-access/apps-manager.store';
+import { CardGridSkeletonComponent } from '@shared/ui/card-grid-skeleton/card-grid-skeleton.component';
 
 const PARALLAX_FACTOR = 0.45;
 
 @Component({
   selector: 'app-home-page',
-  imports: [AppsGridComponent, MatProgressBarModule],
+  imports: [AppsGridComponent, CardGridSkeletonComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })

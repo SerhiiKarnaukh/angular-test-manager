@@ -3,11 +3,14 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { SOCIAL_DEFAULT_AVATAR } from '@features/social/posts/data-access/social-post.models';
 import { TrendsComponent } from '@features/social/posts/components/trends/trends.component';
 import { PeopleYouMayKnowComponent } from '@features/social/profiles/components/people-you-may-know/people-you-may-know.component';
 import { SocialProfileStore } from '@features/social/profiles/data-access/social-profile.store';
+import { EmptyStateComponent } from '@shared/ui/empty-state/empty-state.component';
+import { PostListSkeletonComponent } from '@shared/ui/post-list-skeleton/post-list-skeleton.component';
 
 @Component({
   selector: 'app-friends-page',
@@ -17,6 +20,9 @@ import { SocialProfileStore } from '@features/social/profiles/data-access/social
     TrendsComponent,
     MatCardModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
+    EmptyStateComponent,
+    PostListSkeletonComponent,
   ],
   templateUrl: './friends-page.component.html',
   styleUrl: './friends-page.component.scss',
@@ -29,6 +35,7 @@ export class FriendsPageComponent implements OnInit {
   protected readonly profile = this.profileStore.currentProfile;
   protected readonly friendshipRequests = this.profileStore.friendshipRequests;
   protected readonly friends = this.profileStore.currentProfileFriends;
+  protected readonly isLoading = this.profileStore.isLoading;
   protected readonly defaultAvatar = SOCIAL_DEFAULT_AVATAR;
 
   protected readonly profileName = computed(() => {

@@ -1,6 +1,8 @@
 <app-social-page-layout>
   <div main>
-    @if (notifications().length) {
+    @if (isLoading()) {
+      <app-post-list-skeleton [count]="2" />
+    } @else if (notifications().length) {
       @for (notification of notifications(); track notification.id) {
         <mat-card class="notification-card">
           <mat-card-content>
@@ -14,7 +16,7 @@
         </mat-card>
       }
     } @else {
-      <h2 class="empty-state">You don't have any unread notifications!</h2>
+      <app-empty-state title="You don't have any unread notifications!" />
     }
   </div>
 

@@ -3,17 +3,6 @@ import { Routes } from '@angular/router';
 import { authGuard } from '@core/auth/auth.guard';
 
 import { MainTabernaLayoutComponent } from './layouts/main-taberna-layout/main-taberna-layout.component';
-import { CategoryDetailPageComponent } from './pages/category-detail-page/category-detail-page.component';
-import { ProductDetailPageComponent } from './pages/product-detail-page/product-detail-page.component';
-import { ProductHomePageComponent } from './pages/product-home-page/product-home-page.component';
-import { CartPageComponent } from './cart/pages/cart-page/cart-page.component';
-import { CheckoutPageComponent } from './orders/pages/checkout-page/checkout-page.component';
-import { OrderFailedPageComponent } from './orders/pages/order-failed-page/order-failed-page.component';
-import { OrderSuccessPageComponent } from './orders/pages/order-success-page/order-success-page.component';
-import { TabernaSearchPageComponent } from './pages/taberna-search-page/taberna-search-page.component';
-import { TabernaDashboardPageComponent } from './profiles/pages/dashboard-page/dashboard-page.component';
-import { TabernaLoginPageComponent } from './profiles/pages/taberna-login-page/taberna-login-page.component';
-import { TabernaSignupPageComponent } from './profiles/pages/taberna-signup-page/taberna-signup-page.component';
 
 export const TABERNA_ROUTES: Routes = [
   {
@@ -22,49 +11,82 @@ export const TABERNA_ROUTES: Routes = [
     children: [
       {
         path: 'taberna',
-        component: ProductHomePageComponent,
+        loadComponent: () =>
+          import('./pages/product-home-page/product-home-page.component').then(
+            (m) => m.ProductHomePageComponent,
+          ),
       },
       {
         path: 'taberna/signup',
-        component: TabernaSignupPageComponent,
+        loadComponent: () =>
+          import('./profiles/pages/taberna-signup-page/taberna-signup-page.component').then(
+            (m) => m.TabernaSignupPageComponent,
+          ),
       },
       {
         path: 'taberna/login',
-        component: TabernaLoginPageComponent,
+        loadComponent: () =>
+          import('./profiles/pages/taberna-login-page/taberna-login-page.component').then(
+            (m) => m.TabernaLoginPageComponent,
+          ),
       },
       {
         path: 'taberna/dashboard',
-        component: TabernaDashboardPageComponent,
+        loadComponent: () =>
+          import('./profiles/pages/dashboard-page/dashboard-page.component').then(
+            (m) => m.TabernaDashboardPageComponent,
+          ),
         canActivate: [authGuard],
+        data: { authJWT: true },
       },
       {
         path: 'taberna-store/category/:category_slug/:product_slug',
-        component: ProductDetailPageComponent,
+        loadComponent: () =>
+          import('./pages/product-detail-page/product-detail-page.component').then(
+            (m) => m.ProductDetailPageComponent,
+          ),
       },
       {
         path: 'taberna-store/category/:category_slug',
-        component: CategoryDetailPageComponent,
+        loadComponent: () =>
+          import('./pages/category-detail-page/category-detail-page.component').then(
+            (m) => m.CategoryDetailPageComponent,
+          ),
       },
       {
         path: 'taberna/search',
-        component: TabernaSearchPageComponent,
+        loadComponent: () =>
+          import('./pages/taberna-search-page/taberna-search-page.component').then(
+            (m) => m.TabernaSearchPageComponent,
+          ),
       },
       {
         path: 'taberna/cart',
-        component: CartPageComponent,
+        loadComponent: () =>
+          import('./cart/pages/cart-page/cart-page.component').then((m) => m.CartPageComponent),
       },
       {
         path: 'taberna/cart/checkout',
-        component: CheckoutPageComponent,
+        loadComponent: () =>
+          import('./orders/pages/checkout-page/checkout-page.component').then(
+            (m) => m.CheckoutPageComponent,
+          ),
         canActivate: [authGuard],
+        data: { authJWT: true },
       },
       {
         path: 'taberna/cart/success',
-        component: OrderSuccessPageComponent,
+        loadComponent: () =>
+          import('./orders/pages/order-success-page/order-success-page.component').then(
+            (m) => m.OrderSuccessPageComponent,
+          ),
       },
       {
         path: 'taberna/cart/failed',
-        component: OrderFailedPageComponent,
+        loadComponent: () =>
+          import('./orders/pages/order-failed-page/order-failed-page.component').then(
+            (m) => m.OrderFailedPageComponent,
+          ),
       },
     ],
   },

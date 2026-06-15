@@ -10,17 +10,17 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { fromEvent } from 'rxjs';
 
 import { ProductsGridComponent } from '@features/taberna/components/products-grid/products-grid.component';
 import { TabernaProductStore } from '@features/taberna/data-access/taberna-product.store';
+import { CardGridSkeletonComponent } from '@shared/ui/card-grid-skeleton/card-grid-skeleton.component';
 
 const PARALLAX_FACTOR = 0.45;
 
 @Component({
   selector: 'app-product-home-page',
-  imports: [ProductsGridComponent, MatProgressBarModule],
+  imports: [ProductsGridComponent, CardGridSkeletonComponent],
   templateUrl: './product-home-page.component.html',
   styleUrl: './product-home-page.component.scss',
 })

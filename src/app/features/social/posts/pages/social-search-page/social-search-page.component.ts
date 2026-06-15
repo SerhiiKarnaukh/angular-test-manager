@@ -1,11 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import {
-  Component,
-  DestroyRef,
-  inject,
-  OnInit,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -23,6 +17,8 @@ import { SocialPostCardComponent } from '@features/social/posts/components/socia
 import { TrendsComponent } from '@features/social/posts/components/trends/trends.component';
 import { SocialPostsStore } from '@features/social/posts/data-access/social-posts.store';
 import { SOCIAL_DEFAULT_AVATAR } from '@features/social/posts/data-access/social-post.models';
+import { EmptyStateComponent } from '@shared/ui/empty-state/empty-state.component';
+import { PostListSkeletonComponent } from '@shared/ui/post-list-skeleton/post-list-skeleton.component';
 import { isPageBottomReached } from '@features/social/posts/utils/scroll.utils';
 
 @Component({
@@ -39,6 +35,8 @@ import { isPageBottomReached } from '@features/social/posts/utils/scroll.utils';
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    EmptyStateComponent,
+    PostListSkeletonComponent,
   ],
   templateUrl: './social-search-page.component.html',
   styleUrl: './social-search-page.component.scss',
@@ -51,7 +49,9 @@ export class SocialSearchPageComponent implements OnInit {
 
   protected readonly posts = this.store.searchPosts;
   protected readonly profiles = this.store.searchProfiles;
+  protected readonly isLoading = this.store.isLoading;
   protected readonly isPaginationLoading = this.store.isPaginationLoading;
+  protected readonly hasSearched = computed(() => this.store.searchQuery().length > 0);
   protected readonly defaultAvatar = SOCIAL_DEFAULT_AVATAR;
 
   protected readonly queryControl = new FormControl('', {

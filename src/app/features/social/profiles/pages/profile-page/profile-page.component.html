@@ -54,8 +54,16 @@
       <app-create-post-form />
     }
 
-    @for (post of posts(); track post.id) {
-      <app-social-post-card [post]="post" />
+    @if (isLoading() && !posts().length) {
+      <app-post-list-skeleton />
+    } @else {
+      @for (post of posts(); track post.id) {
+        <app-social-post-card [post]="post" />
+      }
+
+      @if (!isLoading() && !isPaginationLoading() && !posts().length && profileLoaded()) {
+        <app-empty-state title="No posts yet." />
+      }
     }
 
     @if (isPaginationLoading()) {

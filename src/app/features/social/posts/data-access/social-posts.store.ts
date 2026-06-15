@@ -141,7 +141,7 @@ export class SocialPostsStore {
       const trends = await firstValueFrom(this.api.fetchTrends());
       this.trendsState.set(trends);
     } catch (error) {
-      console.error(error);
+      this.handleError(error);
     }
   }
 

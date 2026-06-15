@@ -2,7 +2,9 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
+import { AlertService } from '@core/alert/alert.service';
 import { AuthService } from '@core/auth/auth.service';
+import { reportApiError } from '@shared/utils/error.utils';
 import { SocialProfileStore } from '@features/social/profiles/data-access/social-profile.store';
 
 import { SocialNotificationWebSocketService } from './social-notification-websocket.service';
@@ -13,13 +15,16 @@ import { SocialNotification } from './social-notification.models';
 export class SocialNotificationsStore {
   private readonly api = inject(SocialNotificationsApiService);
   private readonly auth = inject(AuthService);
+  private readonly alert = inject(AlertService);
   private readonly profileStore = inject(SocialProfileStore);
   private readonly notificationWebSocket = inject(SocialNotificationWebSocketService);
   private readonly router = inject(Router);
 
   private readonly notificationsState = signal<SocialNotification[]>([]);
+  private readonly loadingState = signal(false);
 
   readonly notifications = this.notificationsState.asReadonly();
+  readonly isLoading = this.loadingState.asReadonly();
   readonly unreadCount = computed(() => this.notificationsState().length);
 
   async loadNotifications(): Promise<void> {
@@ -28,11 +33,15 @@ export class SocialNotificationsStore {
       return;
     }
 
+    this.loadingState.set(true);
+
     try {
       const notifications = await firstValueFrom(this.api.fetchNotifications());
       this.notificationsState.set(notifications);
     } catch (error) {
-      console.error(error);
+      reportApiError(this.alert, error);
+    } finally {
+      this.loadingState.set(false);
     }
   }
 
@@ -62,7 +71,7 @@ export class SocialNotificationsStore {
       this.notificationsState.update((items) => items.filter((item) => item.id !== notification.id));
       await this.navigateAfterRead(notification);
     } catch (error) {
-      console.error(error);
+      reportApiError(this.alert, error);
     }
   }
 

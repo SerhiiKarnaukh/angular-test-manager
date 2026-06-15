@@ -1,14 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { ProductsGridComponent } from '@features/taberna/components/products-grid/products-grid.component';
 import { TabernaProductStore } from '@features/taberna/data-access/taberna-product.store';
+import { CardGridSkeletonComponent } from '@shared/ui/card-grid-skeleton/card-grid-skeleton.component';
+import { EmptyStateComponent } from '@shared/ui/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-taberna-search-page',
-  imports: [ProductsGridComponent, MatProgressBarModule],
+  imports: [ProductsGridComponent, CardGridSkeletonComponent, EmptyStateComponent],
   templateUrl: './taberna-search-page.component.html',
   styleUrl: './taberna-search-page.component.scss',
 })

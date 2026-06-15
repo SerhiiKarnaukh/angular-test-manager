@@ -26,6 +26,8 @@ import { SocialPostsStore } from '@features/social/posts/data-access/social-post
 import { isPageBottomReached } from '@features/social/posts/utils/scroll.utils';
 import { PeopleYouMayKnowComponent } from '@features/social/profiles/components/people-you-may-know/people-you-may-know.component';
 import { SocialProfileStore } from '@features/social/profiles/data-access/social-profile.store';
+import { EmptyStateComponent } from '@shared/ui/empty-state/empty-state.component';
+import { PostListSkeletonComponent } from '@shared/ui/post-list-skeleton/post-list-skeleton.component';
 
 @Component({
   selector: 'app-profile-page',
@@ -38,6 +40,8 @@ import { SocialProfileStore } from '@features/social/profiles/data-access/social
     MatCardModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    EmptyStateComponent,
+    PostListSkeletonComponent,
   ],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss',
@@ -55,6 +59,7 @@ export class ProfilePageComponent implements OnInit {
 
   protected readonly posts = this.postsStore.profilePostList;
   protected readonly profile = this.postsStore.viewedProfile;
+  protected readonly isLoading = this.postsStore.isLoading;
   protected readonly canSendFriendshipRequest = this.postsStore.canSendFriendshipRequest;
   protected readonly isPaginationLoading = this.postsStore.isPaginationLoading;
   protected readonly currentUser = this.profileStore.user;

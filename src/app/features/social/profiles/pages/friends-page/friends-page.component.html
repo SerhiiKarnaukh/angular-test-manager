@@ -1,6 +1,10 @@
 <div class="friends-page">
   <div class="profile-sidebar">
-    @if (profile()) {
+    @if (isLoading()) {
+      <div class="loading-row">
+        <mat-progress-spinner mode="indeterminate" diameter="40" />
+      </div>
+    } @else if (profile()) {
       <mat-card class="profile-card">
         <mat-card-content>
           <img
@@ -19,87 +23,95 @@
   </div>
 
   <div class="friends-main">
-    @if (friendshipRequests().length) {
-      <mat-card class="section-card">
-        <mat-card-header>
-          <mat-card-title>Friendship requests</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="users-grid">
-            @for (request of friendshipRequests(); track request.id) {
-              <mat-card class="user-card">
-                <mat-card-content>
-                  <img
-                    class="user-avatar"
-                    [src]="request.created_by.avatar_url ?? defaultAvatar"
-                    [alt]="request.created_by.first_name"
-                  />
-                  <p>
-                    <a [routerLink]="['/social/profile', request.created_by.slug]">
-                      <strong>
-                        {{ request.created_by.first_name }} {{ request.created_by.last_name }}
-                      </strong>
-                    </a>
-                  </p>
-                  <div class="user-stats">
-                    <span>{{ request.created_by.friends_count }} friends</span>
-                    <span>{{ request.created_by.posts_count }} posts</span>
-                  </div>
-                  <div class="request-actions">
-                    <button
-                      mat-flat-button
-                      color="primary"
-                      type="button"
-                      (click)="handleRequest('accepted', request.created_by.slug)"
-                    >
-                      Accept
-                    </button>
-                    <button
-                      mat-stroked-button
-                      type="button"
-                      (click)="handleRequest('rejected', request.created_by.slug)"
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </mat-card-content>
-              </mat-card>
-            }
-          </div>
-        </mat-card-content>
-      </mat-card>
-    }
+    @if (isLoading()) {
+      <app-post-list-skeleton [count]="2" />
+    } @else {
+      @if (friendshipRequests().length) {
+        <mat-card class="section-card">
+          <mat-card-header>
+            <mat-card-title>Friendship requests</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="users-grid">
+              @for (request of friendshipRequests(); track request.id) {
+                <mat-card class="user-card">
+                  <mat-card-content>
+                    <img
+                      class="user-avatar"
+                      [src]="request.created_by.avatar_url ?? defaultAvatar"
+                      [alt]="request.created_by.first_name"
+                    />
+                    <p>
+                      <a [routerLink]="['/social/profile', request.created_by.slug]">
+                        <strong>
+                          {{ request.created_by.first_name }} {{ request.created_by.last_name }}
+                        </strong>
+                      </a>
+                    </p>
+                    <div class="user-stats">
+                      <span>{{ request.created_by.friends_count }} friends</span>
+                      <span>{{ request.created_by.posts_count }} posts</span>
+                    </div>
+                    <div class="request-actions">
+                      <button
+                        mat-flat-button
+                        color="primary"
+                        type="button"
+                        (click)="handleRequest('accepted', request.created_by.slug)"
+                      >
+                        Accept
+                      </button>
+                      <button
+                        mat-stroked-button
+                        type="button"
+                        (click)="handleRequest('rejected', request.created_by.slug)"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
 
-    @if (friends().length) {
-      <mat-card class="section-card">
-        <mat-card-header>
-          <mat-card-title>Friends</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="users-grid">
-            @for (user of friends(); track user.id) {
-              <mat-card class="user-card">
-                <mat-card-content>
-                  <img
-                    class="user-avatar"
-                    [src]="user.avatar_url ?? defaultAvatar"
-                    [alt]="user.first_name"
-                  />
-                  <p>
-                    <a [routerLink]="['/social/profile', user.slug]">
-                      <strong>{{ user.first_name }} {{ user.last_name }}</strong>
-                    </a>
-                  </p>
-                  <div class="user-stats">
-                    <span>{{ user.friends_count }} friends</span>
-                    <span>{{ user.posts_count }} posts</span>
-                  </div>
-                </mat-card-content>
-              </mat-card>
-            }
-          </div>
-        </mat-card-content>
-      </mat-card>
+      @if (friends().length) {
+        <mat-card class="section-card">
+          <mat-card-header>
+            <mat-card-title>Friends</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="users-grid">
+              @for (user of friends(); track user.id) {
+                <mat-card class="user-card">
+                  <mat-card-content>
+                    <img
+                      class="user-avatar"
+                      [src]="user.avatar_url ?? defaultAvatar"
+                      [alt]="user.first_name"
+                    />
+                    <p>
+                      <a [routerLink]="['/social/profile', user.slug]">
+                        <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+                      </a>
+                    </p>
+                    <div class="user-stats">
+                      <span>{{ user.friends_count }} friends</span>
+                      <span>{{ user.posts_count }} posts</span>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      @if (!friendshipRequests().length && !friends().length) {
+        <app-empty-state title="No friends yet." message="Connect with people you may know." />
+      }
     }
   </div>
 
