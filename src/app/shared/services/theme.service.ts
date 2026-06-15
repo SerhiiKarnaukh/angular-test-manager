@@ -12,16 +12,7 @@ export class ThemeService {
   }
 
   private resolveInitialDark(saved: string | null): boolean {
-    if (saved === 'dark') {
-      return true;
-    }
-    if (saved === 'light') {
-      return false;
-    }
-    if (typeof window.matchMedia === 'function') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
+    return saved === 'dark';
   }
 
   toggle(): void {

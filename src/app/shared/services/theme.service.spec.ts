@@ -14,6 +14,22 @@ describe('ThemeService', () => {
     service = TestBed.inject(ThemeService);
   });
 
+  it('should default to light mode on first visit', () => {
+    expect(service.isDark()).toBe(false);
+    expect(document.body.classList.contains('dark-mode')).toBe(false);
+    expect(localStorage.getItem('theme-preference')).toBe('light');
+  });
+
+  it('should restore saved dark preference', () => {
+    localStorage.setItem('theme-preference', 'dark');
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({});
+    const restored = TestBed.inject(ThemeService);
+
+    expect(restored.isDark()).toBe(true);
+    expect(document.body.classList.contains('dark-mode')).toBe(true);
+  });
+
   it('should toggle dark mode', () => {
     const initial = service.isDark();
     service.toggle();
