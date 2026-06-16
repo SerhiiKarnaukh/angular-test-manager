@@ -40,7 +40,9 @@ Copy `.env.example` to `.env` for local tooling (`Makefile`). Runtime config liv
 | `stripePublicKey` | Stripe.js publishable key |
 | `stripeActionType` | `session` or `charge` |
 
-Production values are injected at build time via `environment.prod.ts` (Firebase CI in Phase 12).
+Production values are injected at build time in CI via `scripts/write-prod-environment.mjs` (GitHub Secrets).
+
+**Live demo:** [https://angular-test-manager.web.app](https://angular-test-manager.web.app) (after first deploy to `main`).
 
 ## Scripts
 
@@ -49,6 +51,7 @@ Production values are injected at build time via `environment.prod.ts` (Firebase
 | `npm start` | Dev server on port 4200 |
 | `npm run build` | Production build → `dist/angular-test-manager/browser` |
 | `npm run test` | Unit tests (Vitest) |
+| `npm run test:coverage` | Unit tests with coverage (CI) |
 | `npm run lint` | ESLint |
 
 ## Project structure
