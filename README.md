@@ -4,7 +4,7 @@ Feature-parity Angular rewrite of the [Vue Applications Manager](https://github.
 
 ### Live Demo on Firebase: <https://angular.karnaukh-webdev.com>
 
-![Angular Applications Manager screenshot](src/app/features/apps-manager/angular_apps_manager.jpg)
+![Angular Applications Manager screenshot](./angular_apps_manager.jpg)
 
 ## Table of Contents
 
@@ -125,7 +125,7 @@ Portfolio launcher — card grid of projects with search.
 - **Layout:** `MainAppsManagerLayoutComponent`
 - **Docs:** [src/app/features/apps-manager/README.md](src/app/features/apps-manager/README.md)
 
-![Apps Manager screenshot](src/app/features/apps-manager/angular_apps_manager.jpg)
+![Apps Manager screenshot](./angular_apps_manager.jpg)
 
 ### 2. Taberna eCommerce
 
