@@ -4,6 +4,10 @@
 @use './app/features/taberna/taberna-theme';
 @use './app/features/ai-lab/ai-lab-theme';
 
+@import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+@import '@fortawesome/fontawesome-free/css/solid.min.css';
+@import '@fortawesome/fontawesome-free/css/brands.min.css';
+
 $app-button-shape: 4px;
 
 html {

@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, map, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -8,11 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { map } from 'rxjs';
 
 import { environment } from '@env/environment';
 import { ThemeService } from '@shared/services/theme.service';
 
+import { TopbarLinksApiService } from '../../data-access/topbar-links.api.service';
 import { AppsManagerSearchDialogComponent } from '../apps-manager-search-dialog/apps-manager-search-dialog.component';
 
 @Component({
@@ -32,9 +33,14 @@ import { AppsManagerSearchDialogComponent } from '../apps-manager-search-dialog/
 export class AppsManagerNavbarComponent {
   private readonly dialog = inject(MatDialog);
   private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly topbarLinksApi = inject(TopbarLinksApiService);
 
   protected readonly theme = inject(ThemeService);
   protected readonly remoteHost = environment.remoteHost;
+  protected readonly topbarLinks = toSignal(
+    this.topbarLinksApi.fetchLinks().pipe(catchError(() => of([]))),
+    { initialValue: [] },
+  );
 
   protected readonly isHandset = toSignal(
     this.breakpointObserver.observe(Breakpoints.Handset).pipe(map((state) => state.matches)),

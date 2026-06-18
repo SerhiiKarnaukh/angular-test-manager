@@ -31,28 +31,12 @@
         </a>
       </mat-menu>
 
-      <a
-        mat-button
-        href="https://docs.google.com/document/d/11DNF9pFl0wQLNXac779DO6axLG67nMGIBC_bPTPulRQ/edit?usp=share_link"
-        target="_blank"
-        rel="noopener"
-      >
-        <mat-icon>description</mat-icon>
-        CV
-      </a>
-      <a mat-button href="https://github.com/SerhiiKarnaukh" target="_blank" rel="noopener">
-        <mat-icon>code</mat-icon>
-        GitHub
-      </a>
-      <a
-        mat-button
-        href="https://www.linkedin.com/in/serhiikarnaukh"
-        target="_blank"
-        rel="noopener"
-      >
-        <mat-icon>work</mat-icon>
-        LinkedIn
-      </a>
+      @for (link of topbarLinks(); track link.key) {
+        <a mat-button [href]="link.url" target="_blank" rel="noopener">
+          <i [class]="link.icon_class" class="topbar-link-icon" aria-hidden="true"></i>
+          {{ link.title }}
+        </a>
+      }
 
       <span class="nav-divider" aria-hidden="true"></span>
 
@@ -111,30 +95,18 @@
 
       <mat-divider />
 
-      <a
-        mat-menu-item
-        href="https://docs.google.com/document/d/11DNF9pFl0wQLNXac779DO6axLG67nMGIBC_bPTPulRQ/edit?usp=share_link"
-        target="_blank"
-        rel="noopener"
-        (click)="closeMobileMenu()"
-      >
-        <mat-icon>description</mat-icon>
-        CV
-      </a>
-      <a mat-menu-item href="https://github.com/SerhiiKarnaukh" target="_blank" rel="noopener" (click)="closeMobileMenu()">
-        <mat-icon>code</mat-icon>
-        GitHub
-      </a>
-      <a
-        mat-menu-item
-        href="https://www.linkedin.com/in/serhiikarnaukh"
-        target="_blank"
-        rel="noopener"
-        (click)="closeMobileMenu()"
-      >
-        <mat-icon>work</mat-icon>
-        LinkedIn
-      </a>
+      @for (link of topbarLinks(); track link.key) {
+        <a
+          mat-menu-item
+          [href]="link.url"
+          target="_blank"
+          rel="noopener"
+          (click)="closeMobileMenu()"
+        >
+          <i [class]="link.icon_class" class="topbar-link-icon" aria-hidden="true"></i>
+          {{ link.title }}
+        </a>
+      }
 
       <mat-divider />
 

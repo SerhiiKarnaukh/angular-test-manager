@@ -127,6 +127,13 @@ body.dark-mode .apps-manager-search-dialog {
 }
 
 .apps-manager-nav-menu {
+  .mat-mdc-menu-item .topbar-link-icon {
+    margin-right: 16px;
+    font-size: 24px;
+    width: 24px;
+    text-align: center;
+  }
+
   .mat-mdc-menu-item.menu-item-active {
     background-color: rgba(30, 184, 212, 0.14);
     color: #1eb8d4;

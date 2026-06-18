@@ -81,11 +81,19 @@
   gap: 2px;
 }
 
-.nav-actions mat-icon {
+.nav-actions mat-icon,
+.nav-actions .topbar-link-icon {
   margin-right: 6px;
   font-size: 18px;
   width: 18px;
   height: 18px;
+}
+
+.topbar-link-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .nav-divider {
