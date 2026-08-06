@@ -23,7 +23,7 @@ export interface PromptImageUpload {
   file: File;
 }
 
-export const REALTIME_WS_URL = 'wss://api.openai.com/v1/realtime?model=gpt-realtime';
+export const REALTIME_WS_URL = 'wss://api.openai.com/v1/realtime?model=gpt-realtime-2.1';
 
 export const PROMPT_IMAGE_MAX_BYTES = 20 * 1024 * 1024;
 export const PROMPT_IMAGE_ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg'] as const;
