@@ -29,20 +29,20 @@ The frontend talks to the same **Django REST API** on AWS as the Vue app. Produc
 
 ## Tech Stack
 
-| Technology | Purpose |
-| ---------- | ------- |
-| Angular 22 | Frontend framework (standalone components) |
-| Angular Router | Client-side routing with lazy-loaded features |
-| Angular Material | UI components |
-| Signals + injectable stores | Feature state (`data-access/*.store.ts`) |
-| HttpClient + interceptors | API requests, JWT refresh |
-| Reactive Forms | Form validation (checkout, auth) |
-| CryptoJS | Encrypted social profile cache in `localStorage` |
-| `@stripe/stripe-js` | Taberna checkout (charge mode) |
-| Vitest | Unit tests via `ng test` |
-| `@vitest/coverage-v8` | Coverage reports in CI |
-| Firebase Hosting | Static SPA deploy |
-| GitHub Actions | Lint, test, build, deploy |
+| Technology                  | Purpose                                          |
+| --------------------------- | ------------------------------------------------ |
+| Angular 22                  | Frontend framework (standalone components)       |
+| Angular Router              | Client-side routing with lazy-loaded features    |
+| Angular Material            | UI components                                    |
+| Signals + injectable stores | Feature state (`data-access/*.store.ts`)         |
+| HttpClient + interceptors   | API requests, JWT refresh                        |
+| Reactive Forms              | Form validation (checkout, auth)                 |
+| CryptoJS                    | Encrypted social profile cache in `localStorage` |
+| `@stripe/stripe-js`         | Taberna checkout (charge mode)                   |
+| Vitest                      | Unit tests via `ng test`                         |
+| `@vitest/coverage-v8`       | Coverage reports in CI                           |
+| Firebase Hosting            | Static SPA deploy                                |
+| GitHub Actions              | Lint, test, build, deploy                        |
 
 ## Architecture
 
@@ -98,15 +98,15 @@ flowchart TB
   TB --> Stripe
 ```
 
-| Layer | Role |
-| ----- | ---- |
-| **Bootstrap** (`main.ts`, `app.config.ts`) | `provideRouter`, `provideHttpClient` with JWT interceptor, Material theme. |
-| **Shell** (`app.component.ts`) | Global snackbar + `<router-outlet>`. |
+| Layer                                       | Role                                                                                      |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Bootstrap** (`main.ts`, `app.config.ts`)  | `provideRouter`, `provideHttpClient` with JWT interceptor, Material theme.                |
+| **Shell** (`app.component.ts`)              | Global snackbar + `<router-outlet>`.                                                      |
 | **Router** (`app.routes.ts`, `*.routes.ts`) | Lazy `loadChildren` / `loadComponent`; `authGuard` + `data.authJWT` for protected routes. |
-| **Core** (`src/app/core/`) | `AuthService`, `JwtInterceptor`, `AuthGuard`, `AlertService`, `LoadingService`. |
-| **Features** (`src/app/features/`) | Per-app layouts, pages, `*.api.service.ts`, `*.store.ts`. |
-| **Shared** (`src/app/shared/`) | Auth forms, empty states, skeletons, `ThemeService`, validators. |
-| **CI/CD** (`.github/workflows/`) | `ci.yml` on PR; `firebase-hosting-merge.yml` on `main` → coverage, build, deploy. |
+| **Core** (`src/app/core/`)                  | `AuthService`, `JwtInterceptor`, `AuthGuard`, `AlertService`, `LoadingService`.           |
+| **Features** (`src/app/features/`)          | Per-app layouts, pages, `*.api.service.ts`, `*.store.ts`.                                 |
+| **Shared** (`src/app/shared/`)              | Auth forms, empty states, skeletons, `ThemeService`, validators.                          |
+| **CI/CD** (`.github/workflows/`)            | `ci.yml` on PR; `firebase-hosting-merge.yml` on `main` → coverage, build, deploy.         |
 
 **Routing at a glance**
 
@@ -189,7 +189,7 @@ scripts/write-prod-environment.mjs  # CI: secrets → environment.prod.ts
 
 ## Prerequisites
 
-- **Node.js** 22.x (see `.nvmrc`)
+- **Node.js** 24.x (see `.nvmrc`)
 - **npm** 11+
 - Django REST API reachable at `remoteHost` (local or AWS)
 
@@ -234,22 +234,22 @@ make update     # clean reinstall with ncu
 
 ## Environment Variables
 
-| Variable (local `.env` / CI secret) | Angular `environment.*` | Description |
-| --------------------------------- | ------------------------- | ----------- |
-| `REMOTE_HOST` | `remoteHost` | Backend API base URL |
-| `ENCRYPTION_KEY` | `encryptionKey` | CryptoJS key for social profile cache |
-| `STRIPE_PUBLIC_KEY` | `stripePublicKey` | Stripe publishable key (Taberna) |
-| `STRIPE_ACTION_TYPE` | `stripeActionType` | `session` or `charge` (CI variable, default `session`) |
-| `NODE_VERSION` | `.nvmrc` | Node version for local/CI |
+| Variable (local `.env` / CI secret) | Angular `environment.*` | Description                                            |
+| ----------------------------------- | ----------------------- | ------------------------------------------------------ |
+| `REMOTE_HOST`                       | `remoteHost`            | Backend API base URL                                   |
+| `ENCRYPTION_KEY`                    | `encryptionKey`         | CryptoJS key for social profile cache                  |
+| `STRIPE_PUBLIC_KEY`                 | `stripePublicKey`       | Stripe publishable key (Taberna)                       |
+| `STRIPE_ACTION_TYPE`                | `stripeActionType`      | `session` or `charge` (CI variable, default `session`) |
+| `NODE_VERSION`                      | `.nvmrc`                | Node version for local/CI                              |
 
 Production build injects secrets via `scripts/write-prod-environment.mjs` in the deploy workflow.
 
 ## CI/CD Pipeline
 
-| Workflow | Trigger | Steps |
-| -------- | ------- | ----- |
-| `ci.yml` | pull request to `main` | `npm ci` → lint → test → build |
-| `firebase-hosting-merge.yml` | push to `main` | lint → `test:coverage` → write prod env → build → Firebase deploy |
+| Workflow                     | Trigger                | Steps                                                             |
+| ---------------------------- | ---------------------- | ----------------------------------------------------------------- |
+| `ci.yml`                     | pull request to `main` | `npm ci` → lint → test → build                                    |
+| `firebase-hosting-merge.yml` | push to `main`         | lint → `test:coverage` → write prod env → build → Firebase deploy |
 
 **GitHub Secrets:** `REMOTE_HOST`, `ENCRYPTION_KEY`, `STRIPE_PUBLIC_KEY`, `FIREBASE_SERVICE_ACCOUNT`.
 
@@ -257,14 +257,14 @@ Production build injects secrets via `scripts/write-prod-environment.mjs` in the
 
 ## Available Scripts
 
-| Command | Description |
-| ------- | ----------- |
-| `npm start` | Dev server on port 4200 |
-| `npm run build` | Production build → `dist/angular-test-manager/browser` |
-| `npm run test` | Unit tests (watch) |
-| `npm run test:run` | Unit tests once |
-| `npm run test:coverage` | Tests with coverage (CI) |
-| `npm run lint` | ESLint |
+| Command                 | Description                                            |
+| ----------------------- | ------------------------------------------------------ |
+| `npm start`             | Dev server on port 4200                                |
+| `npm run build`         | Production build → `dist/angular-test-manager/browser` |
+| `npm run test`          | Unit tests (watch)                                     |
+| `npm run test:run`      | Unit tests once                                        |
+| `npm run test:coverage` | Tests with coverage (CI)                               |
+| `npm run lint`          | ESLint                                                 |
 
 ## Backend
 
