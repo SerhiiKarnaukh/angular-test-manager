@@ -140,7 +140,7 @@ Product catalog, cart, Stripe checkout, user dashboard.
 
 ![Taberna screenshot](src/app/features/taberna/angular_taberna.jpg)
 
-### 3. Social Network DRF
+### 3. Social Network
 
 Posts feed, profiles, friends, real-time chat and notifications.
 
