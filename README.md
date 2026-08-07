@@ -279,3 +279,5 @@ The Django REST Framework backend is hosted on AWS and powers all sub-applicatio
 Full phase-by-phase porting guide: [docs/angular-frontend-development-plan.md](docs/angular-frontend-development-plan.md).
 
 Vue reference implementation: [test-applications-manager-vue](https://github.com/karnaukh-webdev/test-applications-manager-vue).
+
+### test
